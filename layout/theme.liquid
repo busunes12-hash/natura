@@ -26,17 +26,22 @@
       <meta name="description" content="{{ shop.name }} — مستحضرات عناية طبيعية فاخرة مصنوعة في المغرب. زيوت عضوية، سيرومات، وكريمات مختبرة جلدياً. الدفع عند الاستلام في جميع المدن المغربية.">
     {%- endif -%}
 
-    <!-- Google Fonts: Preconnect + Swap -->
+    <!-- Google Fonts: Preconnect & Preload Optimization -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@600;700;800&display=swap"
       rel="stylesheet"
+      media="print" onload="this.media='all'"
     >
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@600;700;800&display=swap" rel="stylesheet">
+    </noscript>
 
     <!-- LCP Hero Preload (homepage only) -->
     {%- if template.name == 'index' -%}
-      <link rel="preload" as="image" href="{{ 'luxury-hero-skincare.jpg' | asset_url }}">
+      <link rel="preload" as="image" href="{{ 'luxury-hero-skincare.jpg' | asset_url }}" fetchpriority="high">
     {%- endif -%}
 
     <!-- Core CSS -->

@@ -5,25 +5,25 @@
    ========================================================================== */
 
 :root {
-  /* 1.1 Color Palette (Restrained Quiet Luxury DTC System) */
-  --color-forest: #2D5F3E;
-  --color-forest-deep: #1E3F2A;
-  --color-bg-secondary: #F4F0E8;
-  --color-bg-primary: #FAF8F5;
-  --color-bg-surface: #FFFFFF;
-  --color-bg-dark: #1A1D1A;
-  --color-charcoal-dark: #1F241E;
-  --color-terracotta: #B86B49;
-  --color-terracotta-soft: #FAF4F0;
-  --color-text-muted: #5C645A;
-  --color-border-subtle: #E5E0D5;
-  --color-success: #256B43;
-  --color-error: #B03A2E;
-  --color-warning: #D37526;
-  --color-gold: #C69F38;
+  /* 1.1 Color Palette (Restrained Quiet Luxury Moroccan DTC System) */
+  --color-forest: #1B3B2B;         /* Deep Moroccan Cedar Green */
+  --color-forest-deep: #12271C;    /* Rich Obsidian Forest */
+  --color-bg-secondary: #F4F0E8;   /* Warm Sand Dune Alabaster */
+  --color-bg-primary: #FAF8F5;     /* Pure Silk Off-White */
+  --color-bg-surface: #FFFFFF;     /* Crisp White Surface */
+  --color-bg-dark: #121714;        /* Midnight Obsidian */
+  --color-charcoal-dark: #161B18;  /* Deep Charcoal Slate */
+  --color-terracotta: #B86B49;    /* Royal Moroccan Terracotta */
+  --color-terracotta-soft: #FAF4F0;/* Soft Terracotta Silk */
+  --color-text-muted: #525B54;     /* Muted Charcoal (WCAG AA Compliant 4.5:1+) */
+  --color-border-subtle: #E5E0D5;  /* Delicate Stone Border */
+  --color-success: #1E6B3F;        /* Deep Emerald Success */
+  --color-error: #9E2A2B;          /* Luxury Garnet Red */
+  --color-warning: #C57B26;        /* Saharan Ochre */
+  --color-gold: #C5A059;           /* Warm Sahara Gold Foil */
 
   /* Typography Fonts */
-  --font-heading: 'Noto Kufi Arabic', sans-serif;
+  --font-heading: 'Noto Kufi Arabic', 'Cormorant Garamond', serif;
   --font-body: 'IBM Plex Sans Arabic', sans-serif;
 
   /* 1.4 Border Radius Token System */
@@ -33,14 +33,14 @@
   --radius-full: 9999px;
 
   /* 1.5 Elevation & Shadow Tokens */
-  --shadow-sm: 0 2px 10px rgba(31, 36, 30, 0.04);
-  --shadow-md: 0 8px 24px rgba(31, 36, 30, 0.06);
-  --shadow-lg: 0 16px 40px rgba(31, 36, 30, 0.09);
+  --shadow-sm: 0 2px 10px rgba(27, 59, 43, 0.04);
+  --shadow-md: 0 8px 24px rgba(27, 59, 43, 0.08);
+  --shadow-lg: 0 16px 40px rgba(27, 59, 43, 0.12);
 
   /* 1.6 Transitions & Animation Curves */
-  --transition-base: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-fast: 0.15s ease-out;
+  --transition-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 
   /* Layout Spacing */
   --page-width: 1200px;

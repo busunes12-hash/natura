@@ -43,7 +43,7 @@
         {%- endif -%}
 
         <!-- Clinical Study Results Box -->
-        {% render 'clinical-box' %}
+        {% render 'clinical-results' %}
       </div>
 
       <!-- Column 2: Product Info & COD Order Form -->
@@ -75,52 +75,15 @@
         <!-- Stock Scarcity Urgency Badge Snippet -->
         {% render 'scarcity-badge', product: product %}
 
-        {% form 'product', product, class: 'product-form flex flex-col gap-4' %}
+        <!-- Tiered Volume Discount Bundle Selector -->
+        {% render 'bundle-selector', product: product %}
+
+        <!-- Accelerated 1-Click Direct COD Form -->
+        {% render 'cod-express-form', product: product %}
+
+        {% form 'product', product, class: 'product-form flex flex-col gap-4 hidden' %}
           <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-
-          {%- if product.has_only_default_variant == false -%}
-            <div class="variant-select-wrapper">
-              <label class="font-semibold text-sm mb-2 block text-dark">اختر السعة المناسبة:</label>
-              <div class="variant-pills">
-                {%- for variant in product.variants -%}
-                  <button
-                    type="button"
-                    class="variant-pill {% if variant.id == product.selected_or_first_available_variant.id %}is-active{% endif %}"
-                    data-variant-id="{{ variant.id }}"
-                  >
-                    <span>{{ variant.title }}</span>
-                    <span class="opacity-80">({{ variant.price | money_without_currency }} د.م.)</span>
-                  </button>
-                {%- endfor -%}
-              </div>
-            </div>
-          {%- endif -%}
-
-          <div class="quantity-row flex items-center gap-4">
-            <label class="font-semibold text-sm text-dark">الكمية:</label>
-            <quantity-input class="quantity-input">
-              <button type="button" name="minus" class="quantity-btn" aria-label="تقليل الكمية">-</button>
-              <input type="number" name="quantity" value="1" min="1" max="10" class="quantity-field" readonly aria-label="كمية المنتج">
-              <button type="button" name="plus" class="quantity-btn" aria-label="زيادة الكمية">+</button>
-            </quantity-input>
-          </div>
-
-          <!-- FIX 4: Single clearly-tappable primary button (fill color, shadow, min-height 52px) -->
-          <button
-            type="submit"
-            name="add"
-            class="btn-terracotta text-base md:text-lg py-3.5 w-full shadow-lg flex items-center justify-center gap-2 pdp-cta-btn"
-            style="min-height: 52px; background-color: var(--color-terracotta); border-radius: var(--radius-full);"
-            data-quick-add="{{ product.selected_or_first_available_variant.id }}"
-          >
-            <span>إضافة إلى سلة التسوق</span>
-          </button>
-
-          <!-- FIX 4: Separate small trust line below button -->
-          <div class="pdp-trust-line text-xs text-muted text-center flex items-center justify-center gap-1.5 mt-1">
-            <span class="w-4 h-4 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'truck' %}</span>
-            <span>الدفع نقداً عند الاستلام | معاينة الشحنة مجاناً قبل الدفع</span>
-          </div>
+          <button type="submit" name="add" class="hidden">إضافة إلى السلة</button>
         {% endform %}
 
         {% render 'trust-bar' %}

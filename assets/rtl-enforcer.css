@@ -11,6 +11,7 @@
 /* Prevent third-party apps or inline styles from forcing LTR */
 html, body {
   direction: rtl !important;
+  text-align: right;
 }
 
 /* Ensure drawers slide from the correct inline start/end side */
@@ -19,7 +20,27 @@ html, body {
   inset-inline-end: 0;
 }
 
-/* Mirror icons that indicate direction where necessary */
-[dir="rtl"] .rtl-flip {
+/* Mirror directional icons in RTL mode */
+[dir="rtl"] .rtl-flip,
+[dir="rtl"] .icon-arrow-next,
+[dir="rtl"] .icon-arrow-prev,
+[dir="rtl"] .slider-next,
+[dir="rtl"] .slider-prev,
+[dir="rtl"] .accordion-chevron {
   transform: scaleX(-1);
+  display: inline-block;
+}
+
+/* CSS Logical Properties Enforcer */
+.spacing-start {
+  margin-inline-start: 1rem;
+}
+.spacing-end {
+  margin-inline-end: 1rem;
+}
+.padding-start {
+  padding-inline-start: 1rem;
+}
+.padding-end {
+  padding-inline-end: 1rem;
 }
