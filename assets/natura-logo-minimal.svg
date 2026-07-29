@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&amp;display=swap');
+      
+      .brand-color { fill: #4F5F4A; }
+      .brand-title {
+        fill: #4F5F4A;
+        font-family: 'Cormorant Garamond', 'Bodoni MT', 'Didot', 'Playfair Display', serif;
+        font-weight: 500;
+        font-size: 56px;
+        letter-spacing: 0.40em;
+        text-anchor: middle;
+      }
+    </style>
+  </defs>
+
+  <!-- White Background -->
+  <rect width="600" height="450" fill="#FFFFFF"/>
+
+  <!-- Centered Botanical Three-Leaf Icon -->
+  <g transform="translate(300, 160)" class="brand-color">
+    <!-- Center Leaf -->
+    <path d="M 0,-110 C 24,-65 26,-5 0,38 C -26,-5 -24,-65 0,-110 Z" />
+    
+    <!-- Left Leaf -->
+    <path d="M 0,38 C -35,30 -72,-5 -68,-52 C -46,-49 -15,-18 0,38 Z" />
+    
+    <!-- Right Leaf -->
+    <path d="M 0,38 C 35,30 72,-5 68,-52 C 46,-49 15,-18 0,38 Z" />
+    
+    <!-- Elegant Stem Taper -->
+    <path d="M -1.5,38 Q -1.5,56 0,60 Q 1.5,56 1.5,38 Z" />
+  </g>
+
+  <!-- Typography Wordmark -->
+  <text x="300" y="325" dx="11" class="brand-title">NATURA</text>
+</svg>

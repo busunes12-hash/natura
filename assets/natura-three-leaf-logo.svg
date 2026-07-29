@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&amp;family=Cinzel:wght@500;600&amp;display=swap');
+
+      .bg { fill: #FFFFFF; }
+      .dark-green { fill: #1B4D3E; }
+      .logo-text {
+        fill: #1B4D3E;
+        font-family: 'Cinzel', 'Montserrat', 'Trajan Pro', 'Georgia', serif;
+        font-size: 56px;
+        font-weight: 600;
+        letter-spacing: 0.35em;
+        text-anchor: middle;
+      }
+      .logo-subtext {
+        fill: #2C5E4F;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.5em;
+        text-anchor: middle;
+        opacity: 0.9;
+      }
+    </style>
+  </defs>
+
+  <!-- Canvas Background: Pure White -->
+  <rect class="bg" width="800" height="600" />
+
+  <!-- Stylized Three-Leaf Icon (Centered above text) -->
+  <g transform="translate(400, 200)" class="dark-green">
+    <!-- Center Leaf (Taller, Elegant Curve) -->
+    <path d="M 0,-115 C 28,-75 28,-10 0,35 C -28,-10 -28,-75 0,-115 Z" />
+    
+    <!-- Left Leaf (Curved Outward) -->
+    <path d="M -4,25 C -40,15 -80,-20 -72,-75 C -48,-70 -16,-30 -4,25 Z" />
+    
+    <!-- Right Leaf (Curved Outward) -->
+    <path d="M 4,25 C 40,15 80,-20 72,-75 C 48,-70 16,-30 4,25 Z" />
+    
+    <!-- Delicate Center Stem Base -->
+    <path d="M -1.5,30 L -1.5,55 Q 0,60 1.5,55 L 1.5,30 Z" />
+  </g>
+
+  <!-- Text: NATURA in Uppercase -->
+  <!-- dx="10" adjusts visual optical alignment for wide letter-spacing -->
+  <text x="400" y="380" dx="10" class="logo-text">NATURA</text>
+
+  <!-- Optional Sub-line -->
+  <text x="400" y="425" dx="3" class="logo-subtext">ORGANIC &amp; ESSENTIALS</text>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <!-- White Background -->
+  <rect width="400" height="400" fill="#FFFFFF"/>
+
+  <!-- Centered Botanical Three-Leaf Icon -->
+  <g transform="translate(200, 205)" fill="#4F5F4A">
+    <!-- Center Leaf -->
+    <path d="M 0,-120 C 27,-70 28,-5 0,42 C -28,-5 -27,-70 0,-120 Z" />
+    
+    <!-- Left Leaf -->
+    <path d="M 0,42 C -38,33 -78,-5 -74,-57 C -50,-54 -16,-20 0,42 Z" />
+    
+    <!-- Right Leaf -->
+    <path d="M 0,42 C 38,33 78,-5 74,-57 C 50,-54 16,-20 0,42 Z" />
+    
+    <!-- Stem Taper -->
+    <path d="M -1.8,42 Q -1.8,62 0,66 Q 1.8,62 1.8,42 Z" />
+  </g>
+</svg>

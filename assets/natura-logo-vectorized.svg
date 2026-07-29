@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 520" width="100%" height="100%">
+  <!-- Pristine White Background -->
+  <rect width="600" height="520" fill="#FFFFFF"/>
+
+  <!-- Color definition: Dark Forest Green #4F5F4A -->
+  <g fill="#4F5F4A">
+    <!-- Centered Symmetrical Three-Leaf Botanical Icon -->
+    <g transform="translate(300, 165)">
+      <!-- Center Leaf -->
+      <path d="M 0,-110 C 24,-65 26,-5 0,38 C -26,-5 -24,-65 0,-110 Z" />
+      <!-- Left Leaf -->
+      <path d="M 0,38 C -35,30 -72,-5 -68,-52 C -46,-49 -15,-18 0,38 Z" />
+      <!-- Right Leaf -->
+      <path d="M 0,38 C 35,30 72,-5 68,-52 C 46,-49 15,-18 0,38 Z" />
+      <!-- Stem -->
+      <path d="M -1.5,38 Q -1.5,56 0,60 Q 1.5,56 1.5,38 Z" />
+    </g>
+
+    <!-- Vectorized Serif Wordmark: NATURA (Pure Vector Paths) -->
+    <g transform="translate(300, 325)">
+      <!-- Letter N (x = -160) -->
+      <g transform="translate(-160, 0)">
+        <path d="M -16,10 L -16,8 C -11,8 -10,6 -10,0 L -10,-32 C -10,-38 -11,-40 -16,-40 L -16,-42 L -3,-42 L 13,-8 L 13,-32 C 13,-38 12,-40 7,-40 L 7,-42 L 20,-42 L 20,-40 C 15,-40 14,-38 14,-32 L 14,0 C 14,6 15,8 20,8 L 20,10 L 8,10 L -8,-24 L -8,0 C -8,6 -7,8 -2,8 L -2,10 Z"/>
+      </g>
+      
+      <!-- Letter A (x = -96) -->
+      <g transform="translate(-96, 0)">
+        <path d="M -18,10 L -18,8 C -13,8 -12,6 -10,-1 L -1,-25 L -8,-25 L -8,-27 L 0,-27 L 7,-7 C 9,-1 11,8 16,8 L 16,10 L 2,10 L 2,8 C 7,8 7,6 5,1 L 3,-5 L -11,-5 L -13,1 C -15,6 -14,8 -9,8 L -9,10 Z M -10,-8 L 2,-8 L -4,-23 Z"/>
+      </g>
+
+      <!-- Letter T (x = -32) -->
+      <g transform="translate(-32, 0)">
+        <path d="M -16,-42 L 16,-42 L 16,-34 L 14,-34 C 14,-38 12,-40 6,-40 L 2,-40 L 2,-3 C 2,5 4,7 9,7 L 9,9 L -9,9 L -9,7 C -4,7 -2,5 -2,-3 L -2,-40 L -6,-40 C -12,-40 -14,-38 -14,-34 L -16,-34 Z"/>
+      </g>
+
+      <!-- Letter U (x = 32) -->
+      <g transform="translate(32, 0)">
+        <path d="M -16,-42 L -3,-42 L -3,-40 C -8,-40 -9,-38 -9,-32 L -9,-14 C -9,-4 -2,2 6,2 C 14,2 17,-4 17,-14 L 17,-32 C 17,-38 16,-40 11,-40 L 11,-42 L 23,-42 L 23,-40 C 18,-40 17,-38 17,-32 L 17,-12 C 17,2 10,10 -3,10 C -16,10 -23,2 -23,-12 L -23,-32 C -23,-38 -24,-40 -29,-40 L -29,-42 Z"/>
+      </g>
+
+      <!-- Letter R (x = 96) -->
+      <g transform="translate(96, 0)">
+        <path d="M -16,10 L -16,8 C -11,8 -10,6 -10,0 L -10,-32 C -10,-38 -11,-40 -16,-40 L -16,-42 L 5,-42 C 14,-42 20,-36 20,-28 C 20,-21 15,-16 7,-15 C 12,-12 15,-5 18,3 C 19,6 21,8 24,8 L 24,10 L 14,10 C 10,10 7,4 5,-2 C 3,-8 -1,-14 -6,-14 L -4,-14 L -4,0 C -4,6 -3,8 2,8 L 2,10 Z M -4,-16 L 3,-16 C 9,-16 13,-20 13,-28 C 13,-36 9,-40 3,-40 L -4,-40 Z"/>
+      </g>
+
+      <!-- Letter A (x = 160) -->
+      <g transform="translate(160, 0)">
+        <path d="M -18,10 L -18,8 C -13,8 -12,6 -10,-1 L -1,-25 L -8,-25 L -8,-27 L 0,-27 L 7,-7 C 9,-1 11,8 16,8 L 16,10 L 2,10 L 2,8 C 7,8 7,6 5,1 L 3,-5 L -11,-5 L -13,1 C -15,6 -14,8 -9,8 L -9,10 Z M -10,-8 L 2,-8 L -4,-23 Z"/>
+      </g>
+    </g>
+
+    <!-- Vectorized Subtext: BOTANICAL SKINCARE -->
+    <g transform="translate(300, 368)">
+      <text font-family="'Montserrat', sans-serif" font-weight="300" font-size="11.5" letter-spacing="0.48em" text-anchor="middle" dx="3">BOTANICAL SKINCARE</text>
+    </g>
+  </g>
+</svg>

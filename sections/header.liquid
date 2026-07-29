@@ -26,11 +26,17 @@
     <!-- Brand Logo -->
     <a href="{{ routes.root_url }}" class="header__logo" aria-label="{{ shop.name }} — الصفحة الرئيسية">
       <div class="header__logo-wrapper">
-        <svg viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="header__logo-svg">
-          <!-- 3 Botanical Leaves Crest -->
-          <path d="M20 1C16.8 6.5 16.8 12.5 20 16C23.2 12.5 23.2 6.5 20 1Z" fill="currentColor"/>
-          <path d="M18.8 10.5C12.8 8.5 8.5 12 8 18C13 19.5 17.5 16.5 18.8 10.5Z" fill="currentColor"/>
-          <path d="M21.2 10.5C27.2 8.5 31.5 12 32 18C27 19.5 22.5 16.5 21.2 10.5Z" fill="currentColor"/>
+        <svg viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="header__logo-svg">
+          <!-- Detailed 3-leaf Botanical Emblem -->
+          <path d="M60 5 C46 22 48 42 58 54 C60 54 60 54 62 54 C72 42 74 22 60 5 Z" stroke="currentColor" stroke-width="3" fill="none"/>
+          <path d="M60 5 L60 54" stroke="currentColor" stroke-width="2"/>
+          <path d="M60 20 C54 26 50 32 49 38 M60 28 C66 33 70 38 71 43" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M57 52 C38 48 20 38 15 22 C28 18 45 28 54 44 Z" stroke="currentColor" stroke-width="3" fill="none"/>
+          <path d="M15 22 C32 30 46 40 57 52" stroke="currentColor" stroke-width="2"/>
+          <path d="M25 25 C30 32 37 36 43 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M63 52 C82 48 100 38 105 22 C92 18 75 28 66 44 Z" stroke="currentColor" stroke-width="3" fill="none"/>
+          <path d="M105 22 C88 30 74 40 63 52" stroke="currentColor" stroke-width="2"/>
+          <path d="M95 25 C90 32 83 36 77 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>
         <span class="header__logo-text">{{ shop.name | default: 'NATURA' }}</span>
       </div>

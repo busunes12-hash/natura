@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 520" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&amp;family=Montserrat:wght@300;400&amp;display=swap');
+      
+      .brand-color { fill: #4F5F4A; }
+      .brand-title {
+        fill: #4F5F4A;
+        font-family: 'Cormorant Garamond', 'Bodoni MT', 'Didot', 'Playfair Display', serif;
+        font-weight: 500;
+        font-size: 54px;
+        letter-spacing: 0.38em;
+        text-anchor: middle;
+      }
+      .brand-subtext {
+        fill: #4F5F4A;
+        font-family: 'Montserrat', 'Helvetica Neue', sans-serif;
+        font-weight: 300;
+        letter-spacing: 0.48em;
+        font-size: 12px;
+        opacity: 0.85;
+        text-anchor: middle;
+      }
+    </style>
+  </defs>
+
+  <!-- Background: Solid White -->
+  <rect width="600" height="520" fill="#FFFFFF"/>
+
+  <!-- Centered Botanical Icon Group -->
+  <g transform="translate(300, 165)" class="brand-color">
+    <!-- Center Leaf -->
+    <path d="M 0,-110 C 24,-65 26,-5 0,38 C -26,-5 -24,-65 0,-110 Z" />
+    
+    <!-- Left Leaf -->
+    <path d="M 0,38 C -35,30 -72,-5 -68,-52 C -46,-49 -15,-18 0,38 Z" />
+    
+    <!-- Right Leaf -->
+    <path d="M 0,38 C 35,30 72,-5 68,-52 C 46,-49 15,-18 0,38 Z" />
+    
+    <!-- Elegant Stem -->
+    <path d="M -1.5,38 Q -1.5,56 0,60 Q 1.5,56 1.5,38 Z" />
+  </g>
+
+  <!-- Typography Wordmark: NATURA -->
+  <!-- dx offset handles tracking visual centering for letter-spacing -->
+  <text x="300" y="335" dx="10" class="brand-title">NATURA</text>
+
+  <!-- Sub-wordmark: BOTANICAL SKINCARE -->
+  <text x="300" y="375" dx="3" class="brand-subtext">BOTANICAL SKINCARE</text>
+</svg>

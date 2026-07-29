@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NATURA — Luxury Botanical Brand Identity & Vector Logo</title>
+  <meta name="description" content="Official luxury botanical brand identity system and vector logo suite for NATURA skincare. Features dark forest green (#4F5F4A) three-leaf centered icon and elegant wordmark.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --brand-green: #4F5F4A;
+      --brand-green-light: #6A7C64;
+      --brand-green-dark: #374433;
+      --bg-white: #FFFFFF;
+      --bg-cream: #FAF9F6;
+      --bg-soft: #F4F3EE;
+      --text-dark: #222920;
+      --text-muted: #6B7268;
+      --border-light: #E2E1D9;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-subtle: 0 10px 30px rgba(0,0,0,0.03);
+      --shadow-card: 0 15px 35px rgba(79, 95, 74, 0.06);
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, .serif {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* Header Navigation */
+    header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+    }
+
+    .nav-logo-preview {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--brand-green);
+    }
+
+    .nav-logo-preview svg {
+      height: 32px;
+      width: auto;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 40px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid transparent;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--brand-green);
+      color: #FFFFFF;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--brand-green-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(79, 95, 74, 0.25);
+    }
+
+    .btn-outline {
+      border-color: var(--brand-green);
+      color: var(--brand-green);
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      background-color: rgba(79, 95, 74, 0.05);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 70px 0 50px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(79, 95, 74, 0.08);
+      color: var(--brand-green);
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: 54px;
+      color: var(--brand-green-dark);
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+
+    .hero p {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 36px;
+      font-weight: 300;
+    }
+
+    /* Main Showcase Canvas */
+    .canvas-section {
+      background: var(--bg-white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      padding: 60px 40px;
+      margin-bottom: 60px;
+      box-shadow: var(--shadow-card);
+      position: relative;
+    }
+
+    .canvas-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-light);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .canvas-title {
+      font-size: 24px;
+      color: var(--brand-green);
+    }
+
+    .toolbar-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .toggle-btn {
+      padding: 8px 16px;
+      font-size: 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border-light);
+      background: var(--bg-soft);
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .toggle-btn.active {
+      background: var(--brand-green);
+      color: white;
+      border-color: var(--brand-green);
+    }
+
+    .logo-main-display {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 440px;
+      background-color: #FFFFFF;
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.4s ease;
+      border: 1px solid #F0EFE9;
+    }
+
+    .logo-main-display.dark-mode {
+      background-color: #1A2218;
+    }
+
+    .logo-main-display.dark-mode svg .brand-color,
+    .logo-main-display.dark-mode svg .brand-title,
+    .logo-main-display.dark-mode svg .brand-subtext,
+    .logo-main-display.dark-mode svg text,
+    .logo-main-display.dark-mode svg path {
+      fill: #FFFFFF !important;
+    }
+
+    .logo-main-display.dark-mode svg rect {
+      fill: #1A2218 !important;
+    }
+
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(79, 95, 74, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(79, 95, 74, 0.05) 1px, transparent 1px);
+      background-size: 20px 20px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .grid-overlay.visible {
+      opacity: 1;
+    }
+
+    .grid-center-lines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .grid-center-lines.visible {
+      opacity: 1;
+    }
+
+    .grid-center-lines::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0; left: 50%;
+      width: 1px;
+      background: rgba(220, 50, 50, 0.4);
+    }
+
+    .grid-center-lines::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 40%;
+      height: 1px;
+      background: rgba(220, 50, 50, 0.4);
+    }
+
+    .svg-wrapper {
+      width: 100%;
+      max-width: 580px;
+      z-index: 2;
+      transition: transform 0.3s ease;
+    }
+
+    /* Logo Suite Grid */
+    .section-header {
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    .section-header h2 {
+      font-size: 36px;
+      color: var(--brand-green-dark);
+    }
+
+    .suite-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      margin-bottom: 60px;
+    }
+
+    .suite-card {
+      background: var(--bg-white);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .suite-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-card);
+      border-color: var(--brand-green-light);
+    }
+
+    .card-preview {
+      width: 100%;
+      height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #FFFFFF;
+      border-radius: var(--radius-sm);
+      margin-bottom: 20px;
+      padding: 16px;
+      border: 1px solid var(--bg-soft);
+    }
+
+    .card-preview svg {
+      max-height: 100%;
+      max-width: 100%;
+    }
+
+    .card-info {
+      width: 100%;
+      text-align: left;
+    }
+
+    .card-info h3 {
+      font-size: 20px;
+      color: var(--brand-green);
+      margin-bottom: 6px;
+    }
+
+    .card-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .btn-sm {
+      padding: 8px 14px;
+      font-size: 11px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    /* Brand Applications Mockup Gallery */
+    .applications-section {
+      margin-bottom: 70px;
+    }
+
+    .mockup-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+    }
+
+    .mockup-card {
+      background: var(--bg-white);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      overflow: hidden;
+      box-shadow: var(--shadow-subtle);
+      transition: var(--transition);
+    }
+
+    .mockup-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-card);
+    }
+
+    .col-6 { grid-column: span 6; }
+    .col-4 { grid-column: span 4; }
+    .col-12 { grid-column: span 12; }
+
+    @media (max-width: 900px) {
+      .col-6, .col-4 { grid-column: span 12; }
+    }
+
+    .mockup-visual {
+      height: 320px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Skincare Bottle Mockup CSS */
+    .bottle-stage {
+      background: linear-gradient(135deg, #F5F4EF 0%, #E6E4DD 100%);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .skincare-bottle {
+      width: 110px;
+      height: 240px;
+      background: linear-gradient(90deg, #EBE8E0 0%, #FFFFFF 40%, #E3E0D6 100%);
+      border-radius: 16px 16px 30px 30px;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .bottle-cap {
+      width: 48px;
+      height: 45px;
+      background: linear-gradient(90deg, #445340 0%, #5B6D55 50%, #3D4B39 100%);
+      border-radius: 6px 6px 2px 2px;
+      margin-top: -35px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .bottle-label {
+      width: 86%;
+      height: 155px;
+      background: #FFFFFF;
+      margin-top: 25px;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      padding: 14px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #FAF9F6;
+    }
+
+    .bottle-label svg {
+      width: 75px;
+    }
+
+    /* Cosmetic Box Packaging Mockup CSS */
+    .box-stage {
+      background: linear-gradient(135deg, #4A5945 0%, #354231 100%);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .cosmetic-box {
+      width: 170px;
+      height: 230px;
+      background: #4F5F4A;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 25px 25px 50px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      position: relative;
+    }
+
+    .cosmetic-box::before {
+      content: '';
+      position: absolute;
+      top: 15px; bottom: 15px; left: 15px; right: 15px;
+      border: 1px solid rgba(255,255,255,0.25);
+      pointer-events: none;
+    }
+
+    .box-logo-white svg path,
+    .box-logo-white svg text {
+      fill: #FFFFFF !important;
+    }
+
+    /* Shopping Bag Mockup CSS */
+    .bag-stage {
+      background: linear-gradient(135deg, #FAF8F5 0%, #EFECE6 100%);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .shopping-bag {
+      width: 210px;
+      height: 230px;
+      background: #FDFCF7;
+      border: 1px solid #E5E2D9;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .bag-handle {
+      position: absolute;
+      top: -30px;
+      width: 70px;
+      height: 50px;
+      border: 3px solid #7C6D5B;
+      border-bottom: none;
+      border-radius: 35px 35px 0 0;
+    }
+
+    .mockup-info {
+      padding: 20px 24px;
+    }
+
+    .mockup-info h4 {
+      font-size: 20px;
+      color: var(--brand-green);
+      margin-bottom: 4px;
+    }
+
+    .mockup-info p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Brand Guidelines Specifications */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+      margin-bottom: 60px;
+    }
+
+    .spec-card {
+      background: var(--bg-white);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      padding: 32px;
+    }
+
+    .spec-card h3 {
+      font-size: 24px;
+      color: var(--brand-green);
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--bg-soft);
+      padding-bottom: 10px;
+    }
+
+    .color-swatch-group {
+      display: flex;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .color-swatch {
+      flex: 1;
+      height: 90px;
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .swatch-primary {
+      background: #4F5F4A;
+      color: #FFFFFF;
+    }
+
+    .swatch-white {
+      background: #FFFFFF;
+      color: #4F5F4A;
+      border: 1px solid var(--border-light);
+    }
+
+    .swatch-cream {
+      background: #FAF9F6;
+      color: #4F5F4A;
+      border: 1px solid var(--border-light);
+    }
+
+    .spec-list {
+      list-style: none;
+    }
+
+    .spec-list li {
+      font-size: 13.5px;
+      color: var(--text-dark);
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--border-light);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .spec-list li span:first-child {
+      color: var(--text-muted);
+    }
+
+    .spec-list li span:last-child {
+      font-weight: 600;
+      color: var(--brand-green);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--brand-green-dark);
+      color: white;
+      padding: 14px 24px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--brand-green-dark);
+      color: rgba(255,255,255,0.7);
+      padding: 50px 0 30px;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    footer p {
+      margin-bottom: 12px;
+    }
+
+    footer .brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      color: white;
+      letter-spacing: 0.3em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">SVG copied to clipboard successfully!</div>
+
+  <!-- Navigation -->
+  <header>
+    <div class="container header-inner">
+      <a href="#" class="nav-logo-preview">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+          <g fill="#4F5F4A" transform="translate(60, 60) scale(0.6)">
+            <path d="M 0,-65 C 16,-38 18,-3 0,22 C -18,-3 -16,-38 0,-65 Z" />
+            <path d="M 0,22 C -22,17 -44,-3 -42,-32 C -28,-30 -9,-11 0,22 Z" />
+            <path d="M 0,22 C 22,17 44,-3 42,-32 C 28,-30 9,-11 0,22 Z" />
+          </g>
+        </svg>
+        <span class="serif" style="font-size: 22px; letter-spacing: 0.2em; font-weight: 600;">NATURA</span>
+      </a>
+
+      <div class="nav-actions">
+        <button class="btn btn-outline" onclick="toggleGridLines()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+          Grid & Guides
+        </button>
+        <button class="btn btn-primary" onclick="downloadAllSVGs()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Download Vector Assets
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="container">
+    
+    <!-- Hero Header -->
+    <section class="hero">
+      <span class="badge">Brand Identity System</span>
+      <h1>NATURA Botanical Identity</h1>
+      <p>A minimalist, luxury botanical brand mark crafted for natural beauty and skincare. Engineered with organic three-leaf vector curves, refined proportions, and dark forest green (#4F5F4A) color code.</p>
+    </section>
+
+    <!-- Main Canvas Display -->
+    <section class="canvas-section">
+      <div class="canvas-toolbar">
+        <h2 class="canvas-title">Primary Brand Mark (Vertical Lockup)</h2>
+        <div class="toolbar-controls">
+          <button class="toggle-btn active" id="btn-light" onclick="setCanvasTheme('light')">White BG</button>
+          <button class="toggle-btn" id="btn-dark" onclick="setCanvasTheme('dark')">Dark Forest BG</button>
+          <button class="toggle-btn" id="btn-grid" onclick="toggleGridLines()">Toggle Grid</button>
+        </div>
+      </div>
+
+      <div class="logo-main-display" id="main-display">
+        <div class="grid-overlay" id="grid-overlay"></div>
+        <div class="grid-center-lines" id="center-lines"></div>
+
+        <div class="svg-wrapper">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 520" width="100%" height="100%" id="primary-logo-svg">
+            <defs>
+              <style>
+                @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&amp;family=Montserrat:wght@300;400&amp;display=swap');
+                .brand-color { fill: #4F5F4A; }
+                .brand-title {
+                  fill: #4F5F4A;
+                  font-family: 'Cormorant Garamond', 'Bodoni MT', 'Didot', serif;
+                  font-weight: 500;
+                  font-size: 54px;
+                  letter-spacing: 0.38em;
+                  text-anchor: middle;
+                }
+                .brand-subtext {
+                  fill: #4F5F4A;
+                  font-family: 'Montserrat', sans-serif;
+                  font-weight: 300;
+                  letter-spacing: 0.48em;
+                  font-size: 12px;
+                  opacity: 0.85;
+                  text-anchor: middle;
+                }
+              </style>
+            </defs>
+
+            <!-- Background -->
+            <rect width="600" height="520" fill="#FFFFFF"/>
+
+            <!-- Symmetrical Botanical Three-Leaf Icon -->
+            <g transform="translate(300, 165)" class="brand-color">
+              <!-- Center Leaf -->
+              <path d="M 0,-110 C 24,-65 26,-5 0,38 C -26,-5 -24,-65 0,-110 Z" />
+              <!-- Left Leaf -->
+              <path d="M 0,38 C -35,30 -72,-5 -68,-52 C -46,-49 -15,-18 0,38 Z" />
+              <!-- Right Leaf -->
+              <path d="M 0,38 C 35,30 72,-5 68,-52 C 46,-49 15,-18 0,38 Z" />
+              <!-- Tapered Stem Base -->
+              <path d="M -1.5,38 Q -1.5,56 0,60 Q 1.5,56 1.5,38 Z" />
+            </g>
+
+            <!-- Wordmark NATURA -->
+            <text x="300" y="335" dx="10" class="brand-title">NATURA</text>
+
+            <!-- Subtext -->
+            <text x="300" y="375" dx="3" class="brand-subtext">BOTANICAL SKINCARE</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vector Logo Suite Section -->
+    <section>
+      <div class="section-header">
+        <h2>Vector Logo Suite & Lockups</h2>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 8px auto 0;">Scalable vector assets optimized for print packaging, digital storefronts, social media avatars, and physical signage.</p>
+      </div>
+
+      <div class="suite-grid">
+        
+        <!-- Card 1: Minimal Logo -->
+        <div class="suite-card">
+          <div class="card-preview">
+            <img src="assets/natura-logo-minimal.svg" alt="NATURA Minimal Logo" style="max-height: 100%; max-width: 100%;">
+          </div>
+          <div class="card-info">
+            <h3>Minimal Vertical Lockup</h3>
+            <p>Centered 3-leaf icon & NATURA wordmark without subtext. Ideal for skincare bottles and outer cartons.</p>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-outline btn-sm" onclick="copySVGFile('assets/natura-logo-minimal.svg')">Copy SVG</button>
+            <a class="btn btn-primary btn-sm" href="assets/natura-logo-minimal.svg" download="natura-logo-minimal.svg">Download</a>
+          </div>
+        </div>
+
+        <!-- Card 2: Horizontal Lockup -->
+        <div class="suite-card">
+          <div class="card-preview">
+            <img src="assets/natura-logo-horizontal.svg" alt="NATURA Horizontal Logo" style="max-height: 100%; max-width: 100%;">
+          </div>
+          <div class="card-info">
+            <h3>Horizontal Lockup</h3>
+            <p>Side-by-side arrangement. Optimized for web headers, navigation bars, email signatures, and wide ribbons.</p>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-outline btn-sm" onclick="copySVGFile('assets/natura-logo-horizontal.svg')">Copy SVG</button>
+            <a class="btn btn-primary btn-sm" href="assets/natura-logo-horizontal.svg" download="natura-logo-horizontal.svg">Download</a>
+          </div>
+        </div>
+
+        <!-- Card 3: Standalone Icon -->
+        <div class="suite-card">
+          <div class="card-preview">
+            <img src="assets/natura-icon-only.svg" alt="NATURA Botanical Icon" style="max-height: 80%; max-width: 80%;">
+          </div>
+          <div class="card-info">
+            <h3>Botanical Icon Only</h3>
+            <p>Symmetrical 3-leaf brand mark. Perfect for social media profile avatars, app icons, favicons, & bottle caps.</p>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-outline btn-sm" onclick="copySVGFile('assets/natura-icon-only.svg')">Copy SVG</button>
+            <a class="btn btn-primary btn-sm" href="assets/natura-icon-only.svg" download="natura-icon-only.svg">Download</a>
+          </div>
+        </div>
+
+        <!-- Card 4: Vectorized Outlined Version -->
+        <div class="suite-card">
+          <div class="card-preview">
+            <img src="assets/natura-logo-vectorized.svg" alt="NATURA Vectorized Logo" style="max-height: 100%; max-width: 100%;">
+          </div>
+          <div class="card-info">
+            <h3>Pure Vector Path Lockup</h3>
+            <p>100% font-independent vectorized path letterforms. Essential for commercial print shops & CNC engraving.</p>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-outline btn-sm" onclick="copySVGFile('assets/natura-logo-vectorized.svg')">Copy SVG</button>
+            <a class="btn btn-primary btn-sm" href="assets/natura-logo-vectorized.svg" download="natura-logo-vectorized.svg">Download</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Packaging & Application Mockups -->
+    <section class="applications-section">
+      <div class="section-header">
+        <h2>Brand Identity Applications</h2>
+        <p style="color: var(--text-muted);">Real-world application of the NATURA logo across luxury skincare touchpoints.</p>
+      </div>
+
+      <div class="mockup-grid">
+        
+        <!-- Skincare Bottle Mockup -->
+        <div class="mockup-card col-4">
+          <div class="mockup-visual">
+            <div class="bottle-stage">
+              <div class="skincare-bottle">
+                <div class="bottle-cap"></div>
+                <div class="bottle-label">
+                  <img src="assets/natura-logo-minimal.svg" alt="Logo on bottle" style="width: 70px;">
+                  <span style="font-size: 6px; letter-spacing: 0.15em; color: #4F5F4A; margin-top: 8px;">FACIAL ELIXIR</span>
+                  <span style="font-size: 5px; color: #888; margin-top: 2px;">30ml / 1 fl. oz.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mockup-info">
+            <h4>Glass Skincare Dropper</h4>
+            <p>Minimal vertical logo on silk-matte frosted glass label with forest green cap.</p>
+          </div>
+        </div>
+
+        <!-- Cosmetic Box Packaging -->
+        <div class="mockup-card col-4">
+          <div class="mockup-visual">
+            <div class="box-stage">
+              <div class="cosmetic-box">
+                <div class="box-logo-white" style="width: 110px;">
+                  <img src="assets/natura-logo-minimal.svg" alt="Box Logo" style="width: 100%; filter: brightness(0) invert(1);">
+                </div>
+                <span style="font-size: 7px; letter-spacing: 0.3em; color: rgba(255,255,255,0.7); margin-top: 16px;">LUXURY BOTANICAL CARE</span>
+              </div>
+            </div>
+          </div>
+          <div class="mockup-info">
+            <h4>Embossed Rigid Box</h4>
+            <p>Monochrome white logo reverse-embossed on textured forest green cardstock.</p>
+          </div>
+        </div>
+
+        <!-- Shopping Bag -->
+        <div class="mockup-card col-4">
+          <div class="mockup-visual">
+            <div class="bag-stage">
+              <div class="shopping-bag">
+                <div class="bag-handle"></div>
+                <img src="assets/natura-logo-primary.svg" alt="Bag Logo" style="width: 130px;">
+              </div>
+            </div>
+          </div>
+          <div class="mockup-info">
+            <h4>Linen Retail Tote</h4>
+            <p>Clean eco-friendly unbleached cotton tote bag with screenprinted green logo.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Brand Design Specifications -->
+    <section>
+      <div class="section-header">
+        <h2>Brand Identity Specifications</h2>
+      </div>
+
+      <div class="specs-grid">
+        
+        <!-- Color Specifications -->
+        <div class="spec-card">
+          <h3>Color Palette</h3>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Dark forest green provides an earthy, grounded, and trustworthy luxury aesthetic.</p>
+          
+          <div class="color-swatch-group">
+            <div class="color-swatch swatch-primary">
+              <span>Dark Forest Green</span>
+              <span>#4F5F4A</span>
+            </div>
+            <div class="color-swatch swatch-white">
+              <span>Pure White</span>
+              <span>#FFFFFF</span>
+            </div>
+            <div class="color-swatch swatch-cream">
+              <span>Warm Cream</span>
+              <span>#FAF9F6</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Typography Specifications -->
+        <div class="spec-card">
+          <h3>Typography System</h3>
+          <ul class="spec-list">
+            <li><span>Wordmark Font</span> <span>Cormorant Garamond / Didot</span></li>
+            <li><span>Wordmark Weight</span> <span>Medium (500)</span></li>
+            <li><span>Wordmark Spacing</span> <span>+380 (0.38em generous tracking)</span></li>
+            <li><span>Subtext Font</span> <span>Montserrat (Light 300)</span></li>
+            <li><span>Subtext Tracking</span> <span>+480 (0.48em wide tracking)</span></li>
+          </ul>
+        </div>
+
+        <!-- Geometric Ratios -->
+        <div class="spec-card">
+          <h3>Vector Geometry</h3>
+          <ul class="spec-list">
+            <li><span>Icon Symmetry</span> <span>100% Mirror-axis Left/Right</span></li>
+            <li><span>Center Leaf Radius</span> <span>Tapered Bezier (110px height)</span></li>
+            <li><span>Clear Space Rule</span> <span>1.5x Leaf Height Margin</span></li>
+            <li><span>Min Print Size</span> <span>12mm (0.47 in) width</span></li>
+            <li><span>Vector Format</span> <span>SVG 1.1 W3C Standard</span></li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="brand-name">NATURA</div>
+      <p style="margin-top: 8px;">Pure Botanical Skincare & Organic Beauty</p>
+      <p style="font-size: 11px; opacity: 0.5;">© 2026 NATURA Skincare Inc. All vector assets & brand specs reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Interactive JavaScript -->
+  <script>
+    function setCanvasTheme(theme) {
+      const display = document.getElementById('main-display');
+      const btnLight = document.getElementById('btn-light');
+      const btnDark = document.getElementById('btn-dark');
+
+      if (theme === 'dark') {
+        display.classList.add('dark-mode');
+        btnDark.classList.add('active');
+        btnLight.classList.remove('active');
+      } else {
+        display.classList.remove('dark-mode');
+        btnLight.classList.add('active');
+        btnDark.classList.remove('active');
+      }
+    }
+
+    function toggleGridLines() {
+      const grid = document.getElementById('grid-overlay');
+      const lines = document.getElementById('center-lines');
+      const btn = document.getElementById('btn-grid');
+      
+      const isVisible = grid.classList.contains('visible');
+      if (isVisible) {
+        grid.classList.remove('visible');
+        lines.classList.remove('visible');
+        btn.classList.remove('active');
+      } else {
+        grid.classList.add('visible');
+        lines.classList.add('visible');
+        btn.classList.add('active');
+      }
+    }
+
+    async function copySVGFile(path) {
+      try {
+        const response = await fetch(path);
+        const text = await response.text();
+        await navigator.clipboard.writeText(text);
+        showToast("Vector SVG copied to clipboard!");
+      } catch (err) {
+        showToast("Error copying SVG code.");
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    function downloadAllSVGs() {
+      const files = [
+        'assets/natura-logo-primary.svg',
+        'assets/natura-logo-minimal.svg',
+        'assets/natura-logo-horizontal.svg',
+        'assets/natura-icon-only.svg',
+        'assets/natura-logo-vectorized.svg'
+      ];
+      
+      files.forEach(file => {
+        const a = document.createElement('a');
+        a.href = file;
+        a.download = file.split('/').pop();
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      });
+      showToast("Downloading all vector SVG files...");
+    }
+  </script>
+</body>
+</html>

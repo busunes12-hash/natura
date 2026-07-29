@@ -141,11 +141,11 @@
 }
 
 .header__logo-text {
-  font-family: var(--font-heading);
-  font-size: 1.25rem;
-  font-weight: 800;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 700;
   color: var(--color-forest);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.18em;
   line-height: 1;
   text-transform: uppercase;
 }
