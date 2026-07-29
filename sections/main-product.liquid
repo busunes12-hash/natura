@@ -59,7 +59,7 @@
           </span>
         </div>
 
-        <h1 class="type-h1 product-title">{{ product.title | default: "زيت الأرغان المغربي النقي 100% — معصور على البارد من سوس (100 مل)" }}</h1>
+        <h1 class="type-h1 product-title">{{ product.title | default: "زيت الأرغان المغربي النقي 100% — معصور على البارد (100 مل)" }}</h1>
 
         <div class="rating-row flex items-center gap-2.5 text-sm">
           <div class="stars flex gap-1">
@@ -67,7 +67,7 @@
               <span class="star-gold inline-flex items-center justify-center w-4 h-4">{% render 'icon', name: 'star' %}</span>
             {%- endfor -%}
           </div>
-          <span class="font-semibold text-forest">4.9/5 (1,240 تقييم من عائلات مغربية)</span>
+          <span class="font-semibold text-forest">4.9/5 (1,540 تقييم عملاء موثق)</span>
         </div>
 
         {% render 'price', product: product %}
@@ -75,7 +75,7 @@
         <!-- Stock Scarcity Urgency Badge Snippet -->
         {% render 'scarcity-badge', product: product %}
 
-        {% form 'product', product, class: 'product-form flex flex-col gap-5' %}
+        {% form 'product', product, class: 'product-form flex flex-col gap-4' %}
           <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
 
           {%- if product.has_only_default_variant == false -%}
@@ -105,15 +105,22 @@
             </quantity-input>
           </div>
 
+          <!-- FIX 4: Single clearly-tappable primary button (fill color, shadow, min-height 52px) -->
           <button
             type="submit"
             name="add"
-            class="btn-terracotta text-base md:text-lg py-4 w-full shadow-lg flex items-center justify-center gap-2.5 pdp-cta-btn"
+            class="btn-terracotta text-base md:text-lg py-3.5 w-full shadow-lg flex items-center justify-center gap-2 pdp-cta-btn"
+            style="min-height: 52px; background-color: var(--color-terracotta); border-radius: var(--radius-full);"
             data-quick-add="{{ product.selected_or_first_available_variant.id }}"
           >
-            <span class="w-5 h-5 inline-flex items-center justify-center">{% render 'icon', name: 'truck' %}</span>
-            <span>🚚 أطلب الآن — الدفع عند الاستلام بعد المعاينة</span>
+            <span>إضافة إلى سلة التسوق</span>
           </button>
+
+          <!-- FIX 4: Separate small trust line below button -->
+          <div class="pdp-trust-line text-xs text-muted text-center flex items-center justify-center gap-1.5 mt-1">
+            <span class="w-4 h-4 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'truck' %}</span>
+            <span>الدفع نقداً عند الاستلام | معاينة الشحنة مجاناً قبل الدفع</span>
+          </div>
         {% endform %}
 
         {% render 'trust-bar' %}
@@ -175,7 +182,7 @@
 <!-- Mobile Sticky COD Buy Bar -->
 <div class="sticky-mobile-buy-bar">
   <div class="sticky-bar-info">
-    <h4 class="font-semibold text-xs line-clamp-1 sticky-title">{{ product.title | default: "سيروم فيتامين C" }}</h4>
+    <h4 class="font-semibold text-xs line-clamp-1 sticky-title">{{ product.title | default: "زيت الأرغان المغربي النقي 100%" }}</h4>
     <span class="font-bold text-forest text-sm">{{ product.price | default: 19900 | money_without_currency }} د.م.</span>
   </div>
   <button
@@ -184,7 +191,7 @@
     data-quick-add="{{ product.selected_or_first_available_variant.id }}"
   >
     <span class="w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'truck' %}</span>
-    <span>تأكدي واطلبي الآن — دفع عند الاستلام 🌿</span>
+    <span>إضافة إلى السلة — دفع عند الاستلام</span>
   </button>
 </div>
 
@@ -315,10 +322,10 @@
 {
   "@context": "https://schema.org/",
   "@type": "Product",
-  "name": {{ product.title | default: "سيروم فيتامين C العضوي" | json }},
+  "name": {{ product.title | default: "زيت الأرغان المغربي النقي 100% — معصور على البارد (100 مل)" | json }},
   "image": [ {{ product.featured_media | image_url: width: 800 | default: "luxury-hero-skincare.jpg" | prepend: 'https:' | json }} ],
-  "description": {{ product.description | strip_html | default: "سيروم مركز غني بمستخلص فيتامين C النقي وزيت الأرغان المغربي البكر." | json }},
-  "brand": { "@type": "Brand", "name": "MATERIA Organic Skincare" },
+  "description": {{ product.description | strip_html | default: "زيت أرغان مغربي أصلي 100% معصور على البارد من منطقة سوس، خالي من المواد الكيميائية والعطور." | json }},
+  "brand": { "@type": "Brand", "name": "NATURA Moroccan Natural Skincare" },
   "offers": {
     "@type": "Offer",
     "priceCurrency": "MAD",

@@ -161,6 +161,10 @@
   flex-shrink: 0;
 }
 
+.hero-mobile-visual-anchor {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .hero-eyebrow {
     font-size: 0.8rem;
@@ -172,5 +176,24 @@
   .hero-image__trust-pill {
     font-size: 0.75rem;
     padding: 0.4rem 0.875rem;
+  }
+  .hero-mobile-visual-anchor {
+    display: block;
+    width: 100%;
+    margin-block: 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    aspect-ratio: 4 / 3;
+    background-color: var(--color-bg-secondary);
+  }
+  .hero-mobile-visual-anchor__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hero-image {
+    display: none;
   }
 }

@@ -24,12 +24,37 @@
         {{ section.settings.title | default: 'عناية طبيعية أصيلة 100% ترعى بشرة وشعر عائلتكِ كل يوم' }}
       </h1>
 
+      <!-- Mobile Visual Anchor Image (Above the fold on mobile FIX 7) -->
+      <div class="hero-mobile-visual-anchor">
+        {%- if section.settings.image != blank -%}
+          <img
+            src="{{ section.settings.image | image_url: width: 600, format: 'webp' }}"
+            alt="{{ section.settings.image.alt | default: shop.name | escape }}"
+            class="hero-mobile-visual-anchor__img"
+            loading="eager"
+            fetchpriority="high"
+            width="600"
+            height="450"
+          >
+        {%- else -%}
+          <img
+            src="{{ 'luxury-hero-skincare.jpg' | asset_url }}"
+            alt="{{ shop.name }} — مستحضرات العناية بالبشرة الطبيعية المغربية"
+            class="hero-mobile-visual-anchor__img"
+            loading="eager"
+            fetchpriority="high"
+            width="600"
+            height="450"
+          >
+        {%- endif -%}
+      </div>
+
       <!-- Subtext -->
       <p class="hero-content__subtext">
         {{ section.settings.subtext | default: 'نستخلص أجوَد زيوت الأرغان والتين الشوكي المعصورة على البارد مباشرة من معاصرنا بسوس والأطلس. تركيبات خالية تماماً من المعطرات الاصطناعية والمواد الحافظة الضارة، لتوفر لبشرتك وشعر عائلتك تغذية عميقة وأماناً كاملاً كل يوم.' }}
       </p>
 
-      <!-- Social Proof Strip -->
+      <!-- Social Proof Strip (FIX 3: Reconciled rating & review count) -->
       <div class="hero-social-proof">
         <div class="hero-stars">
           {%- for i in (1..5) -%}
@@ -37,17 +62,17 @@
           {%- endfor -%}
         </div>
         <span class="hero-social-proof__text">
-          <strong>4.9/5</strong> تقييم العملاء | <strong>15,000+</strong> عائلة مغربية تضع ثقتها في منتجاتنا الطبيعية
+          <strong>4.9/5</strong> (1,540 تقييم عملاء موثق) | <strong>15,000+</strong> عائلة مغربية تضع ثقتها في منتجاتنا
         </span>
       </div>
 
-      <!-- CTA Buttons -->
+      <!-- CTA Buttons & Separate Trust Line (FIX 4) -->
       <div class="hero-content__actions">
         <a
           href="{{ section.settings.btn_primary_link | default: '/collections/best-sellers' }}"
           class="btn-primary"
         >
-          {{ section.settings.btn_primary_text | default: 'تسوق التشكيلة العائلية — معاينة مجانية عند الاستلام 🌿' }}
+          {{ section.settings.btn_primary_text | default: 'تسوق التشكيلة العائلية' }}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </a>
         <a
@@ -56,6 +81,11 @@
         >
           {{ section.settings.btn_secondary_text | default: 'تعرف على مصدر مكوناتنا الأصيلة' }}
         </a>
+      </div>
+      <!-- Separate Trust Line below CTA (FIX 4) -->
+      <div class="hero-trust-line text-xs text-muted mt-2 flex items-center justify-center md:justify-start gap-1.5 opacity-90">
+        <span class="w-4 h-4 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'truck' %}</span>
+        <span>🚚 توصيل سريع لجميع مدن المغرب | الدفع نقداً عند الاستلام بعد المعاينة</span>
       </div>
 
       {%- for block in section.blocks -%}
