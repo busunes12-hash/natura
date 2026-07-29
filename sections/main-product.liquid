@@ -1,5 +1,5 @@
 {% comment %}
-  Section 3.3 & 11: Main Product Detail Page with JSON-LD Structured Data Schema
+  Section 3.3 & 11: Main Product Detail Page with JSON-LD Structured Data Schema & Sticky Mobile COD Bar
 {% endcomment %}
 {{ 'component-forms.css' | asset_url | stylesheet_tag }}
 
@@ -28,8 +28,8 @@
         </div>
 
         <!-- Clinical Study Results Box -->
-        <div class="clinical-box p-6 rounded-md border bg-surface" style="border-color: #E8D5B7; background-color: var(--color-bg-surface);">
-          <h4 class="font-bold text-forest mb-2 flex items-center gap-2">
+        <div class="clinical-box p-6 rounded-md border bg-surface" style="border-color: var(--color-border-subtle); background-color: var(--color-bg-surface);">
+          <h4 class="font-bold text-forest mb-2 flex items-center gap-2" style="font-family: var(--font-heading);">
             <span>🔬</span> نتائج الاختبارات السريرية:
           </h4>
           <ul class="flex flex-col gap-2 text-sm text-muted list-none">
@@ -110,18 +110,18 @@
 
         <!-- Accordions -->
         <div class="product-accordions flex flex-col gap-3 mt-4">
-          <details class="p-4 bg-surface rounded-md border" style="border-color: #E8D5B7;">
-            <summary class="font-bold cursor-pointer select-none">🌱 المكونات العضوية 100%</summary>
+          <details class="p-4 bg-surface rounded-md border" style="border-color: var(--color-border-subtle); border-radius: var(--radius-md);">
+            <summary class="font-bold cursor-pointer select-none" style="font-family: var(--font-heading);">🌱 المكونات العضوية 100%</summary>
             <p class="pt-3 text-sm text-muted">زيت الأرغان المغربي البكر، مستخلص فيتامين C النقي من الحمضيات، زيت التين الشوكي المعصور على البارد، وماء الورد البلدي.</p>
           </details>
 
-          <details class="p-4 bg-surface rounded-md border" style="border-color: #E8D5B7;">
-            <summary class="font-bold cursor-pointer select-none">✨ طريقة الاستخدام الصحيحة</summary>
+          <details class="p-4 bg-surface rounded-md border" style="border-color: var(--color-border-subtle); border-radius: var(--radius-md);">
+            <summary class="font-bold cursor-pointer select-none" style="font-family: var(--font-heading);">✨ طريقة الاستخدام الصحيحة</summary>
             <p class="pt-3 text-sm text-muted">ضعي 3 إلى 4 قطرات على بشرة نظيفة وجافة صباحاً ومساءً، ثم دلكي بحركات دائرية لطيفة حتى الامتصاص التام.</p>
           </details>
 
-          <details class="p-4 bg-surface rounded-md border" style="border-color: #E8D5B7;">
-            <summary class="font-bold cursor-pointer select-none">🚚 سياسة الشحن والدفع بالمغرب</summary>
+          <details class="p-4 bg-surface rounded-md border" style="border-color: var(--color-border-subtle); border-radius: var(--radius-md);">
+            <summary class="font-bold cursor-pointer select-none" style="font-family: var(--font-heading);">🚚 سياسة الشحن والدفع بالمغرب</summary>
             <p class="pt-3 text-sm text-muted">شحن سريع 24-48 ساعة لجميع مدن المغرب. الدفع نقداً عند استلام طلبكِ ومعاينته مع موزع الشحن.</p>
           </details>
         </div>
@@ -129,6 +129,22 @@
     </div>
   </div>
 </section>
+
+<!-- Mobile Sticky COD Buy Bar -->
+<div class="sticky-mobile-buy-bar fixed bottom-0 inset-x-0 z-40 p-3 bg-surface border-t shadow-lg flex items-center justify-between gap-3 md:hidden" style="position: fixed; bottom: 0; inset-inline-start: 0; inset-inline-end: 0; z-index: 400; background-color: var(--color-bg-surface); border-top: 1px solid var(--color-border-subtle); box-shadow: 0 -4px 16px rgba(0,0,0,0.08);">
+  <div>
+    <h4 class="font-bold text-xs line-clamp-1" style="font-family: var(--font-heading);">{{ product.title | default: "سيروم فيتامين C" }}</h4>
+    <span class="font-bold text-forest text-sm">{{ product.price | default: 19900 | money_without_currency }} د.م.</span>
+  </div>
+  <button
+    type="button"
+    class="btn-terracotta text-sm py-2 px-4 whitespace-nowrap"
+    style="min-height: 42px;"
+    data-quick-add="{{ product.selected_or_first_available_variant.id }}"
+  >
+    طلب الآن 🇲🇦
+  </button>
+</div>
 
 <!-- JSON-LD Structured Data Schema for Google Rich Snippets (Blueprint Section 11) -->
 <script type="application/ld+json">

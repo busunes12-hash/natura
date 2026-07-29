@@ -1,5 +1,5 @@
 {% comment %}
-  Section 3.4: AJAX Slide-Out Cart Drawer
+  Section 3.4: AJAX Slide-Out Cart Drawer with CRO Inspection Guarantee & One-Click Upsell Widget
 {% endcomment %}
 {{ 'component-drawer.css' | asset_url | stylesheet_tag }}
 
@@ -39,7 +39,7 @@
       {%- if cart.item_count > 0 -%}
         <div class="cart-items-list flex flex-col gap-4">
           {%- for item in cart.items -%}
-            <div class="cart-item flex gap-4 p-3 bg-surface rounded-md border" style="border-color: #E8D5B7;">
+            <div class="cart-item flex gap-4 p-3 bg-surface rounded-md border" style="border-color: var(--color-border-subtle);">
               <div class="cart-item__image w-16 h-16 rounded overflow-hidden flex-shrink-0 bg-cream" style="width: 64px; height: 64px;">
                 {%- if item.image -%}
                   <img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title | escape }}" class="w-full h-full object-cover" width="64" height="64">
@@ -75,6 +75,30 @@
             </div>
           {%- endfor -%}
         </div>
+
+        <!-- High-AOV One-Click Complementary Upsell Widget -->
+        {%- if cart_total < free_shipping_threshold -%}
+          <div class="upsell-widget p-3 mt-4 rounded-md border bg-cream" style="background-color: var(--color-bg-secondary); border-color: var(--color-border-subtle);">
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span class="text-xl">🌸</span>
+                <div>
+                  <h5 class="font-bold text-xs">أضيفي ماء الورد البلدي (50ml)</h5>
+                  <span class="text-xs text-forest font-bold">+49 د.م. فقط (للحصول على شحن مجاني)</span>
+                </div>
+              </div>
+              <button
+                type="button"
+                class="btn-primary text-xs py-1 px-3"
+                style="min-height: 36px;"
+                onclick="CartManager.addItem('{{ all_products['rose-water'].selected_or_first_available_variant.id | default: '1' }}', 1, this)"
+              >
+                + إضافة
+              </button>
+            </div>
+          </div>
+        {%- endif -%}
+
       {%- else -%}
         <div class="cart-empty flex flex-col items-center justify-center text-center py-12">
           <span class="text-5xl mb-4">🛒</span>
@@ -89,8 +113,12 @@
 
     <!-- Drawer Footer -->
     <div class="drawer-footer">
-      <div class="cod-banner p-3 rounded-md bg-cream text-center text-xs font-bold text-forest mb-4" style="background-color: var(--color-bg-secondary);">
+      <div class="cod-banner p-3 rounded-md bg-cream text-center text-xs font-bold text-forest mb-2" style="background-color: var(--color-bg-secondary);">
         💰 الدفع عند الاستلام متاح في جميع مدن المغرب
+      </div>
+
+      <div class="text-center text-xs text-muted mb-4">
+        🔍 معاينة الطلب مجانية عند الاستلام قبل تسليم المبلغ للموزع
       </div>
 
       <div class="subtotal-row flex items-center justify-between mb-4 font-bold text-lg">

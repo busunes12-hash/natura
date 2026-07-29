@@ -1,5 +1,5 @@
 {% comment %}
-  Floating WhatsApp CTA button snippet for Morocco market support (+212)
+  Floating WhatsApp CTA button snippet with Unread Notification Badge (1) for Morocco support (+212)
 {% endcomment %}
 {%- assign wa_number = settings.whatsapp_number | default: '212600000000' -%}
 {%- assign wa_message = settings.whatsapp_message | default: 'مرحباً، أود الاستفسار عن منتجات العناية بالبشرة' | url_encode -%}
@@ -8,9 +8,12 @@
   href="https://wa.me/{{ wa_number }}?text={{ wa_message }}"
   target="_blank"
   rel="noopener noreferrer"
-  class="whatsapp-float fixed bottom-6 inset-inline-end-6 z-50 flex items-center justify-center w-14 h-14 bg-forest text-white rounded-full shadow-lg hover:scale-110 transition-transform"
+  class="whatsapp-float fixed bottom-6 inset-inline-end-6 z-50 flex items-center justify-center w-14 h-14 text-white rounded-full shadow-lg hover:scale-110 transition-transform"
   style="position: fixed; bottom: 24px; inset-inline-end: 24px; z-index: 999; width: 56px; height: 56px; background-color: #25D366; color: #FFF; border-radius: 9999px; box-shadow: var(--shadow-lg);"
   aria-label="تواصل معنا عبر الواتساب"
 >
   {% render 'icon', name: 'whatsapp' %}
+  <span class="whatsapp-badge flex items-center justify-center font-bold text-xs" style="position: absolute; top: -4px; inset-inline-end: -4px; width: 22px; height: 22px; background-color: var(--color-terracotta); color: #FFF; border-radius: 50%; border: 2px solid #FFF; font-size: 0.75rem;">
+    1
+  </span>
 </a>
