@@ -14,7 +14,8 @@
           {%- when 'trust_item' -%}
             <div class="pill-item" {{ block.shopify_attributes }}>
               <span class="pill-icon" style="color: var(--color-forest); background-color: rgba(45,95,62,0.08);">
-                {% render 'icon', name: block.settings.icon | default: 'leaf' %}
+                {%- assign icon_name = block.settings.icon | default: 'leaf' -%}
+                {% render 'icon', name: icon_name %}
               </span>
               <div>
                 <h4 class="font-bold" style="font-size: 0.95rem; color: var(--color-charcoal-dark);">{{ block.settings.title | default: 'ميزة' }}</h4>

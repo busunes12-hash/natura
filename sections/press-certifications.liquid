@@ -28,7 +28,8 @@
                 >
               {%- else -%}
                 <div class="cert-placeholder">
-                  <span class="cert-placeholder__icon">{% render 'icon', name: block.settings.icon | default: 'shield' %}</span>
+                  {%- assign icon_name = block.settings.icon | default: 'shield' -%}
+                  <span class="cert-placeholder__icon">{% render 'icon', name: icon_name %}</span>
                   <span class="cert-placeholder__label">{{ block.settings.label | default: 'شهادة جودة' }}</span>
                 </div>
               {%- endif -%}

@@ -1,9 +1,5 @@
 {
   "sections": {
-    "announcement-bar": {
-      "type": "announcement-bar",
-      "disabled": false
-    },
     "hero-banner": {
       "type": "hero-banner",
       "disabled": false

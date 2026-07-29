@@ -19,7 +19,8 @@
           {%- when 'pillar' -%}
             <div class="pillar-card text-center" {{ block.shopify_attributes }}>
               <div class="pillar-icon-wrapper">
-                {% render 'icon', name: block.settings.icon | default: 'leaf' %}
+                {%- assign icon_name = block.settings.icon | default: 'leaf' -%}
+              {% render 'icon', name: icon_name %}
               </div>
               <h3 class="font-bold mb-2" style="font-family: var(--font-heading); font-size: 1.2rem;">{{ block.settings.title | default: 'ميزة رئيسية' }}</h3>
               <p class="text-muted text-sm leading-relaxed">{{ block.settings.description | default: 'وصف الميزة الرئيسية لمنتجاتنا الطبيعية الفاخرة.' }}</p>
