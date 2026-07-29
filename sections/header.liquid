@@ -32,7 +32,7 @@
         >
           {{ link.title }}
         </a>
-      {%- default -%}
+      {%- else -%}
         <a href="{{ routes.root_url }}" class="header__nav-link is-active">الرئيسية</a>
         <a href="/collections/all" class="header__nav-link">منتجاتنا الطبيعية</a>
         <a href="/pages/about" class="header__nav-link">قصتنا</a>
