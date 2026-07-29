@@ -46,18 +46,28 @@
 
     <!-- Navigation Links -->
     <nav class="mobile-nav-panel__nav" aria-label="التنقل الرئيسي">
-      <a href="{{ routes.root_url }}" class="mobile-nav-link{% if request.path == '/' %} is-active{% endif %}" onclick="document.querySelector('#MobileNavDrawer')?.close()">
-        <span>الرئيسية</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
-      </a>
-      <a href="/collections/all" class="mobile-nav-link{% if request.path contains '/collections' %} is-active{% endif %}" onclick="document.querySelector('#MobileNavDrawer')?.close()">
-        <span>المنتجات</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
-      </a>
-      <a href="/pages/contact" class="mobile-nav-link{% if request.path contains '/contact' %} is-active{% endif %}" onclick="document.querySelector('#MobileNavDrawer')?.close()">
-        <span>اتصلي بنا</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
-      </a>
+      {%- assign mobile_menu = linklists[section.settings.menu | default: 'main-menu'] -%}
+      {%- if mobile_menu.links.size > 0 -%}
+        {%- for link in mobile_menu.links -%}
+          <a href="{{ link.url }}" class="mobile-nav-link{% if link.active %} is-active{% endif %}" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+            <span>{{ link.title | escape }}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="{{ routes.root_url }}" class="mobile-nav-link{% if request.path == '/' %} is-active{% endif %}" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+          <span>الرئيسية</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </a>
+        <a href="/collections/all" class="mobile-nav-link{% if request.path contains '/collections' %} is-active{% endif %}" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+          <span>المنتجات</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </a>
+        <a href="/pages/contact" class="mobile-nav-link{% if request.path contains '/contact' %} is-active{% endif %}" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+          <span>اتصلي بنا</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </a>
+      {%- endif -%}
     </nav>
 
     <!-- Trust Badges -->
@@ -145,8 +155,10 @@
   }
 
   .mobile-nav-panel__close {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -228,6 +240,13 @@
 {% schema %}
 {
   "name": "قائمة الجوال",
-  "settings": []
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "قائمة تنقل الجوال",
+      "default": "main-menu"
+    }
+  ]
 }
 {% endschema %}

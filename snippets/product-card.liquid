@@ -14,7 +14,15 @@
   {%- assign savings_pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round -%}
 {%- endif -%}
 
-<div class="product-card">
+<div class="product-card" itemscope itemtype="https://schema.org/Product">
+  <meta itemprop="name" content="{{ product.title | escape }}">
+  <meta itemprop="image" content="{{ product.featured_media | image_url: width: 800 }}">
+  <div itemprop="offers" itemscope itemtype="https://schema.org/AggregateOffer" class="hidden">
+    <meta itemprop="priceCurrency" content="MAD">
+    <meta itemprop="lowPrice" content="{{ product.price_min | divided_by: 100.0 }}">
+    <meta itemprop="highPrice" content="{{ product.price_max | divided_by: 100.0 }}">
+    <meta itemprop="offerCount" content="{{ product.variants.size }}">
+  </div>
   <div class="product-card__image-wrapper">
 
     {%- if product.featured_media -%}

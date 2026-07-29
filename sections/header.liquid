@@ -44,9 +44,18 @@
 
     <!-- Desktop Navigation -->
     <nav class="header__nav hidden lg:flex" aria-label="التنقل الرئيسي">
-      <a href="{{ routes.root_url }}" class="header__nav-link{% if request.path == '/' %} is-active{% endif %}">الرئيسية</a>
-      <a href="/collections/all" class="header__nav-link{% if request.path contains '/collections' %} is-active{% endif %}">المنتجات</a>
-      <a href="/pages/contact" class="header__nav-link{% if request.path contains '/contact' %} is-active{% endif %}">اتصلي بنا</a>
+      {%- assign main_menu = linklists[section.settings.menu] -%}
+      {%- if main_menu.links.size > 0 -%}
+        {%- for link in main_menu.links -%}
+          <a href="{{ link.url }}" class="header__nav-link{% if link.active %} is-active{% endif %}">
+            {{ link.title | escape }}
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="{{ routes.root_url }}" class="header__nav-link{% if request.path == '/' %} is-active{% endif %}">الرئيسية</a>
+        <a href="/collections/all" class="header__nav-link{% if request.path contains '/collections' %} is-active{% endif %}">المنتجات</a>
+        <a href="/pages/contact" class="header__nav-link{% if request.path contains '/contact' %} is-active{% endif %}">اتصلي بنا</a>
+      {%- endif -%}
     </nav>
 
     <!-- Header Icon Actions -->

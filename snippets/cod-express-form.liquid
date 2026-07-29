@@ -114,3 +114,25 @@
     </div>
   </form>
 </div>
+
+<script>
+  (function() {
+    var form = document.getElementById('DirectCODExpressForm');
+    if (!form) return;
+    var phoneInput = document.getElementById('CodCustomerPhone');
+    
+    form.addEventListener('submit', function(e) {
+      if (!phoneInput) return;
+      var cleanPhone = phoneInput.value.replace(/[\s\-\(\)]/g, '');
+      var moroccoPhoneRegex = /^(06|07|05)[0-9]{8}$/;
+      
+      if (!moroccoPhoneRegex.test(cleanPhone)) {
+        e.preventDefault();
+        alert('الرجاء إدخال رقم هاتف مغربي صحيح مكون من 10 أرقام ويبدأ بـ 06 أو 07 أو 05 (مثال: 0661123456)');
+        phoneInput.focus();
+        phoneInput.classList.add('border-red-600');
+        return false;
+      }
+    });
+  })();
+</script>

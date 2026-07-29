@@ -27,6 +27,7 @@
   --font-body: 'IBM Plex Sans Arabic', sans-serif;
 
   /* 1.4 Border Radius Token System */
+  --radius-xs: 4px;
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
@@ -36,6 +37,7 @@
   --shadow-sm: 0 2px 10px rgba(27, 59, 43, 0.04);
   --shadow-md: 0 8px 24px rgba(27, 59, 43, 0.08);
   --shadow-lg: 0 16px 40px rgba(27, 59, 43, 0.12);
+  --shadow-xl: 0 24px 64px rgba(18, 23, 20, 0.20);
 
   /* 1.6 Transitions & Animation Curves */
   --transition-base: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -218,7 +220,7 @@ button {
 
 /* Accessibility Focus Ring */
 :focus-visible {
-  outline: 2.5px solid var(--color-forest);
+  outline: 3px solid var(--color-gold);
   outline-offset: 2px;
 }
 
