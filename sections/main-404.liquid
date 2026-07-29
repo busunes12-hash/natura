@@ -7,11 +7,16 @@
       <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
     </span>
     <h1 class="type-h1 mb-2">404</h1>
-    <h2 class="type-h2 mb-4">عذراً! الصفحة غير موجودة</h2>
-    <p class="text-muted mb-8">يبدو أن الصفحة التي تبحثين عنها قد تـم نقلها أو غير ممتوفرة حالياً.</p>
-    <a href="{{ routes.root_url }}" class="btn-primary">
-      العودة للرئيسية
-    </a>
+    <h2 class="type-h2 mb-4">يبدو أن هذه الزهرة قد ابتعدت عن البستان...</h2>
+    <p class="text-muted mb-8">الصفحة التي تبحثين عنها غير متوفرة حالياً، لكن سيروم الإشراقة الأكثر مبيعاً بانتظاركِ!</p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="/collections/all" class="btn-primary">
+        🌿 اكتشفي المنتجات الأكثر طلباً
+      </a>
+      <a href="{{ routes.root_url }}" class="btn-secondary">
+        العودة للصفحة الرئيسية
+      </a>
+    </div>
   </div>
 </section>
 

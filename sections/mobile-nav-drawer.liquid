@@ -38,39 +38,18 @@
 
     <!-- Navigation Links -->
     <nav class="mobile-nav-panel__nav" aria-label="التنقل الرئيسي">
-      {%- for link in linklists.main-menu.links -%}
-        <a
-          href="{{ link.url }}"
-          class="mobile-nav-link{% if link.active %} is-active{% endif %}"
-          onclick="document.querySelector('#MobileNavDrawer')?.close()"
-        >
-          <span>{{ link.title }}</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </a>
-      {%- else -%}
-        <a href="{{ routes.root_url }}" class="mobile-nav-link is-active" onclick="document.querySelector('#MobileNavDrawer')?.close()">
-          <span>الرئيسية</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        </a>
-        <a href="/collections/all" class="mobile-nav-link" onclick="document.querySelector('#MobileNavDrawer')?.close()">
-          <span>منتجاتنا</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        </a>
-        <a href="/pages/about" class="mobile-nav-link" onclick="document.querySelector('#MobileNavDrawer')?.close()">
-          <span>قصتنا</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        </a>
-        <a href="/blogs/news" class="mobile-nav-link" onclick="document.querySelector('#MobileNavDrawer')?.close()">
-          <span>مدونة الجمال</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        </a>
-        <a href="/pages/contact" class="mobile-nav-link" onclick="document.querySelector('#MobileNavDrawer')?.close()">
-          <span>اتصلي بنا</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        </a>
-      {%- endfor -%}
+      <a href="{{ routes.root_url }}" class="mobile-nav-link{% if request.path == '/' %} is-active{% endif %}" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+        <span>الرئيسية</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </a>
+      <a href="/collections/all" class="mobile-nav-link{% if request.path contains '/collections' %} is-active{% endif %}" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+        <span>المنتجات</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </a>
+      <a href="/pages/contact" class="mobile-nav-link{% if request.path contains '/contact' %} is-active{% endif %}" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+        <span>اتصلي بنا</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </a>
     </nav>
 
     <!-- Trust Badges -->

@@ -59,7 +59,7 @@
           </span>
         </div>
 
-        <h1 class="type-h1">{{ product.title | default: "سيروم فيتامين C العضوي بالنباتات المغربية" }}</h1>
+        <h1 class="type-h1">{{ product.title | default: "سيروم فيتامين C الببتيدي المركّز — لإزالة التصبغات وإعادة وهج البشرة" }}</h1>
 
         <div class="rating-row flex items-center gap-2 text-sm">
           <div class="stars flex">
@@ -67,7 +67,7 @@
               {% render 'icon', name: 'star' %}
             {%- endfor -%}
           </div>
-          <span class="font-bold text-forest">4.9/5 (1,240 تقييم موثق)</span>
+          <span class="font-bold text-forest">4.9/5 (1,240 تقييم سريري موثق)</span>
         </div>
 
         {% render 'price', product: product %}
@@ -80,7 +80,7 @@
 
           {%- if product.has_only_default_variant == false -%}
             <div class="variant-select-wrapper">
-              <label class="font-bold text-sm mb-2 block">اختر السعة:</label>
+              <label class="font-bold text-sm mb-2 block">اختر السعة الفاخرة:</label>
               <div class="variant-pills">
                 {%- for variant in product.variants -%}
                   <button
@@ -112,7 +112,7 @@
             data-quick-add="{{ product.selected_or_first_available_variant.id }}"
           >
             <span class="w-5 h-5 inline-flex items-center justify-center">{% render 'icon', name: 'truck' %}</span>
-            <span>طلب الآن — الدفع عند الاستلام</span>
+            <span>🚚 اطلبي الآن واحصلي على توصيل مجاني — الدفع عند الاستلام</span>
           </button>
         {% endform %}
 
@@ -131,25 +131,25 @@
           <details class="p-4 bg-surface rounded-md border" style="border-color: var(--color-border-subtle); border-radius: var(--radius-md);">
             <summary class="font-bold cursor-pointer select-none flex items-center gap-2" style="font-family: var(--font-heading);">
               <span class="w-4 h-4 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'leaf' %}</span>
-              <span>المكونات العضوية 100%</span>
+              <span>المكونات الفعالة والنسب السريرية</span>
             </summary>
-            <p class="pt-3 text-sm text-muted">زيت الأرغان المغربي البكر، مستخلص فيتامين C النقي من الحمضيات، زيت التين الشوكي المعصور على البارد، وماء الورد البلدي.</p>
+            <p class="pt-3 text-sm text-muted">فيتامين C الببتيدي (15%) المستقر لتفتيح التصبغات، زيت التين الشوكي المعصور على البارد غني بفيتامين E لشد الوجه، زيت الأرغان المغربي البكر، وماء الورد البلدي المقطر.</p>
           </details>
 
           <details class="p-4 bg-surface rounded-md border" style="border-color: var(--color-border-subtle); border-radius: var(--radius-md);">
             <summary class="font-bold cursor-pointer select-none flex items-center gap-2" style="font-family: var(--font-heading);">
               <span class="w-4 h-4 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'sparkle' %}</span>
-              <span>طريقة الاستخدام الصحيحة</span>
+              <span>طريقة الاستخدام الصحيحة والطقس الملكي</span>
             </summary>
-            <p class="pt-3 text-sm text-muted">ضعي 3 إلى 4 قطرات على بشرة نظيفة وجافة صباحاً ومساءً، ثم دلكي بحركات دائرية لطيفة حتى الامتصاص التام.</p>
+            <p class="pt-3 text-sm text-muted">ضعي 3 إلى 4 قطرات على بشرة نظيفة وجافة صباحاً ومساءً. دلكي بحركات تصاعدية لطيفة لمدة 60 ثانية حتى الامتصاص التام. ينصح باستخدامه صباحاً قبل واقي الشمس لمضاعفة الحماية.</p>
           </details>
 
           <details class="p-4 bg-surface rounded-md border" style="border-color: var(--color-border-subtle); border-radius: var(--radius-md);">
             <summary class="font-bold cursor-pointer select-none flex items-center gap-2" style="font-family: var(--font-heading);">
               <span class="w-4 h-4 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'truck' %}</span>
-              <span>سياسة الشحن والدفع بالمغرب</span>
+              <span>سياسة الشحن والمعاينة عند الاستلام بالمغرب</span>
             </summary>
-            <p class="pt-3 text-sm text-muted">شحن سريع 24-48 ساعة لجميع مدن المغرب. الدفع نقداً عند استلام طلبكِ ومعاينته مع موزع الشحن.</p>
+            <p class="pt-3 text-sm text-muted">توصيل سريع 24-48 ساعة لجميع مدن المملكة. تتاح لكِ فرصة فتح الشحنة ومعاينة العبوة الفاخرة قبل تسليم أي مبلغ نقدي للموزع. الشحن مجاني لجميع الطلبات فوق 200 د.م.</p>
           </details>
         </div>
       </div>
@@ -170,7 +170,7 @@
     data-quick-add="{{ product.selected_or_first_available_variant.id }}"
   >
     <span class="w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'truck' %}</span>
-    <span>طلب الآن — COD</span>
+    <span>تأكدي واطلبي الآن — دفع عند الاستلام 🌿</span>
   </button>
 </div>
 

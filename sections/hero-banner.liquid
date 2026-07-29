@@ -16,17 +16,17 @@
       <!-- Eyebrow badge -->
       <div class="hero-eyebrow">
         <span class="hero-eyebrow__icon">{% render 'icon', name: 'leaf' %}</span>
-        <span>{{ section.settings.eyebrow | default: 'تركيبات طبيعية فاخرة — مصنوعة في المغرب' }}</span>
+        <span>{{ section.settings.eyebrow | default: '🔬 إكسير الأطلس النادر — تركيبات سريرية ناطقة بالأصالة المغربية' }}</span>
       </div>
 
       <!-- H1 Headline -->
       <h1 class="hero-content__title">
-        {{ section.settings.title | default: 'استعيدي إشراقة بشرتكِ الطبيعية' }}
+        {{ section.settings.title | default: 'بشرة متجددة، مشدودة ومشرقة بدون مسام في 14 يوماً فقط' }}
       </h1>
 
       <!-- Subtext -->
       <p class="hero-content__subtext">
-        {{ section.settings.subtext | default: 'مستحضرات فاخرة مستوحاة من الطبيعة المغربية، موثقة مخبرياً ومُصنَّعة بعناية لبشرة ناعمة ومشرقة طوال اليوم.' }}
+        {{ section.settings.subtext | default: 'دمجنا أندر زيوت التين الشوكي والأرغان المعصور على البارد مع ببتيدات فيتامين C النقي. نتائج سريرية مثبتة لتوحيد لون البشرة والقضاء على التصبغات بشكل دائم.' }}
       </p>
 
       <!-- Social Proof Strip -->
@@ -37,7 +37,7 @@
           {%- endfor -%}
         </div>
         <span class="hero-social-proof__text">
-          <strong>4.9/5</strong> — أكثر من <strong>10,000</strong> عميلة سعيدة
+          <strong>4.9/5</strong> تقييم سريري معتمد | <strong>12,840+</strong> سيدة بالمغرب حصلن على بشرة أحلامهن هذا الشهر
         </span>
       </div>
 
@@ -47,14 +47,14 @@
           href="{{ section.settings.btn_primary_link | default: '/collections/best-sellers' }}"
           class="btn-primary"
         >
-          {{ section.settings.btn_primary_text | default: 'تسوقي الأكثر مبيعاً' }}
+          {{ section.settings.btn_primary_text | default: 'احصلي على روتين الإشراقة الملكي — توصيل ودفع عند الاستلام 🌿' }}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </a>
         <a
           href="{{ section.settings.btn_secondary_link | default: '/pages/about' }}"
           class="btn-secondary"
         >
-          {{ section.settings.btn_secondary_text | default: 'اكتشفي قصتنا' }}
+          {{ section.settings.btn_secondary_text | default: 'شاهد نتائج الاختبارات السريرية (30 يوماً)' }}
         </a>
       </div>
 
@@ -102,7 +102,7 @@
         <!-- Floating trust pill -->
         <div class="hero-image__trust-pill">
           <span class="hero-image__trust-icon">{% render 'icon', name: 'flask' %}</span>
-          <span>مختبر جلدياً ومعتمد</span>
+          <span>مختبر سريرياً ومعتمد طبيئاً</span>
         </div>
 
       </div>
@@ -124,25 +124,25 @@
       "type": "text",
       "id": "eyebrow",
       "label": "النص الصغير فوق العنوان",
-      "default": "تركيبات طبيعية فاخرة — مصنوعة في المغرب"
+      "default": "🔬 إكسير الأطلس النادر — تركيبات سريرية ناطقة بالأصالة المغربية"
     },
     {
       "type": "text",
       "id": "title",
       "label": "العنوان الرئيسي",
-      "default": "استعيدي إشراقة بشرتكِ الطبيعية"
+      "default": "بشرة متجددة، مشدودة ومشرقة بدون مسام في 14 يوماً فقط"
     },
     {
       "type": "textarea",
       "id": "subtext",
       "label": "الوصف الفرعي",
-      "default": "مستحضرات فاخرة مستوحاة من الطبيعة المغربية، موثقة مخبرياً ومُصنَّعة بعناية لبشرة ناعمة ومشرقة طوال اليوم."
+      "default": "دمجنا أندر زيوت التين الشوكي والأرغان المعصور على البارد مع ببتيدات فيتامين C النقي. نتائج سريرية مثبتة لتوحيد لون البشرة والقضاء على التصبغات بشكل دائم."
     },
     {
       "type": "text",
       "id": "btn_primary_text",
       "label": "نص الزر الأساسي",
-      "default": "تسوقي الأكثر مبيعاً"
+      "default": "احصلي على روتين الإشراقة الملكي — توصيل ودفع عند الاستلام 🌿"
     },
     {
       "type": "url",
@@ -153,7 +153,7 @@
       "type": "text",
       "id": "btn_secondary_text",
       "label": "نص الزر الثانوي",
-      "default": "اكتشفي قصتنا"
+      "default": "شاهد نتائج الاختبارات السريرية (30 يوماً)"
     },
     {
       "type": "url",

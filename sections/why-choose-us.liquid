@@ -8,9 +8,9 @@
 <section class="why-choose-us py-16 reveal-on-scroll" style="background-color: var(--color-bg-secondary);">
   <div class="container">
     <div class="section-header">
-      <span class="badge-terracotta mb-4" style="display: inline-flex;">{{ section.settings.badge | default: 'جودة لا تضاهى' }}</span>
-      <h2 class="type-h2">{{ section.settings.title | default: 'لماذا تميزت منتجات ناتورا؟' }}</h2>
-      <p class="section-subtitle">{{ section.settings.subtitle | default: 'معايير رفيعة تجمع بين الأصالة المغربية والبحث العلمي الحديث' }}</p>
+      <span class="badge-terracotta mb-4" style="display: inline-flex;">{{ section.settings.badge | default: 'المعيار الملكي للجمال' }}</span>
+      <h2 class="type-h2">{{ section.settings.title | default: '3 أسباب تجعل ناتورا الخيار الأول لرائدات المجتمع والمشاهير في المغرب' }}</h2>
+      <p class="section-subtitle">{{ section.settings.subtitle | default: 'دقة سريرية وأصالة نباتية تمنحكِ تجربة عناية لا تضاهى' }}</p>
     </div>
 
     <div class="pillars-grid">
@@ -30,18 +30,18 @@
         <!-- Default 3 pillars -->
         <div class="pillar-card text-center">
           <div class="pillar-icon-wrapper">{% render 'icon', name: 'flask' %}</div>
-          <h3 class="font-bold mb-2" style="font-family: var(--font-heading); font-size: 1.2rem;">تركيبات موثقة طبياً</h3>
-          <p class="text-muted text-sm leading-relaxed">مختبرة سريرياً من طرف أطباء الجلد لضمان أقصى درجات الفعالية والأمان على بشرتكِ.</p>
+          <h3 class="font-bold mb-2" style="font-family: var(--font-heading); font-size: 1.2rem;">الفعالية التراكمية السريعة</h3>
+          <p class="text-muted text-sm leading-relaxed">تركيبات ببتيدية نانوية تمتصها البشرة في 45 ثانية لتصل للطبقات العميقة وتعالج التصبغات والتجاعيد الفورية.</p>
         </div>
         <div class="pillar-card text-center">
           <div class="pillar-icon-wrapper">{% render 'icon', name: 'leaf' %}</div>
-          <h3 class="font-bold mb-2" style="font-family: var(--font-heading); font-size: 1.2rem;">زيوت عضوية 100%</h3>
-          <p class="text-muted text-sm leading-relaxed">مكونات نقية من قلب الأطلس وسوس، بدون بارابين أو كبريتات أو معطرات صناعية.</p>
+          <h3 class="font-bold mb-2" style="font-family: var(--font-heading); font-size: 1.2rem;">النقاء العضوي المطلق</h3>
+          <p class="text-muted text-sm leading-relaxed">نستخلص قطرات التين الشوكي والأرغان يدوياً من مزارعنا بسوس والأطلس. كل قارورة تحمل شهادة نقاء 100%.</p>
         </div>
         <div class="pillar-card text-center">
           <div class="pillar-icon-wrapper">{% render 'icon', name: 'shield' %}</div>
-          <h3 class="font-bold mb-2" style="font-family: var(--font-heading); font-size: 1.2rem;">ضمان رضا تام</h3>
-          <p class="text-muted text-sm leading-relaxed">خدمة عميلات بالواتساب على مدار الساعة، شحن سريع، دفع عند الاستلام، واسترجاع مضمون 7 أيام.</p>
+          <h3 class="font-bold mb-2" style="font-family: var(--font-heading); font-size: 1.2rem;">تجربة تسوق مخملية</h3>
+          <p class="text-muted text-sm leading-relaxed">استشارة مجانية مع خبيرة بشرة، تغليف هدايا فاخر، وتوصيل مجاني مع إمكانية فتح الشحنة وفحصها قبل التسليم.</p>
         </div>
       {%- endfor -%}
     </div>
@@ -96,9 +96,9 @@
 {
   "name": "لماذا تميزت منتجاتنا",
   "settings": [
-    { "type": "text", "id": "badge", "label": "نص البادج", "default": "جودة لا تضاهى" },
-    { "type": "text", "id": "title", "label": "العنوان", "default": "لماذا تميزت منتجات ناتورا؟" },
-    { "type": "textarea", "id": "subtitle", "label": "الوصف", "default": "معايير رفيعة تجمع بين الأصالة المغربية والبحث العلمي الحديث" }
+    { "type": "text", "id": "badge", "label": "نص البادج", "default": "المعيار الملكي للجمال" },
+    { "type": "text", "id": "title", "label": "العنوان", "default": "3 أسباب تجعل ناتورا الخيار الأول لرائدات المجتمع والمشاهير في المغرب" },
+    { "type": "textarea", "id": "subtitle", "label": "الوصف", "default": "دقة سريرية وأصالة نباتية تمنحكِ تجربة عناية لا تضاهى" }
   ],
   "blocks": [
     {

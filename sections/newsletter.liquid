@@ -6,15 +6,15 @@
 
 <section class="newsletter-section py-16 text-center reveal-on-scroll" style="background-color: var(--color-forest); color: var(--color-bg-primary);">
   <div class="container" style="max-width: 700px;">
-    <span class="badge-terracotta mb-4" style="display: inline-flex;">{{ section.settings.badge | default: 'نشرتنا البريدية' }}</span>
-    <h2 class="type-h2 mb-4" style="color: var(--color-bg-primary);">{{ section.settings.title | default: 'انضمي لمجتمع ناتورا للجمال الطبيعي' }}</h2>
-    <p class="mb-8 leading-relaxed" style="font-family: var(--font-body); font-size: 1.05rem; opacity: 0.9;">{{ section.settings.description | default: 'اشتركي بنشرتنا البريدية واحصلي فوراً على خصم 10% على طلبكِ الأول بالإضافة إلى نصائح العناية الحصرية.' }}</p>
+    <span class="badge-terracotta mb-4" style="display: inline-flex;">{{ section.settings.badge | default: 'العضوية الملكية الحصرية' }}</span>
+    <h2 class="type-h2 mb-4" style="color: var(--color-bg-primary);">{{ section.settings.title | default: 'انضمي لنادي ناتورا الملكي وافتحي خصم 10% فوراً' }}</h2>
+    <p class="mb-8 leading-relaxed" style="font-family: var(--font-body); font-size: 1.05rem; opacity: 0.9;">{{ section.settings.description | default: 'ادخلي بريدكِ الإلكتروني الفاخر للحصول على رمز الخصم السري ورليل العناية بالبشرة المجاني (PDF) المصمم من طرف خبيرات التجميل.' }}</p>
 
     {% form 'contact', class: 'newsletter-form' %}
       {%- if form.posted_successfully? -%}
         <p class="newsletter-success" role="status">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-left:0.5rem;"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          شكراً! تم تسجيل بريدكِ بنجاح. ستصلكِ رسالة الخصم قريباً.
+          مرحباً بكِ في نادي ناتورا الملكي! تم إرسال كود الخصم ودليل العناية إلى بريدكِ بنجاح.
         </p>
       {%- else -%}
         <div class="newsletter-fields">
@@ -24,14 +24,14 @@
             name="contact[email]"
             id="NewsletterEmail"
             class="newsletter-input"
-            placeholder="{{ section.settings.placeholder | default: 'أدخلي بريدكِ الإلكتروني...' }}"
+            placeholder="{{ section.settings.placeholder | default: 'أدخلي بريدكِ الإلكتروني الفاخر...' }}"
             required
             aria-label="البريد الإلكتروني"
             autocomplete="email"
           >
           <input type="hidden" name="contact[body]" value="newsletter-signup">
           <button type="submit" class="btn-terracotta newsletter-btn">
-            {{ section.settings.btn_text | default: 'اشتركي الآن' }}
+            {{ section.settings.btn_text | default: 'افتحي الخصم والدليل المجاني' }}
           </button>
         </div>
         {%- if form.errors -%}
@@ -42,7 +42,7 @@
       {%- endif -%}
     {% endform %}
 
-    <p class="newsletter-disclaimer">{{ section.settings.disclaimer | default: 'بإشتراككِ، أنتِ توافقين على تلقي رسائل تسويقية. يمكنكِ إلغاء الاشتراك في أي وقت.' }}</p>
+    <p class="newsletter-disclaimer">{{ section.settings.disclaimer | default: 'نحن نحترم خصوصيتكِ المطلقة. يمكنكِ إلغاء الاشتراك بنقرة واحدة في أي وقت.' }}</p>
   </div>
 </section>
 

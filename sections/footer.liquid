@@ -22,38 +22,38 @@
           <span>{{ shop.name | default: 'NATURA' }}</span>
         </a>
         <p class="footer-brand-desc">
-          {{ section.settings.brand_desc | default: 'علامة مغربية فاخرة متخصصة في مستحضرات العناية بالبشرة المصنوعة من أجود المكونات والزيوت العضوية النادرة.' }}
+          {{ section.settings.brand_desc | default: 'دار مغربية فاخرة متخصصة في ابتكار تركيبات العناية بالبشرة السريرية من أنقى الزيوت العضوية المعصورة على البارد وببتيدات الفيتامينات المركزّة.' }}
         </p>
         {% render 'social-icons' %}
       </div>
 
       <!-- Column 2: Quick Links -->
       <div class="footer-col">
-        <h4 class="footer-col__heading">{{ section.settings.links_heading | default: 'روابط سريعة' }}</h4>
+        <h4 class="footer-col__heading">{{ section.settings.links_heading | default: 'عالم ناتورا' }}</h4>
         <ul class="footer-links">
-          <li><a href="{{ routes.root_url }}">الرئيسية</a></li>
-          <li><a href="/collections/all">جميع المنتجات</a></li>
-          <li><a href="/pages/about">قصتنا</a></li>
-          <li><a href="/blogs/news">مدونة الجمال</a></li>
-          <li><a href="/pages/contact">اتصلي بنا</a></li>
+          <li><a href="{{ routes.root_url }}">الملاذ الرئيسي</a></li>
+          <li><a href="/collections/all">مجموعات العناية الملكية</a></li>
+          <li><a href="/pages/about">قصة الابتكار والزيوت</a></li>
+          <li><a href="/blogs/news">موسوعة البشرة والإشراقة</a></li>
+          <li><a href="/pages/contact">الاستشارة والخدمة الملكية</a></li>
         </ul>
       </div>
 
       <!-- Column 3: Customer Service -->
       <div class="footer-col">
-        <h4 class="footer-col__heading">{{ section.settings.service_heading | default: 'خدمة العملاء' }}</h4>
+        <h4 class="footer-col__heading">{{ section.settings.service_heading | default: 'الرعاية والاستفسارات' }}</h4>
         <ul class="footer-links">
-          <li><a href="#faq">الأسئلة الشائعة</a></li>
-          <li><a href="/pages/shipping">سياسة الشحن والتوصيل</a></li>
-          <li><a href="/pages/returns">سياسة الاسترجاع 7 أيام</a></li>
-          <li><a href="/search">البحث في المتجر</a></li>
+          <li><a href="#faq">الأسئلة الشائعة حول الطلب</a></li>
+          <li><a href="/pages/shipping">الشحن السريع للمدن المغربية</a></li>
+          <li><a href="/pages/returns">ضمان الإشراقة 30 يوماً</a></li>
+          <li><a href="/search">البحث في الموسوعة</a></li>
           <li>
             <a
               href="https://wa.me/{{ section.settings.whatsapp_number | default: '212600000000' }}"
               target="_blank"
               rel="noopener noreferrer"
             >
-              تواصل عبر الواتساب
+              استشارة فورية عبر الواتساب
             </a>
           </li>
         </ul>
@@ -64,15 +64,15 @@
         <div class="footer-cod-card">
           <div class="footer-cod-card__header">
             <span class="footer-cod-card__icon">{% render 'icon', name: 'truck' %}</span>
-            <span>الدفع عند الاستلام 100%</span>
+            <span>المعاينة قبل الدفع 100%</span>
           </div>
           <p class="footer-cod-card__desc">
-            {{ section.settings.cod_text | default: 'لا حاجة لبطاقة بنكية. ادفعي نقداً للموزع عند استلام طلبكِ في أي مدينة مغربية.' }}
+            {{ section.settings.cod_text | default: 'افتحي شحنتكِ وتأكدي من سلامة المنتجات والعبوة الفاخرة بنفسكِ قبل دفع أي سنتيم للموزع.' }}
           </p>
         </div>
         <p class="footer-shipping-tag">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          شحن لجميع جهات المملكة المغربية
+          توصيل آمن لجميع جهات مدن المملكة المغربية
         </p>
       </div>
 
