@@ -1,48 +1,113 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero-banner": {
       "type": "hero-banner",
-      "disabled": false
+      "settings": {
+        "eyebrow": "🔬 إكسير الأطلس النادر — تركيبات سريرية ناطقة بالأصالة المغربية",
+        "title": "بشرة متجددة، مشدودة ومشرقة بدون مسام في 14 يوماً فقط",
+        "subtext": "دمجنا أندر زيوت التين الشوكي والأرغان المعصور على البارد مع ببتيدات فيتامين C النقي. نتائج سريرية مثبتة لتوحيد لون البشرة والقضاء على التصبغات بشكل دائم.",
+        "btn_primary_text": "احصلي على روتين الإشراقة الملكي — توصيل ودفع عند الاستلام 🌿",
+        "btn_primary_link": "",
+        "btn_secondary_text": "شاهد نتائج الاختبارات السريرية (30 يوماً)",
+        "btn_secondary_link": ""
+      }
     },
     "ingredients-trust-bar": {
       "type": "ingredients-showcase",
-      "disabled": false
+      "settings": {}
     },
     "featured-collection": {
       "type": "featured-collection",
-      "disabled": false
+      "settings": {
+        "badge": "الأكثر مبيعاً",
+        "title": "منتجاتنا الأكثر طلباً",
+        "subtitle": "مستحضرات حازت على ثقة أكثر من 10,000 سيدة في المغرب",
+        "collection": "all",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "view_all_text": "عرض جميع المنتجات"
+      }
     },
     "collection-list": {
       "type": "collection-list",
-      "disabled": false
+      "settings": {
+        "badge": "تشكيلاتنا",
+        "title": "تسوقي حسب التشكيلة",
+        "subtitle": "عناية مخصصة لمختلف احتياجات بشرتكِ اليومية"
+      }
     },
     "skincare-routine": {
       "type": "skincare-routine",
-      "disabled": false
+      "settings": {}
     },
     "why-choose-us": {
       "type": "why-choose-us",
-      "disabled": false
+      "settings": {
+        "badge": "المعيار الملكي للجمال",
+        "title": "3 أسباب تجعل ناتورا الخيار الأول لرائدات المجتمع والمشاهير في المغرب",
+        "subtitle": "دقة سريرية وأصالة نباتية تمنحكِ تجربة عناية لا تضاهى"
+      }
     },
     "before-after": {
       "type": "before-after",
-      "disabled": false
+      "settings": {
+        "badge": "نتائج حقيقية",
+        "title": "تحول ملحوظ خلال 30 يوماً",
+        "subtitle": "اسحبي الشريط للمقارنة بين البشرة قبل وبعد استعمال سيروم فيتامين C العضوي",
+        "before_label": "قبل",
+        "after_label": "بعد",
+        "before_sub": "بشرة مجهدة ودون إشراق",
+        "after_sub": "نضارة فائقة وتوحيد لون البشرة",
+        "show_stats": true,
+        "stat_1_number": "93%",
+        "stat_1_label": "لاحظن تحسناً في نضارة البشرة",
+        "stat_2_number": "30",
+        "stat_2_label": "يوماً للحصول على نتيجة واضحة",
+        "stat_3_number": "+10K",
+        "stat_3_label": "عميلة سعيدة بالنتيجة"
+      }
     },
     "testimonials": {
       "type": "testimonials",
-      "disabled": false
+      "settings": {
+        "badge": "تجارب حقيقية",
+        "title": "ماذا تقول عميلاتنا في المغرب؟",
+        "subtitle": "أكثر من 1,200 تقييم حقيقي من سيدات جربن منتجاتنا"
+      }
     },
     "press-certifications": {
       "type": "press-certifications",
-      "disabled": false
+      "settings": {
+        "headline": "شهادات الجودة والمعايير التي نلتزم بها"
+      }
     },
     "faq": {
       "type": "faq",
-      "disabled": false
+      "settings": {
+        "badge": "إجابات فورية",
+        "title": "الأسئلة الشائعة حول الطلب والشحن",
+        "subtitle": "كل ما تحتاجين معرفته قبل إتمام طلبكِ في المغرب"
+      }
     },
     "newsletter": {
       "type": "newsletter",
-      "disabled": false
+      "settings": {
+        "badge": "نشرتنا البريدية",
+        "title": "انضمي لمجتمع ناتورا للجمال الطبيعي",
+        "description": "",
+        "placeholder": "أدخلي بريدكِ الإلكتروني...",
+        "btn_text": "اشتركي الآن",
+        "disclaimer": "بإشتراككِ، أنتِ توافقين على تلقي رسائل تسويقية."
+      }
     }
   },
   "order": [
