@@ -1,6 +1,6 @@
 /* ==========================================================================
-   🌿 MATERIA DTC SKINCARE THEME - GLOBAL WEB COMPONENTS
-   Pure ES6 Native Web Components (Zero jQuery dependency)
+   🌿 MATERIA DTC SKINCARE THEME - GLOBAL WEB COMPONENTS & MOTION
+   Pure ES6 Native Web Components & Micro-Interactions (Zero jQuery)
    ========================================================================== */
 
 /* 1. Quantity Input Web Component */
@@ -91,7 +91,42 @@ class ModalDialog extends HTMLElement {
 }
 customElements.define('modal-dialog', ModalDialog);
 
-/* 4. RTL Enforcer */
+/* 4. IntersectionObserver Scroll Reveal Manager */
+class ScrollRevealManager {
+  static init() {
+    const reveals = document.querySelectorAll('.reveal-on-scroll');
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      reveals.forEach((el) => el.classList.add('is-visible'));
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach((el) => observer.observe(el));
+  }
+}
+
+/* 5. Smooth Lazy Image Load Manager */
+class ImageLoadManager {
+  static init() {
+    document.querySelectorAll('img').forEach((img) => {
+      if (img.complete) {
+        img.classList.add('is-loaded');
+      } else {
+        img.addEventListener('load', () => img.classList.add('is-loaded'));
+      }
+    });
+  }
+}
+
+/* 6. RTL Enforcer */
 class RTLEnforcer {
   static init() {
     if (document.documentElement.getAttribute('dir') !== 'rtl') {
@@ -99,4 +134,9 @@ class RTLEnforcer {
     }
   }
 }
-document.addEventListener('DOMContentLoaded', () => RTLEnforcer.init());
+
+document.addEventListener('DOMContentLoaded', () => {
+  RTLEnforcer.init();
+  ScrollRevealManager.init();
+  ImageLoadManager.init();
+});

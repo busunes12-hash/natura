@@ -2,7 +2,7 @@
   Section 12: Pre-Purchase FAQ
   Accordion: Native HTML5 <details> with custom + / − CSS summary toggle icons.
 {% endcomment %}
-<section class="faq-section py-16" style="background-color: var(--color-bg-primary);">
+<section class="faq-section py-16 reveal-on-scroll" style="background-color: var(--color-bg-primary);">
   <div class="container max-w-3xl" style="max-width: 800px;">
     <div class="section-header">
       <span class="badge-forest mb-2">إجابات فورية</span>
@@ -55,11 +55,13 @@
 </section>
 
 <style>
-  details[open] summary .faq-icon::before {
-    content: "−";
+  details summary .faq-icon {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-block;
   }
   details[open] summary .faq-icon {
-    content: "";
+    transform: rotate(45deg);
+    color: var(--color-terracotta) !important;
   }
 </style>
 

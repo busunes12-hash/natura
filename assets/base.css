@@ -35,6 +35,7 @@
   /* 1.6 Transitions & Animation Curves */
   --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 0.15s ease-out;
 
   /* Layout Spacing */
   --page-width: 1200px;
@@ -105,11 +106,22 @@ img, svg, video {
   display: block;
 }
 
+/* Smooth Image Loading Fade-in */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+img[loading="lazy"].is-loaded, img.is-loaded {
+  opacity: 1;
+}
+
 button {
   cursor: pointer;
   border: none;
   background: none;
   font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Standardized Section Header Block */
@@ -125,6 +137,19 @@ button {
   line-height: 1.6;
   max-width: 640px;
   margin-inline: auto;
+}
+
+/* Smooth Scroll Reveal Micro-Interactions */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
 /* Accessibility Focus Ring */
@@ -176,5 +201,19 @@ button {
 @media (max-width: 480px) {
   .container {
     padding-inline: 1rem;
+  }
+}
+
+/* Reduced Motion Override for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
