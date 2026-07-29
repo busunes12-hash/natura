@@ -31,7 +31,7 @@
         </span>
       {%- else -%}
         {%- assign needed = free_shipping_threshold | minus: cart_total -%}
-        <span>🚚 باقي لكِ <strong class="text-terracotta">{{ needed | money_without_currency }} د.م.</strong> فقط لفتح الشحن السريع المجاني وتغليف الهدايا الملكي!</span>
+        <span>🚚 باقي لك <strong class="text-terracotta">{{ needed | money_without_currency }} د.م.</strong> فقط للحصول على التوصيل السريع المجاني!</span>
       {%- endif -%}
       <div class="progress-track">
         <div class="progress-fill" style="width: {{ progress_percentage }}%;"></div>
@@ -90,7 +90,7 @@
               <div class="flex items-center gap-2">
                 <span class="w-5 h-5 text-forest flex-shrink-0 inline-flex items-center justify-center">{% render 'icon', name: 'sparkle' %}</span>
                 <div>
-                  <h5 class="font-bold text-xs">✨ كملي روتينكِ: إكسير ماء الورد المقطر (50ml)</h5>
+                  <h5 class="font-bold text-xs">✨ كمل روتينك: ماء الورد البلدي المقطر (50ml)</h5>
                   <span class="text-xs text-forest font-bold">+49 د.م. فقط (واكسري حد الشحن المجاني فوراً)</span>
                 </div>
               </div>

@@ -59,7 +59,7 @@
           </span>
         </div>
 
-        <h1 class="type-h1 product-title">{{ product.title | default: "سيروم فيتامين C الببتيدي المركّز — لإزالة التصبغات وإعادة وهج البشرة" }}</h1>
+        <h1 class="type-h1 product-title">{{ product.title | default: "زيت الأرغان المغربي النقي 100% — معصور على البارد من سوس (100 مل)" }}</h1>
 
         <div class="rating-row flex items-center gap-2.5 text-sm">
           <div class="stars flex gap-1">
@@ -67,7 +67,7 @@
               <span class="star-gold inline-flex items-center justify-center w-4 h-4">{% render 'icon', name: 'star' %}</span>
             {%- endfor -%}
           </div>
-          <span class="font-semibold text-forest">4.9/5 (1,240 تقييم سريري موثق)</span>
+          <span class="font-semibold text-forest">4.9/5 (1,240 تقييم من عائلات مغربية)</span>
         </div>
 
         {% render 'price', product: product %}
@@ -80,7 +80,7 @@
 
           {%- if product.has_only_default_variant == false -%}
             <div class="variant-select-wrapper">
-              <label class="font-semibold text-sm mb-2 block text-dark">اختر السعة الفاخرة:</label>
+              <label class="font-semibold text-sm mb-2 block text-dark">اختر السعة المناسبة:</label>
               <div class="variant-pills">
                 {%- for variant in product.variants -%}
                   <button
@@ -112,7 +112,7 @@
             data-quick-add="{{ product.selected_or_first_available_variant.id }}"
           >
             <span class="w-5 h-5 inline-flex items-center justify-center">{% render 'icon', name: 'truck' %}</span>
-            <span>🚚 اطلبي الآن واحصلي على توصيل مجاني — الدفع عند الاستلام</span>
+            <span>🚚 أطلب الآن — الدفع عند الاستلام بعد المعاينة</span>
           </button>
         {% endform %}
 
@@ -132,12 +132,12 @@
             <summary class="pdp-accordion-summary">
               <span class="flex items-center gap-2.5">
                 <span class="w-4 h-4 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'leaf' %}</span>
-                <span>المكونات الفعالة والنسب السريرية</span>
+                <span>المكونات الطبيعية ومصدرها الأصيل</span>
               </span>
               <span class="accordion-chevron">↓</span>
             </summary>
             <div class="pdp-accordion-content">
-              <p class="text-sm text-muted leading-relaxed">فيتامين C الببتيدي (15%) المستقر لتفتيح التصبغات، زيت التين الشوكي المعصور على البارد غني بفيتامين E لشد الوجه، زيت الأرغان المغربي البكر، وماء الورد البلدي المقطر.</p>
+              <p class="text-sm text-muted leading-relaxed">زيت أرغان مغربي أصلي 100% معصور على البارد من منطقة سوس، خالٍ تماماً من الزيوت الممددة أو العطور الاصطناعية أو المواد الحافظة.</p>
             </div>
           </details>
 
@@ -145,12 +145,12 @@
             <summary class="pdp-accordion-summary">
               <span class="flex items-center gap-2.5">
                 <span class="w-4 h-4 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'sparkle' %}</span>
-                <span>طريقة الاستخدام الصحيحة والطقس الملكي</span>
+                <span>طريقة الاستخدام العائلية اليومية</span>
               </span>
               <span class="accordion-chevron">↓</span>
             </summary>
             <div class="pdp-accordion-content">
-              <p class="text-sm text-muted leading-relaxed">ضعي 3 إلى 4 قطرات على بشرة نظيفة وجافة صباحاً ومساءً. دلكي بحركات تصاعدية لطيفة لمدة 60 ثانية حتى الامتصاص التام. ينصح باستخدامه صباحاً قبل واقي الشمس لمضاعفة الحماية.</p>
+              <p class="text-sm text-muted leading-relaxed">ضعي قطرات قليلة على البشرة أو الشعر وتدلك بحركات لطيفة. مناسب للاستخدام اليومي الآمن لجميع أفراد الأسرة الكبار والأطفال.</p>
             </div>
           </details>
 
@@ -163,7 +163,7 @@
               <span class="accordion-chevron">↓</span>
             </summary>
             <div class="pdp-accordion-content">
-              <p class="text-sm text-muted leading-relaxed">توصيل سريع 24-48 ساعة لجميع مدن المملكة. تتاح لكِ فرصة فتح الشحنة ومعاينة العبوة الفاخرة قبل تسليم أي مبلغ نقدي للموزع. الشحن مجاني لجميع الطلبات فوق 200 د.م.</p>
+              <p class="text-sm text-muted leading-relaxed">توصيل سريع 24-48 ساعة لجميع مدن المملكة. تتاح لكِ فرصة فتح الشحنة ومعاينة العبوة والتأكد من سلامتها قبل تسليم أي مبلغ نقدي للموزع. الشحن مجاني لجميع الطلبات فوق 200 د.م.</p>
             </div>
           </details>
         </div>

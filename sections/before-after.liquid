@@ -9,9 +9,9 @@
 <section class="before-after-section py-16 reveal-on-scroll" id="before-after">
   <div class="container">
     <div class="section-header">
-      <span class="badge-forest mb-4" style="display: inline-flex;">{{ section.settings.badge | default: 'نتائج حقيقية' }}</span>
-      <h2 class="type-h2">{{ section.settings.title | default: 'تحول ملحوظ خلال 30 يوماً' }}</h2>
-      <p class="section-subtitle">{{ section.settings.subtitle | default: 'اسحبي الشريط للمقارنة بين البشرة قبل وبعد استعمال سيروم فيتامين C العضوي' }}</p>
+      <span class="badge-forest mb-4" style="display: inline-flex;">{{ section.settings.badge | default: 'نتائج حقيقية ملموسة' }}</span>
+      <h2 class="type-h2">{{ section.settings.title | default: 'ترطيب عميق وحماية حقيقية للبشرة والشعر' }}</h2>
+      <p class="section-subtitle">{{ section.settings.subtitle | default: 'اسحب الشريط للمقارنة بين البشرة قبل وبعد الالتزام اليومي بالزيوت المغربية النقية' }}</p>
     </div>
 
     <div class="before-after-container" id="BeforeAfterSlider" aria-label="مقارنة قبل وبعد" role="img">
@@ -83,16 +83,16 @@
     {%- if section.settings.show_stats -%}
     <div class="ba-stats">
       <div class="ba-stat">
-        <span class="ba-stat__number">{{ section.settings.stat_1_number | default: '93%' }}</span>
-        <span class="ba-stat__label">{{ section.settings.stat_1_label | default: 'لاحظن تحسناً في نضارة البشرة' }}</span>
+        <span class="ba-stat__number">{{ section.settings.stat_1_number | default: '94%' }}</span>
+        <span class="ba-stat__label">{{ section.settings.stat_1_label | default: 'لاحظن ترطيباً يدوم طوال اليوم' }}</span>
       </div>
       <div class="ba-stat">
-        <span class="ba-stat__number">{{ section.settings.stat_2_number | default: '30' }}</span>
-        <span class="ba-stat__label">{{ section.settings.stat_2_label | default: 'يوماً للحصول على نتيجة واضحة' }}</span>
+        <span class="ba-stat__number">{{ section.settings.stat_2_number | default: '100%' }}</span>
+        <span class="ba-stat__label">{{ section.settings.stat_2_label | default: 'زيوت مغربية نقية بدون إضافات' }}</span>
       </div>
       <div class="ba-stat">
-        <span class="ba-stat__number">{{ section.settings.stat_3_number | default: '+10K' }}</span>
-        <span class="ba-stat__label">{{ section.settings.stat_3_label | default: 'عميلة سعيدة بالنتيجة' }}</span>
+        <span class="ba-stat__number">{{ section.settings.stat_3_number | default: '+15K' }}</span>
+        <span class="ba-stat__label">{{ section.settings.stat_3_label | default: 'عائلة مغربية تستخدم منتجاتنا' }}</span>
       </div>
     </div>
     {%- endif -%}
@@ -134,25 +134,26 @@
 
 <script>
   (function() {
-    var container = document.getElementById('BeforeAfterSlider');
+    var slider = document.getElementById('BeforeAfterSlider');
+    if (!slider) return;
     var afterPanel = document.getElementById('BaAfterPanel');
     var divider = document.getElementById('BaDivider');
     var dragTarget = document.getElementById('BaDragTarget');
-    if (!container || !afterPanel || !divider) return;
-
     var isDragging = false;
-    var position = 50; // percentage
+    var position = 50;
 
     function setPosition(pct) {
-      pct = Math.min(95, Math.max(5, pct));
+      pct = Math.max(0, Math.min(100, pct));
       position = pct;
-      afterPanel.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
-      divider.style.left = pct + '%';
+      afterPanel.style.clipPath = 'polygon(' + pct + '% 0, 100% 0, 100% 100%, ' + pct + '% 100%)';
+      divider.style.right = pct + '%';
     }
 
     function getPercent(clientX) {
-      var rect = container.getBoundingClientRect();
-      return ((clientX - rect.left) / rect.width) * 100;
+      var rect = slider.getBoundingClientRect();
+      var x = clientX - rect.left;
+      var pct = (1 - (x / rect.width)) * 100;
+      return pct;
     }
 
     // Initial
@@ -204,22 +205,22 @@
 {
   "name": "نتائج قبل وبعد",
   "settings": [
-    { "type": "text", "id": "badge", "label": "نص البادج", "default": "نتائج حقيقية" },
-    { "type": "text", "id": "title", "label": "العنوان", "default": "تحول ملحوظ خلال 30 يوماً" },
-    { "type": "textarea", "id": "subtitle", "label": "الوصف", "default": "اسحبي الشريط للمقارنة بين البشرة قبل وبعد استعمال سيروم فيتامين C العضوي" },
+    { "type": "text", "id": "badge", "label": "نص البادج", "default": "نتائج حقيقية ملموسة" },
+    { "type": "text", "id": "title", "label": "العنوان", "default": "ترطيب عميق وحماية حقيقية للبشرة والشعر" },
+    { "type": "textarea", "id": "subtitle", "label": "الوصف", "default": "اسحب الشريط للمقارنة بين البشرة قبل وبعد الالتزام اليومي بالزيوت المغربية النقية" },
     { "type": "image_picker", "id": "image_before", "label": "صورة قبل الاستعمال" },
     { "type": "image_picker", "id": "image_after", "label": "صورة بعد الاستعمال" },
     { "type": "text", "id": "before_label", "label": "تسمية قبل", "default": "قبل" },
     { "type": "text", "id": "after_label", "label": "تسمية بعد", "default": "بعد" },
-    { "type": "text", "id": "before_sub", "label": "وصف صورة قبل", "default": "بشرة مجهدة ودون إشراق" },
-    { "type": "text", "id": "after_sub", "label": "وصف صورة بعد", "default": "نضارة فائقة وتوحيد لون البشرة" },
+    { "type": "text", "id": "before_sub", "label": "وصف صورة قبل", "default": "بشرة جافة ومجهدة" },
+    { "type": "text", "id": "after_sub", "label": "وصف صورة بعد", "default": "ترطيب عميق ونضارة حقيقية" },
     { "type": "checkbox", "id": "show_stats", "label": "عرض الإحصاءات", "default": true },
-    { "type": "text", "id": "stat_1_number", "label": "الإحصاء 1 — الرقم", "default": "93%" },
-    { "type": "text", "id": "stat_1_label", "label": "الإحصاء 1 — الوصف", "default": "لاحظن تحسناً في نضارة البشرة" },
-    { "type": "text", "id": "stat_2_number", "label": "الإحصاء 2 — الرقم", "default": "30" },
-    { "type": "text", "id": "stat_2_label", "label": "الإحصاء 2 — الوصف", "default": "يوماً للحصول على نتيجة واضحة" },
-    { "type": "text", "id": "stat_3_number", "label": "الإحصاء 3 — الرقم", "default": "+10K" },
-    { "type": "text", "id": "stat_3_label", "label": "الإحصاء 3 — الوصف", "default": "عميلة سعيدة بالنتيجة" }
+    { "type": "text", "id": "stat_1_number", "label": "الإحصاء 1 — الرقم", "default": "94%" },
+    { "type": "text", "id": "stat_1_label", "label": "الإحصاء 1 — الوصف", "default": "لاحظن ترطيباً يدوم طوال اليوم" },
+    { "type": "text", "id": "stat_2_number", "label": "الإحصاء 2 — الرقم", "default": "100%" },
+    { "type": "text", "id": "stat_2_label", "label": "الإحصاء 2 — الوصف", "default": "زيوت مغربية نقية بدون إضافات" },
+    { "type": "text", "id": "stat_3_number", "label": "الإحصاء 3 — الرقم", "default": "+15K" },
+    { "type": "text", "id": "stat_3_label", "label": "الإحصاء 3 — الوصف", "default": "عائلة مغربية تستخدم منتجاتنا" }
   ],
   "presets": [{ "name": "نتائج قبل وبعد" }]
 }

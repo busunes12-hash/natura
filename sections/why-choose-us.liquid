@@ -8,9 +8,9 @@
 <section class="why-choose-us py-16 reveal-on-scroll" style="background-color: var(--color-bg-secondary);">
   <div class="container">
     <div class="section-header">
-      <span class="badge-terracotta mb-4" style="display: inline-flex;">{{ section.settings.badge | default: 'المعيار الملكي للجمال' }}</span>
-      <h2 class="type-h2">{{ section.settings.title | default: '3 أسباب تجعل ناتورا الخيار الأول لرائدات المجتمع والمشاهير في المغرب' }}</h2>
-      <p class="section-subtitle">{{ section.settings.subtitle | default: 'دقة سريرية وأصالة نباتية تمنحكِ تجربة عناية لا تضاهى' }}</p>
+      <span class="badge-terracotta mb-4" style="display: inline-flex;">{{ section.settings.badge | default: 'لماذا تختار عائلات المغرب ناتورا؟' }}</span>
+      <h2 class="type-h2">{{ section.settings.title | default: '3 أسباب تجعل ناتورا الاختيار الأول والآمن لكل بيت مغربي' }}</h2>
+      <p class="section-subtitle">{{ section.settings.subtitle | default: 'نوفر لكِ ولأسرتكِ مستحضرات طبيعية نقية بأسعار عادلة وتوصيل موثوق حتى باب المنزل' }}</p>
     </div>
 
     <div class="pillars-grid">
@@ -23,25 +23,25 @@
               {% render 'icon', name: icon_name %}
               </div>
               <h3 class="font-bold mb-2" style="font-family: var(--font-heading); font-size: 1.2rem;">{{ block.settings.title | default: 'ميزة رئيسية' }}</h3>
-              <p class="text-muted text-sm leading-relaxed">{{ block.settings.description | default: 'وصف الميزة الرئيسية لمنتجاتنا الطبيعية الفاخرة.' }}</p>
+              <p class="text-muted text-sm leading-relaxed">{{ block.settings.description | default: 'وصف الميزة الرئيسية لمنتجاتنا الطبيعية الصادقة.' }}</p>
             </div>
         {%- endcase -%}
       {%- else -%}
         <!-- Default 3 pillars -->
         <div class="pillar-card text-center">
-          <div class="pillar-icon-wrapper">{% render 'icon', name: 'flask' %}</div>
-          <h3 class="font-bold mb-2" style="font-family: var(--font-heading); font-size: 1.2rem;">الفعالية التراكمية السريعة</h3>
-          <p class="text-muted text-sm leading-relaxed">تركيبات ببتيدية نانوية تمتصها البشرة في 45 ثانية لتصل للطبقات العميقة وتعالج التصبغات والتجاعيد الفورية.</p>
-        </div>
-        <div class="pillar-card text-center">
           <div class="pillar-icon-wrapper">{% render 'icon', name: 'leaf' %}</div>
-          <h3 class="font-bold mb-2" style="font-family: var(--font-heading); font-size: 1.2rem;">النقاء العضوي المطلق</h3>
-          <p class="text-muted text-sm leading-relaxed">نستخلص قطرات التين الشوكي والأرغان يدوياً من مزارعنا بسوس والأطلس. كل قارورة تحمل شهادة نقاء 100%.</p>
+          <h3 class="font-bold mb-2" style="font-family: var(--font-heading); font-size: 1.2rem;">مكونات حقيقية 100% بدون تخفيف</h3>
+          <p class="text-muted text-sm leading-relaxed">نضمن لكِ عصارة أولى نقية لزيوت الأرغان والتين الشوكي المستخرجة مباشرة من معاصر سوس والأطلس. لا نستخدم الزيوت الرخيصة المخففة أو العطور الاصطناعية.</p>
         </div>
         <div class="pillar-card text-center">
           <div class="pillar-icon-wrapper">{% render 'icon', name: 'shield' %}</div>
-          <h3 class="font-bold mb-2" style="font-family: var(--font-heading); font-size: 1.2rem;">تجربة تسوق مخملية</h3>
-          <p class="text-muted text-sm leading-relaxed">استشارة مجانية مع خبيرة بشرة، تغليف هدايا فاخر، وتوصيل مجاني مع إمكانية فتح الشحنة وفحصها قبل التسليم.</p>
+          <h3 class="font-bold mb-2" style="font-family: var(--font-heading); font-size: 1.2rem;">تركيبات لطيفة مخصصة للاستعمال اليومي</h3>
+          <p class="text-muted text-sm leading-relaxed">صُممت منتجاتنا بمكونات نباتية مهدئة تناسب جميع أنواع البشرة والشعر، بما في ذلك البشرة الحساسة للأطفال والكبار، لتكون الخيار الآمن اليومي لكل العائلة.</p>
+        </div>
+        <div class="pillar-card text-center">
+          <div class="pillar-icon-wrapper">{% render 'icon', name: 'truck' %}</div>
+          <h3 class="font-bold mb-2" style="font-family: var(--font-heading); font-size: 1.2rem;">أسعار عادلة وتوصيل آمن لباب البيت</h3>
+          <p class="text-muted text-sm leading-relaxed">نؤمن بأن العناية الطبيعية حق لكل بيت. نوفر منتجاتنا بأسعار مناسبة مع خدمة معاينة الشحنة قبل الدفع نقداً عند الاستلام لضمان راحة بالكِ التامة.</p>
         </div>
       {%- endfor -%}
     </div>
@@ -96,9 +96,9 @@
 {
   "name": "لماذا تميزت منتجاتنا",
   "settings": [
-    { "type": "text", "id": "badge", "label": "نص البادج", "default": "المعيار الملكي للجمال" },
-    { "type": "text", "id": "title", "label": "العنوان", "default": "3 أسباب تجعل ناتورا الخيار الأول لرائدات المجتمع والمشاهير في المغرب" },
-    { "type": "textarea", "id": "subtitle", "label": "الوصف", "default": "دقة سريرية وأصالة نباتية تمنحكِ تجربة عناية لا تضاهى" }
+    { "type": "text", "id": "badge", "label": "نص البادج", "default": "لماذا تختار عائلات المغرب ناتورا؟" },
+    { "type": "text", "id": "title", "label": "العنوان", "default": "3 أسباب تجعل ناتورا الاختيار الأول والآمن لكل بيت مغربي" },
+    { "type": "textarea", "id": "subtitle", "label": "الوصف", "default": "نوفر لكِ ولأسرتكِ مستحضرات طبيعية نقية بأسعار عادلة وتوصيل موثوق حتى باب المنزل" }
   ],
   "blocks": [
     {

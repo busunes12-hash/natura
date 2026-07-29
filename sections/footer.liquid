@@ -30,20 +30,20 @@
           </div>
         </a>
         <p class="footer-brand-desc">
-          {{ section.settings.brand_desc | default: 'دار مغربية فاخرة متخصصة في ابتكار تركيبات العناية بالبشرة السريرية من أنقى الزيوت العضوية المعصورة على البارد وببتيدات الفيتامينات المركزّة.' }}
+          {{ section.settings.brand_desc | default: 'علامة مغربية موثوقة تقدم مستحضرات العناية الطبيعية 100% بالبشرة والشعر المصممة لرعاية وحماية عائلتكِ كل يوم.' }}
         </p>
         {% render 'social-icons' %}
       </div>
 
       <!-- Column 2: Quick Links -->
       <div class="footer-col">
-        <h4 class="footer-col__heading">{{ section.settings.links_heading | default: 'عالم ناتورا' }}</h4>
+        <h4 class="footer-col__heading">{{ section.settings.links_heading | default: 'عائلة ناتورا' }}</h4>
         <ul class="footer-links">
-          <li><a href="{{ routes.root_url }}">الملاذ الرئيسي</a></li>
-          <li><a href="/collections/all">مجموعات العناية الملكية</a></li>
-          <li><a href="/pages/about">قصة الابتكار والزيوت</a></li>
-          <li><a href="/blogs/news">موسوعة البشرة والإشراقة</a></li>
-          <li><a href="/pages/contact">الاستشارة والخدمة الملكية</a></li>
+          <li><a href="{{ routes.root_url }}">الرئيسية</a></li>
+          <li><a href="/collections/all">منتجات العناية الطبيعية</a></li>
+          <li><a href="/pages/about">قصتنا ومصدر مكوناتنا</a></li>
+          <li><a href="/blogs/news">نصائح العناية الطبيعية</a></li>
+          <li><a href="/pages/contact">تواصل معنا والدعم</a></li>
         </ul>
       </div>
 
@@ -268,7 +268,7 @@
 {
   "name": "الفوتر الفاخر",
   "settings": [
-    { "type": "textarea", "id": "brand_desc", "label": "وصف العلامة التجارية", "default": "علامة مغربية فاخرة متخصصة في مستحضرات العناية بالبشرة." },
+    { "type": "textarea", "id": "brand_desc", "label": "وصف العلامة التجارية", "default": "علامة مغربية موثوقة تقدم مستحضرات العناية الطبيعية 100% بالبشرة والشعر لجميع أفراد العائلة." },
     { "type": "text", "id": "links_heading", "label": "عنوان عمود الروابط", "default": "روابط سريعة" },
     { "type": "text", "id": "service_heading", "label": "عنوان عمود الخدمات", "default": "خدمة العملاء" },
     { "type": "text", "id": "whatsapp_number", "label": "رقم الواتساب (بدون +)", "default": "212600000000", "info": "مثال: 212612345678 (رمز المغرب 212 ثم رقم الهاتف بدون صفر في البداية)" },

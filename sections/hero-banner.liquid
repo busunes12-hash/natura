@@ -16,17 +16,17 @@
       <!-- Eyebrow badge -->
       <div class="hero-eyebrow">
         <span class="hero-eyebrow__icon">{% render 'icon', name: 'leaf' %}</span>
-        <span>{{ section.settings.eyebrow | default: '🔬 إكسير الأطلس النادر — تركيبات سريرية ناطقة بالأصالة المغربية' }}</span>
+        <span>{{ section.settings.eyebrow | default: '🌿 مكونات مغربية نقية 100% — من المنبت إلى بيتكِ' }}</span>
       </div>
 
       <!-- H1 Headline -->
       <h1 class="hero-content__title">
-        {{ section.settings.title | default: 'بشرة متجددة، مشدودة ومشرقة بدون مسام في 14 يوماً فقط' }}
+        {{ section.settings.title | default: 'عناية طبيعية أصيلة 100% ترعى بشرة وشعر عائلتكِ كل يوم' }}
       </h1>
 
       <!-- Subtext -->
       <p class="hero-content__subtext">
-        {{ section.settings.subtext | default: 'دمجنا أندر زيوت التين الشوكي والأرغان المعصور على البارد مع ببتيدات فيتامين C النقي. نتائج سريرية مثبتة لتوحيد لون البشرة والقضاء على التصبغات بشكل دائم.' }}
+        {{ section.settings.subtext | default: 'نستخلص أجوَد زيوت الأرغان والتين الشوكي المعصورة على البارد مباشرة من معاصرنا بسوس والأطلس. تركيبات خالية تماماً من المعطرات الاصطناعية والمواد الحافظة الضارة، لتوفر لبشرتك وشعر عائلتك تغذية عميقة وأماناً كاملاً كل يوم.' }}
       </p>
 
       <!-- Social Proof Strip -->
@@ -37,7 +37,7 @@
           {%- endfor -%}
         </div>
         <span class="hero-social-proof__text">
-          <strong>4.9/5</strong> تقييم سريري معتمد | <strong>12,840+</strong> سيدة بالمغرب حصلن على بشرة أحلامهن هذا الشهر
+          <strong>4.9/5</strong> تقييم العملاء | <strong>15,000+</strong> عائلة مغربية تضع ثقتها في منتجاتنا الطبيعية
         </span>
       </div>
 
@@ -47,14 +47,14 @@
           href="{{ section.settings.btn_primary_link | default: '/collections/best-sellers' }}"
           class="btn-primary"
         >
-          {{ section.settings.btn_primary_text | default: 'احصلي على روتين الإشراقة الملكي — توصيل ودفع عند الاستلام 🌿' }}
+          {{ section.settings.btn_primary_text | default: 'تسوق التشكيلة العائلية — معاينة مجانية عند الاستلام 🌿' }}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </a>
         <a
           href="{{ section.settings.btn_secondary_link | default: '/pages/about' }}"
           class="btn-secondary"
         >
-          {{ section.settings.btn_secondary_text | default: 'شاهد نتائج الاختبارات السريرية (30 يوماً)' }}
+          {{ section.settings.btn_secondary_text | default: 'تعرف على مصدر مكوناتنا الأصيلة' }}
         </a>
       </div>
 
@@ -124,25 +124,25 @@
       "type": "text",
       "id": "eyebrow",
       "label": "النص الصغير فوق العنوان",
-      "default": "🔬 إكسير الأطلس النادر — تركيبات سريرية ناطقة بالأصالة المغربية"
+      "default": "🌿 مكونات مغربية نقية 100% — من المنبت إلى بيتكِ"
     },
     {
       "type": "text",
       "id": "title",
       "label": "العنوان الرئيسي",
-      "default": "بشرة متجددة، مشدودة ومشرقة بدون مسام في 14 يوماً فقط"
+      "default": "عناية طبيعية أصيلة 100% ترعى بشرة وشعر عائلتكِ كل يوم"
     },
     {
       "type": "textarea",
       "id": "subtext",
       "label": "الوصف الفرعي",
-      "default": "دمجنا أندر زيوت التين الشوكي والأرغان المعصور على البارد مع ببتيدات فيتامين C النقي. نتائج سريرية مثبتة لتوحيد لون البشرة والقضاء على التصبغات بشكل دائم."
+      "default": "نستخلص أجوَد زيوت الأرغان والتين الشوكي المعصورة على البارد مباشرة من معاصرنا بسوس والأطلس. تركيبات خالية تماماً من المعطرات الاصطناعية والمواد الحافظة الضارة، لتوفر لبشرتك وشعر عائلتك تغذية عميقة وأماناً كاملاً كل يوم."
     },
     {
       "type": "text",
       "id": "btn_primary_text",
       "label": "نص الزر الأساسي",
-      "default": "احصلي على روتين الإشراقة الملكي — توصيل ودفع عند الاستلام 🌿"
+      "default": "تسوق التشكيلة العائلية — معاينة مجانية عند الاستلام 🌿"
     },
     {
       "type": "url",
@@ -153,7 +153,7 @@
       "type": "text",
       "id": "btn_secondary_text",
       "label": "نص الزر الثانوي",
-      "default": "شاهد نتائج الاختبارات السريرية (30 يوماً)"
+      "default": "تعرف على مصدر مكوناتنا الأصيلة"
     },
     {
       "type": "url",
