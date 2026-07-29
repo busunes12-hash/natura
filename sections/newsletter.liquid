@@ -4,9 +4,9 @@
 {% endcomment %}
 <section class="newsletter-section py-16 text-center" style="background-color: var(--color-forest); color: var(--color-bg-primary);">
   <div class="container max-w-2xl" style="max-width: 700px;">
-    <span class="inline-block p-3 rounded-full mb-4" style="background: rgba(255, 248, 231, 0.15);">💌</span>
-    <h2 class="type-h2 mb-4" style="color: var(--color-bg-primary);">انضمي لمجتمع ماتيريا للجمال الطبيعي</h2>
-    <p class="mb-8 opacity-90 text-lg">اشتركي بنشرتنا البريدية واحصلي فوراً على خصم 10% على طلبكِ الأول بالإضافة إلى نصائح العناية الحصرية.</p>
+    <span class="badge-terracotta mb-4">نشرتنا البريدية</span>
+    <h2 class="type-h2 mb-4" style="color: var(--color-bg-primary);">انضمي لمجتمع ماتيريا للجمال الطبيعي 💌</h2>
+    <p class="mb-8 opacity-90 text-lg leading-relaxed" style="font-family: var(--font-body);">اشتركي بنشرتنا البريدية واحصلي فوراً على خصم 10% على طلبكِ الأول بالإضافة إلى نصائح العناية الحصرية.</p>
 
     {% form 'customer', class: 'newsletter-form flex flex-col md:flex-row gap-3 justify-center' %}
       <input type="hidden" name="contact[tags]" value="newsletter">

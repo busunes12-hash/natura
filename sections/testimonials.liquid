@@ -5,14 +5,14 @@
 {% endcomment %}
 <section id="testimonials" class="testimonials-section py-16" style="background-color: var(--color-bg-primary);">
   <div class="container">
-    <div class="section-header text-center mb-12">
+    <div class="section-header">
       <span class="badge-terracotta mb-2">تجارب حقيقية</span>
       <h2 class="type-h2">ماذا تقول عميلاتنا في المغرب؟ 🇲🇦</h2>
-      <p class="text-muted mt-2">أكثر من 1,200 تقييم 5 نجوم من سيدات جربن منتجاتنا</p>
+      <p class="section-subtitle">أكثر من 1,200 تقييم 5 نجوم من سيدات جربن منتجاتنا</p>
     </div>
 
     <div class="testimonials-carousel">
-      <div class="testimonial-card p-6 bg-surface rounded-lg shadow-sm">
+      <div class="testimonial-card p-6 bg-surface rounded-lg shadow-sm border" style="border-color: var(--color-border-subtle); border-radius: var(--radius-md);">
         <div class="flex items-center justify-between mb-4">
           <div class="stars flex gap-1">
             {%- for i in (1..5) -%}
@@ -21,19 +21,19 @@
           </div>
           <span class="badge-forest text-xs">شراء موثق 🇲🇦</span>
         </div>
-        <p class="testimonial-text mb-4 text-sm leading-relaxed">
+        <p class="testimonial-text mb-4 text-sm leading-relaxed" style="color: var(--color-charcoal-dark);">
           "صراحة السيروم روعة! فرق كبير لاحظتو من الأسبوع الأول في نضارة الوجه والصفاء. والتوصيل كان سريع بزاف للدار البيضاء ودفعوني حتى وصلتني الأمانة."
         </p>
         <div class="author-info flex items-center gap-3">
-          <div class="avatar font-bold text-forest bg-cream rounded-full w-10 h-10 flex items-center justify-center">ف</div>
+          <div class="avatar font-bold text-forest bg-cream rounded-full w-10 h-10 flex items-center justify-center" style="width: 40px; height: 40px; background-color: var(--color-bg-secondary);">ف</div>
           <div>
-            <h4 class="font-bold text-sm">فاطمة الزهراء — الدار البيضاء</h4>
+            <h4 class="font-bold text-sm" style="font-family: var(--font-heading);">فاطمة الزهراء — الدار البيضاء</h4>
             <span class="text-xs text-muted">سيروم فيتامين C العضوي</span>
           </div>
         </div>
       </div>
 
-      <div class="testimonial-card p-6 bg-surface rounded-lg shadow-sm">
+      <div class="testimonial-card p-6 bg-surface rounded-lg shadow-sm border" style="border-color: var(--color-border-subtle); border-radius: var(--radius-md);">
         <div class="flex items-center justify-between mb-4">
           <div class="stars flex gap-1">
             {%- for i in (1..5) -%}
@@ -42,19 +42,19 @@
           </div>
           <span class="badge-forest text-xs">شراء موثق 🇲🇦</span>
         </div>
-        <p class="testimonial-text mb-4 text-sm leading-relaxed">
+        <p class="testimonial-text mb-4 text-sm leading-relaxed" style="color: var(--color-charcoal-dark);">
           "كريم التين الشوكي غزال بزاف على البشرة. كيرطب من الأعماق وريحته طبيعية غزالة. كنشكركم على الجودة وحسن التعامل بالواتساب."
         </p>
         <div class="author-info flex items-center gap-3">
-          <div class="avatar font-bold text-forest bg-cream rounded-full w-10 h-10 flex items-center justify-center">س</div>
+          <div class="avatar font-bold text-forest bg-cream rounded-full w-10 h-10 flex items-center justify-center" style="width: 40px; height: 40px; background-color: var(--color-bg-secondary);">س</div>
           <div>
-            <h4 class="font-bold text-sm">سناء البقالي — الرباط</h4>
+            <h4 class="font-bold text-sm" style="font-family: var(--font-heading);">سناء البقالي — الرباط</h4>
             <span class="text-xs text-muted">كريم التين الشوكي الفاخر</span>
           </div>
         </div>
       </div>
 
-      <div class="testimonial-card p-6 bg-surface rounded-lg shadow-sm">
+      <div class="testimonial-card p-6 bg-surface rounded-lg shadow-sm border" style="border-color: var(--color-border-subtle); border-radius: var(--radius-md);">
         <div class="flex items-center justify-between mb-4">
           <div class="stars flex gap-1">
             {%- for i in (1..5) -%}
@@ -63,13 +63,13 @@
           </div>
           <span class="badge-forest text-xs">شراء موثق 🇲🇦</span>
         </div>
-        <p class="testimonial-text mb-4 text-sm leading-relaxed">
+        <p class="testimonial-text mb-4 text-sm leading-relaxed" style="color: var(--color-charcoal-dark);">
           "أحسن باك خدتو هاد العام. جودة عالية ومكونات طبيعية 100%. التوصيل لمراكش خذ يومين فقط والتغليف راقي جداً ينفع حتى كهدية."
         </p>
         <div class="author-info flex items-center gap-3">
-          <div class="avatar font-bold text-forest bg-cream rounded-full w-10 h-10 flex items-center justify-center">م</div>
+          <div class="avatar font-bold text-forest bg-cream rounded-full w-10 h-10 flex items-center justify-center" style="width: 40px; height: 40px; background-color: var(--color-bg-secondary);">م</div>
           <div>
-            <h4 class="font-bold text-sm">مريم بناني — مراكش</h4>
+            <h4 class="font-bold text-sm" style="font-family: var(--font-heading);">مريم بناني — مراكش</h4>
             <span class="text-xs text-muted">باك العناية الملكي</span>
           </div>
         </div>
@@ -83,6 +83,13 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
+  }
+  .testimonial-card {
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+  .testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
   }
   @media (max-width: 768px) {
     .testimonials-carousel {
