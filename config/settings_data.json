@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_primary": "#2D5F3E",
@@ -6,6 +15,52 @@
     "free_shipping_threshold": 200,
     "enable_free_sample": true,
     "whatsapp_number": "212600000000",
-    "whatsapp_message": "مرحباً، أود الاستفسار عن منتجات العناية بالبشرة"
+    "whatsapp_message": "مرحباً، أود الاستفسار عن منتجات العناية بالبشرة",
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "text_1": "الدفع عند الاستلام",
+          "text_2": "توصيل مجاني لجميع المدن",
+          "text_3": "ضمان لمدة 30 يوم",
+          "interval": 4000
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "menu": "main-menu"
+        }
+      },
+      "mobile-nav-drawer": {
+        "type": "mobile-nav-drawer",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "brand_desc": "علامة مغربية فاخرة متخصصة في مستحضرات العناية بالبشرة.",
+          "links_heading": "روابط سريعة",
+          "service_heading": "خدمة العملاء",
+          "whatsapp_number": "212600000000",
+          "cod_text": ""
+        }
+      },
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {
+          "upsell_product": ""
+        }
+      },
+      "popup-newsletter": {
+        "type": "popup-newsletter",
+        "settings": {}
+      },
+      "popup-cookie-consent": {
+        "type": "popup-cookie-consent",
+        "settings": {}
+      }
+    },
+    "content_for_index": []
   }
 }
