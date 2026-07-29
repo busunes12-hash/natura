@@ -56,8 +56,9 @@
           <li><a href="/pages/returns">ضمان الإشراقة 30 يوماً</a></li>
           <li><a href="/search">البحث في الموسوعة</a></li>
           <li>
+            {%- assign footer_wa = section.settings.whatsapp_number | default: '212600000000' | replace: '+', '' | replace: ' ', '' | replace: '-', '' | replace: '(', '' | replace: ')', '' -%}
             <a
-              href="https://wa.me/{{ section.settings.whatsapp_number | default: '212600000000' }}"
+              href="https://wa.me/{{ footer_wa }}"
               target="_blank"
               rel="noopener noreferrer"
             >

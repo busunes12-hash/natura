@@ -1,19 +1,103 @@
 {% comment %}
-  Floating WhatsApp CTA button snippet with Unread Notification Badge (1) for Morocco support (+212)
+  Floating WhatsApp CTA button snippet with Unread Notification Badge (1)
 {% endcomment %}
-{%- assign wa_number = settings.whatsapp_number | default: '212600000000' -%}
+{%- assign raw_number = settings.whatsapp_number | default: '212600000000' -%}
+{%- assign wa_number = raw_number | replace: '+', '' | replace: ' ', '' | replace: '-', '' | replace: '(', '' | replace: ')', '' -%}
 {%- assign wa_message = settings.whatsapp_message | default: 'مرحباً، أود الاستفسار عن منتجات العناية بالبشرة' | url_encode -%}
 
 <a
   href="https://wa.me/{{ wa_number }}?text={{ wa_message }}"
   target="_blank"
   rel="noopener noreferrer"
-  class="whatsapp-float fixed bottom-6 inset-inline-end-6 z-50 flex items-center justify-center w-14 h-14 text-white rounded-full shadow-lg hover:scale-110 transition-transform"
-  style="position: fixed; bottom: 24px; inset-inline-end: 24px; z-index: 999; width: 56px; height: 56px; background-color: #25D366; color: #FFF; border-radius: 9999px; box-shadow: var(--shadow-lg);"
+  class="whatsapp-float-btn"
   aria-label="تواصل معنا عبر الواتساب"
 >
-  {% render 'icon', name: 'whatsapp' %}
-  <span class="whatsapp-badge flex items-center justify-center font-bold text-xs" style="position: absolute; top: -4px; inset-inline-end: -4px; width: 22px; height: 22px; background-color: var(--color-terracotta); color: #FFF; border-radius: 50%; border: 2px solid #FFF; font-size: 0.75rem;">
-    1
+  <span class="whatsapp-float-icon">
+    {% render 'icon', name: 'whatsapp' %}
   </span>
+  <span class="whatsapp-badge-pulse">1</span>
 </a>
+
+<style>
+  .whatsapp-float-btn {
+    position: fixed;
+    bottom: 24px;
+    inset-inline-end: 24px;
+    z-index: 9999;
+    width: 58px;
+    height: 58px;
+    background-color: #25D366;
+    color: #FFFFFF !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4), 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, background-color 0.3s ease;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .whatsapp-float-btn:hover {
+    transform: scale(1.12);
+    background-color: #20BA5A;
+    box-shadow: 0 14px 30px rgba(37, 211, 102, 0.55), 0 6px 16px rgba(0, 0, 0, 0.2);
+    color: #FFFFFF !important;
+  }
+
+  .whatsapp-float-icon {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .whatsapp-float-icon svg {
+    width: 30px;
+    height: 30px;
+    fill: #FFFFFF;
+  }
+
+  .whatsapp-badge-pulse {
+    position: absolute;
+    top: -2px;
+    inset-inline-end: -2px;
+    width: 22px;
+    height: 22px;
+    background-color: #E63946;
+    color: #FFFFFF;
+    border-radius: 50%;
+    border: 2px solid #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: system-ui, -apple-system, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    animation: wa-badge-pulse 2s infinite ease-in-out;
+  }
+
+  @keyframes wa-badge-pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.18);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .whatsapp-float-btn {
+      bottom: 20px;
+      inset-inline-end: 20px;
+      width: 52px;
+      height: 52px;
+    }
+    .whatsapp-float-icon svg {
+      width: 26px;
+      height: 26px;
+    }
+  }
+</style>
