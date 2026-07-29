@@ -28,13 +28,14 @@
             style="width:100%;height:100%;object-fit:cover;"
           >
         {%- else -%}
-          <div class="ba-placeholder-content">
-            <div class="ba-placeholder-icon" style="color: #a08060;">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
-            </div>
-            <h4 class="ba-placeholder-title" style="color: #6b4c2a;">{{ section.settings.before_label | default: 'قبل الاستعمال' }}</h4>
-            <p class="ba-placeholder-sub" style="color: #8c6844;">{{ section.settings.before_sub | default: 'بشرة مجهدة ودون إشراق' }}</p>
-          </div>
+          <img
+            src="{{ 'skincare-before.jpg' | asset_url }}"
+            alt="{{ section.settings.before_label | default: 'قبل الاستعمال' }}"
+            loading="lazy"
+            width="820"
+            height="461"
+            style="width:100%;height:100%;object-fit:cover;"
+          >
         {%- endif -%}
       </div>
 
@@ -50,13 +51,14 @@
             style="width:100%;height:100%;object-fit:cover;"
           >
         {%- else -%}
-          <div class="ba-placeholder-content">
-            <div class="ba-placeholder-icon" style="color: var(--color-bg-secondary);">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-            </div>
-            <h4 class="ba-placeholder-title" style="color: var(--color-bg-primary);">{{ section.settings.after_label | default: 'بعد 30 يوماً' }}</h4>
-            <p class="ba-placeholder-sub" style="color: rgba(255,248,231,0.8);">{{ section.settings.after_sub | default: 'نضارة فائقة وتوحيد لون البشرة' }}</p>
-          </div>
+          <img
+            src="{{ 'skincare-after.jpg' | asset_url }}"
+            alt="{{ section.settings.after_label | default: 'بعد 30 يوماً' }}"
+            loading="lazy"
+            width="820"
+            height="461"
+            style="width:100%;height:100%;object-fit:cover;"
+          >
         {%- endif -%}
       </div>
 
