@@ -1,0 +1,22 @@
+{% comment %}
+  RTL breadcrumb navigation snippet
+{% endcomment %}
+<nav class="breadcrumb py-4 text-sm font-medium text-muted" aria-label="مسار التنقل">
+  <ol class="flex items-center gap-2 list-none">
+    <li>
+      <a href="{{ routes.root_url }}" class="hover:text-forest">الرئيسية</a>
+    </li>
+    <li aria-hidden="true">/</li>
+    {%- if template.name == 'product' -%}
+      {%- if collection.url -%}
+        <li>
+          <a href="{{ collection.url }}" class="hover:text-forest">{{ collection.title }}</a>
+        </li>
+        <li aria-hidden="true">/</li>
+      {%- endif -%}
+      <li aria-current="page" class="text-forest font-bold">{{ product.title }}</li>
+    {%- elsif template.name == 'collection' and collection.handle -%}
+      <li aria-current="page" class="text-forest font-bold">{{ collection.title }}</li>
+    {%- endif -%}
+  </ol>
+</nav>

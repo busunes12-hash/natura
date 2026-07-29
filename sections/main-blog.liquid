@@ -1,0 +1,55 @@
+{% comment %}
+  Section 3.6: Blog Listing Page
+{% endcomment %}
+<section class="main-blog-section py-12" style="background-color: var(--color-bg-primary);">
+  <div class="container">
+    {% render 'breadcrumb' %}
+
+    <div class="section-header text-center mb-12">
+      <h1 class="type-h1">{{ blog.title | default: "مدونة الجمال الطبيعي 📖" }}</h1>
+      <p class="text-muted mt-2">مقالات وأسرار العناية بالبشرة باستعمال أجود المكونات الطبيعية</p>
+    </div>
+
+    {%- paginate blog.articles by 6 -%}
+      <div class="blog-grid grid grid-cols-1 md:grid-cols-3 gap-8 mb-8" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+        {%- for article in blog.articles -%}
+          <article class="article-card bg-surface rounded-lg shadow-sm overflow-hidden flex flex-col h-full">
+            <div class="article-card__image aspect-video bg-cream" style="aspect-ratio: 16/9;">
+              {%- if article.image -%}
+                <img src="{{ article.image | image_url: width: 600 }}" alt="{{ article.title | escape }}" class="w-full h-full object-cover" width="600" height="337">
+              {%- else -%}
+                <div class="flex items-center justify-center h-full text-4xl text-forest">✨</div>
+              {%- endif -%}
+            </div>
+            <div class="article-card__content p-6 flex flex-col flex-grow justify-between">
+              <div>
+                <span class="text-xs text-muted font-bold block mb-2">{{ article.published_at | date: "%d %B %Y" }}</span>
+                <h3 class="font-bold text-lg mb-2 text-forest"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+                <p class="text-sm text-muted line-clamp-3 mb-4">{{ article.excerpt_or_content | strip_html | truncate: 120 }}</p>
+              </div>
+              <a href="{{ article.url }}" class="text-sm font-bold text-terracotta hover:underline">اقرئي المزيد ←</a>
+            </div>
+          </article>
+        {%- else -%}
+          {%- for i in (1..3) -%}
+            <article class="article-card bg-surface rounded-lg shadow-sm overflow-hidden p-6">
+              <div class="text-4xl mb-4">📖</div>
+              <h3 class="font-bold text-lg mb-2 text-forest">أسرار استخدام زيت التين الشوكي للبشرة {{ i }}</h3>
+              <p class="text-sm text-muted mb-4">تعرفي على الفوائد السحرية لزيت التين الشوكي المغربي وكيفية دمجه في روتينكِ اليومي.</p>
+              <span class="text-sm font-bold text-terracotta">اقرئي المقال الكامل ←</span>
+            </article>
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+
+      {% render 'pagination', paginate: paginate %}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "صفحة المدونة",
+  "settings": []
+}
+{% endschema %}

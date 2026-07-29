@@ -1,0 +1,157 @@
+{% comment %}
+  Section 3.3 & 11: Main Product Detail Page with JSON-LD Structured Data Schema
+{% endcomment %}
+{{ 'component-forms.css' | asset_url | stylesheet_tag }}
+
+<section class="main-product-section py-8" style="background-color: var(--color-bg-primary);">
+  <div class="container">
+    {% render 'breadcrumb' %}
+
+    <div class="product-main-grid grid grid-cols-1 md:grid-cols-2 gap-12 mt-4" style="display: grid; gap: 3rem;">
+      <!-- Column 1: Product Gallery -->
+      <div class="product-gallery">
+        <div class="main-image-wrapper rounded-lg shadow-md overflow-hidden bg-surface mb-4" style="aspect-ratio: 1/1; border-radius: var(--radius-lg);">
+          {%- if product.featured_media -%}
+            <img
+              src="{{ product.featured_media | image_url: width: 800 }}"
+              alt="{{ product.title | escape }}"
+              class="w-full h-full object-cover"
+              loading="eager"
+              width="800"
+              height="800"
+            >
+          {%- else -%}
+            <div class="flex items-center justify-center h-full bg-cream text-forest text-6xl">
+              🌿
+            </div>
+          {%- endif -%}
+        </div>
+
+        <!-- Clinical Study Results Box -->
+        <div class="clinical-box p-6 rounded-md border bg-surface" style="border-color: #E8D5B7; background-color: var(--color-bg-surface);">
+          <h4 class="font-bold text-forest mb-2 flex items-center gap-2">
+            <span>🔬</span> نتائج الاختبارات السريرية:
+          </h4>
+          <ul class="flex flex-col gap-2 text-sm text-muted list-none">
+            <li class="flex items-center gap-2">
+              <span class="text-forest font-bold">✓</span> 98% نضارة فورية من الأسبوع الأول
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-forest font-bold">✓</span> 95% توحيد لون البشرة والتخلص من التصبغات
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-forest font-bold">✓</span> 100% ترطيب عميق بدون ملمس دهني
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Column 2: Product Info & COD Order Form -->
+      <div class="product-info flex flex-col gap-6">
+        <div class="tags-row flex items-center gap-2">
+          <span class="badge-forest">🌿 عضوي 100%</span>
+          <span class="badge-terracotta">🔬 مختبر طبياً</span>
+        </div>
+
+        <h1 class="type-h1">{{ product.title | default: "سيروم فيتامين C العضوي بالنباتات المغربية" }}</h1>
+
+        <div class="rating-row flex items-center gap-2 text-sm">
+          <div class="stars flex">
+            {%- for i in (1..5) -%}
+              {% render 'icon', name: 'star' %}
+            {%- endfor -%}
+          </div>
+          <span class="font-bold text-forest">★★★★★ (4.9/5 - 1,240 تقييم موثق)</span>
+        </div>
+
+        {% render 'price', product: product %}
+
+        <!-- Stock Scarcity Urgency Badge -->
+        <div class="stock-badge p-3 rounded-md bg-terracotta/10 text-terracotta font-bold text-sm flex items-center gap-2" style="background-color: #FDF2EE; color: var(--color-terracotta); border: 1px solid #F5C6B3;">
+          <span>🔥</span> باقي 6 قطع فقط بالمخزون بالمغرب!
+        </div>
+
+        {% form 'product', product, class: 'product-form flex flex-col gap-4' %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+          {%- if product.has_only_default_variant == false -%}
+            <div class="variant-select-wrapper">
+              <label class="font-bold text-sm mb-2 block">اختر السعة:</label>
+              <select name="id" class="form-select">
+                {%- for variant in product.variants -%}
+                  <option value="{{ variant.id }}">
+                    {{ variant.title }} — {{ variant.price | money_without_currency }} د.م.
+                  </option>
+                {%- endfor -%}
+              </select>
+            </div>
+          {%- endif -%}
+
+          <div class="quantity-row flex items-center gap-4">
+            <label class="font-bold text-sm">الكمية:</label>
+            <quantity-input class="quantity-input">
+              <button type="button" name="minus" class="quantity-btn" aria-label="تقليل الكمية">-</button>
+              <input type="number" name="quantity" value="1" min="1" max="10" class="quantity-field" readonly aria-label="كمية المنتج">
+              <button type="button" name="plus" class="quantity-btn" aria-label="زيادة الكمية">+</button>
+            </quantity-input>
+          </div>
+
+          <button
+            type="submit"
+            name="add"
+            class="btn-terracotta text-lg py-4 w-full shadow-lg"
+            data-quick-add="{{ product.selected_or_first_available_variant.id }}"
+          >
+            طلب الآن — الدفع عند الاستلام 🇲🇦
+          </button>
+        {% endform %}
+
+        {% render 'trust-bar' %}
+
+        <!-- Accordions -->
+        <div class="product-accordions flex flex-col gap-3 mt-4">
+          <details class="p-4 bg-surface rounded-md border" style="border-color: #E8D5B7;">
+            <summary class="font-bold cursor-pointer select-none">🌱 المكونات العضوية 100%</summary>
+            <p class="pt-3 text-sm text-muted">زيت الأرغان المغربي البكر، مستخلص فيتامين C النقي من الحمضيات، زيت التين الشوكي المعصور على البارد، وماء الورد البلدي.</p>
+          </details>
+
+          <details class="p-4 bg-surface rounded-md border" style="border-color: #E8D5B7;">
+            <summary class="font-bold cursor-pointer select-none">✨ طريقة الاستخدام الصحيحة</summary>
+            <p class="pt-3 text-sm text-muted">ضعي 3 إلى 4 قطرات على بشرة نظيفة وجافة صباحاً ومساءً، ثم دلكي بحركات دائرية لطيفة حتى الامتصاص التام.</p>
+          </details>
+
+          <details class="p-4 bg-surface rounded-md border" style="border-color: #E8D5B7;">
+            <summary class="font-bold cursor-pointer select-none">🚚 سياسة الشحن والدفع بالمغرب</summary>
+            <p class="pt-3 text-sm text-muted">شحن سريع 24-48 ساعة لجميع مدن المغرب. الدفع نقداً عند استلام طلبكِ ومعاينته مع موزع الشحن.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JSON-LD Structured Data Schema for Google Rich Snippets (Blueprint Section 11) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": {{ product.title | default: "سيروم فيتامين C العضوي" | json }},
+  "image": [ {{ product.featured_media | image_url | default: "https://store.com/cdn/luxury-hero-skincare.jpg" | json }} ],
+  "description": {{ product.description | strip_html | default: "سيروم مركز غني بمستخلص فيتامين C النقي وزيت الأرغان المغربي البكر." | json }},
+  "brand": { "@type": "Brand", "name": "MATERIA Organic Skincare" },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "MAD",
+    "price": "{{ product.price | money_without_currency | default: '199.00' }}",
+    "itemCondition": "https://schema.org/NewCondition",
+    "availability": "https://schema.org/InStock"
+  }
+}
+</script>
+
+{% schema %}
+{
+  "name": "تفاصيل المنتج الرئيسية",
+  "settings": []
+}
+{% endschema %}

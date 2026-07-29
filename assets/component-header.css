@@ -1,0 +1,114 @@
+/* ==========================================================================
+   🌿 MATERIA DTC SKINCARE THEME - STICKY GLASSMORPHISM HEADER
+   Single Source of Truth: Section 2 of THEME_BLUEPRINT.md
+   ========================================================================== */
+
+.header-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(45, 95, 62, 0.1);
+  transition: all var(--transition-base);
+}
+
+.header {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+  .header {
+    height: 60px;
+  }
+}
+
+.header__logo {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-forest);
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.header__nav-link {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-charcoal-dark);
+  position: relative;
+  padding-block: 0.5rem;
+}
+
+.header__nav-link:hover,
+.header__nav-link.is-active {
+  color: var(--color-forest-deep);
+}
+
+.header__nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  inset-inline-start: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-forest);
+  transition: width var(--transition-base);
+}
+
+.header__nav-link:hover::after {
+  width: 100%;
+}
+
+.header__icons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* 44x44px circular touch targets with 22x22px SVG icons */
+.header__icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-forest);
+  background-color: transparent;
+  transition: background-color var(--transition-base);
+  position: relative;
+}
+
+.header__icon-btn:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+.header__cart-badge {
+  position: absolute;
+  top: 4px;
+  inset-inline-end: 4px;
+  background-color: var(--color-terracotta);
+  color: var(--color-bg-surface);
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

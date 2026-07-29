@@ -1,0 +1,25 @@
+/* ==========================================================================
+   🌿 MATERIA DTC SKINCARE THEME - RTL ENFORCER LAYER
+   Single Source of Truth: Section 10 of THEME_BLUEPRINT.md
+   ========================================================================== */
+
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Prevent third-party apps or inline styles from forcing LTR */
+html, body {
+  direction: rtl !important;
+}
+
+/* Ensure drawers slide from the correct inline start/end side */
+.drawer-content {
+  inset-inline-start: auto;
+  inset-inline-end: 0;
+}
+
+/* Mirror icons that indicate direction where necessary */
+[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+}

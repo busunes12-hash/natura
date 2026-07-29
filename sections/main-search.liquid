@@ -1,0 +1,66 @@
+{% comment %}
+  Section 3.5: Search & Predictive Search Results
+{% endcomment %}
+<section class="main-search-section py-12" style="background-color: var(--color-bg-primary);">
+  <div class="container">
+    <div class="search-header text-center max-w-xl mx-auto mb-12">
+      <h1 class="type-h1 mb-4">البحث في المنتجات 🔍</h1>
+      <form action="{{ routes.search_url }}" method="get" class="flex gap-2">
+        <input
+          type="search"
+          name="q"
+          value="{{ search.terms | escape }}"
+          placeholder="ابحثي عن سيروم، كريم، أو زيوت..."
+          class="form-input text-lg py-3 flex-grow"
+          aria-label="كلمة البحث"
+        >
+        <button type="submit" class="btn-primary py-3 px-6 whitespace-nowrap">
+          بحث 🌿
+        </button>
+      </form>
+    </div>
+
+    {%- if search.performed -%}
+      <div class="search-results-info text-center mb-6">
+        <p class="text-muted">
+          نتائج البحث عن: <strong class="text-forest">"{{ search.terms }}"</strong> ({{ search.results_count }} نتيجة)
+        </p>
+      </div>
+
+      <div class="products-grid">
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {% render 'product-card', product: item %}
+          {%- endif -%}
+        {%- else -%}
+          <div class="no-results text-center py-12 col-span-full">
+            <span class="text-4xl mb-2 block">🌿</span>
+            <h3 class="font-bold text-lg">لم نجد أي نتائج مطابقة لبحثكِ</h3>
+            <p class="text-muted text-sm mt-1">جربي البحث بكلمات أخرى مثل "سيروم" أو "أرغان"</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  @media (max-width: 1024px) {
+    .products-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .products-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 0.75rem; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "صفحة البحث",
+  "settings": []
+}
+{% endschema %}

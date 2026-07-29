@@ -1,0 +1,31 @@
+{
+  "sections": {
+    "main_product": {
+      "type": "main-product",
+      "settings": {}
+    },
+    "ingredients_showcase": {
+      "type": "ingredients-showcase",
+      "settings": {}
+    },
+    "before_after": {
+      "type": "before-after",
+      "settings": {}
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {}
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main_product",
+    "ingredients_showcase",
+    "before_after",
+    "testimonials",
+    "faq"
+  ]
+}

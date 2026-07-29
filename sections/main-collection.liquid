@@ -1,0 +1,76 @@
+{% comment %}
+  Section 3.2: Collection Page Section
+{% endcomment %}
+<section class="main-collection-section py-8" style="background-color: var(--color-bg-primary);">
+  <div class="container">
+    {% render 'breadcrumb' %}
+
+    <div class="collection-header flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
+      <div>
+        <h1 class="type-h1">{{ collection.title | default: "جميع المنتجات الطبيعية" }}</h1>
+        {%- if collection.description != blank -%}
+          <p class="text-muted text-sm mt-1">{{ collection.description }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="sort-wrapper flex items-center gap-2">
+        <label class="text-sm font-bold whitespace-nowrap">الترتيب حسب:</label>
+        <select class="form-select text-sm py-2" style="width: auto;" onchange="location.href = this.value">
+          <option value="?sort_by=manual">المميز</option>
+          <option value="?sort_by=best-selling">الأكثر مبيعاً</option>
+          <option value="?sort_by=price-ascending">السعر: من الأقل للأعلى</option>
+          <option value="?sort_by=price-descending">السعر: من الأعلى للأقل</option>
+        </select>
+      </div>
+    </div>
+
+    {%- paginate collection.products by 12 -%}
+      <div class="products-grid mb-8">
+        {%- for product in collection.products -%}
+          {% render 'product-card', product: product %}
+        {%- else -%}
+          {%- for i in (1..6) -%}
+            <div class="product-card-dummy product-card">
+              <div class="product-card__image-wrapper flex items-center justify-center bg-cream text-4xl">🌿</div>
+              <div class="product-card__content">
+                <h3 class="product-card__title">مستحضر عناية مغربي فاخر {{ i }}</h3>
+                <div class="price-container flex items-center gap-2">
+                  <span class="font-bold text-forest">199 د.م.</span>
+                </div>
+                <button type="button" class="btn-primary product-card__quick-add">إضافة للسلة 🛒</button>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+
+      {% render 'pagination', paginate: paginate %}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+<style>
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  @media (max-width: 1024px) {
+    .products-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .products-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 0.75rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "صفحة المجموعة الرئيسية",
+  "settings": []
+}
+{% endschema %}

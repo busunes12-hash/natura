@@ -1,0 +1,34 @@
+{% comment %}
+  Section 13: Newsletter
+  Form: Integrated with Shopify Customer Form API ({% form 'customer' %}), Terracotta submit button.
+{% endcomment %}
+<section class="newsletter-section py-16 text-center" style="background-color: var(--color-forest); color: var(--color-bg-primary);">
+  <div class="container max-w-2xl" style="max-width: 700px;">
+    <span class="inline-block p-3 rounded-full mb-4" style="background: rgba(255, 248, 231, 0.15);">💌</span>
+    <h2 class="type-h2 mb-4" style="color: var(--color-bg-primary);">انضمي لمجتمع ماتيريا للجمال الطبيعي</h2>
+    <p class="mb-8 opacity-90 text-lg">اشتركي بنشرتنا البريدية واحصلي فوراً على خصم 10% على طلبكِ الأول بالإضافة إلى نصائح العناية الحصرية.</p>
+
+    {% form 'customer', class: 'newsletter-form flex flex-col md:flex-row gap-3 justify-center' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <input
+        type="email"
+        name="contact[email]"
+        class="newsletter-input px-6 py-4 rounded-full text-charcoal bg-surface font-body border-none outline-none focus:ring-2 focus:ring-terracotta"
+        placeholder="أدخلي بريدكِ الإلكتروني..."
+        required
+        aria-label="البريد الإلكتروني"
+        style="min-width: 300px; color: var(--color-charcoal-dark); background-color: var(--color-bg-surface);"
+      >
+      <button type="submit" class="btn-terracotta whitespace-nowrap">
+        اشتركي الآن 🌿
+      </button>
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "النشرة البريدية",
+  "settings": []
+}
+{% endschema %}

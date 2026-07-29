@@ -1,0 +1,74 @@
+{% comment %}
+  Section 3: Hero Banner
+  Preload Tag: Dynamically preloads luxury-hero-skincare.jpg via <link rel="preload" as="image">
+  Image Container: aspect-ratio: 1/1, object-fit: cover, border-radius: 20px, box-shadow: var(--shadow-lg)
+{% endcomment %}
+{{ 'section-hero.css' | asset_url | stylesheet_tag }}
+
+<section class="hero-section">
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <div class="hero-content__tag">
+        <span>🔬</span>
+        <span>تركيبات طبيعية فاخرة مصممة للبشرة المغربية</span>
+      </div>
+
+      <h1 class="hero-content__title">
+        {{ section.settings.title | default: "استعيدي إشراقة بشرتكِ الطبيعية بأجود الزيوت العضوية" }}
+      </h1>
+
+      <p class="hero-content__subtext">
+        {{ section.settings.subtext | default: "مستحضرات عناية فائقة الجودة مستوحاة من الطبيعة المغربية الغنية، موثقة مخبرياً ومصنوعة بعناية فائقة لتمنحكِ بشرة ناعمة ومشعة." }}
+      </p>
+
+      <div class="hero-content__actions">
+        <a href="{{ section.settings.btn_link | default: '/collections/all' }}" class="btn-primary">
+          تسوّقي المجموعة 🌿
+        </a>
+        <a href="#testimonials" class="btn-secondary">
+          آراء العميلات ⭐ (4.9/5)
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <div class="hero-image__wrapper">
+        <img
+          src="{{ 'luxury-hero-skincare.jpg' | asset_url }}"
+          alt="مستحضرات ماتيريا الفاخرة للعناية بالبشرة"
+          class="hero-image__img"
+          loading="eager"
+          fetchpriority="high"
+          width="800"
+          height="800"
+        >
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "الهيرو الرئيسي",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "العنوان الرئيسي",
+      "default": "استعيدي إشراقة بشرتكِ الطبيعية بأجود الزيوت العضوية"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "الوصف الفرعي",
+      "default": "مستحضرات عناية فائقة الجودة مستوحاة من الطبيعة المغربية الغنية، موثقة مخبرياً ومصنوعة بعناية فائقة لتمنحكِ بشرة ناعمة ومشعة."
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "رابط زر التسوق",
+      "default": "/collections/all"
+    }
+  ]
+}
+{% endschema %}

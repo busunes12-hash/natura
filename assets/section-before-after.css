@@ -1,0 +1,81 @@
+/* ==========================================================================
+   🌿 MATERIA DTC SKINCARE THEME - BEFORE/AFTER TRANSFORM SLIDER
+   Single Source of Truth: Section 9 of THEME_BLUEPRINT.md
+   ========================================================================== */
+
+.before-after-container {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin-inline: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  touch-action: pan-y;
+  user-select: none;
+}
+
+@media (max-width: 640px) {
+  .before-after-container {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+.ba-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ba-image--after {
+  position: absolute;
+  top: 0;
+  inset-inline-start: 0;
+  height: 100%;
+  width: 50%;
+  overflow: hidden;
+  border-inline-end: 3px solid var(--color-bg-surface);
+}
+
+.ba-image--after img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ba-label {
+  position: absolute;
+  bottom: 1rem;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.65);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: var(--radius-sm);
+  z-index: 10;
+  backdrop-filter: blur(4px);
+}
+
+.ba-label--before {
+  inset-inline-end: 1rem;
+}
+
+.ba-label--after {
+  inset-inline-start: 1rem;
+  background: var(--color-forest);
+}
+
+.ba-slider-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: ew-resize;
+  z-index: 20;
+}

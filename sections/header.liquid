@@ -1,0 +1,74 @@
+{% comment %}
+  Section 2: Sticky Header
+  Container: height: 72px (desktop) / 60px (mobile), background: rgba(255, 255, 255, 0.95), backdrop-filter: blur(12px).
+  Icons: 44x44px circular touch targets with 22x22px SVG icons.
+{% endcomment %}
+{{ 'component-header.css' | asset_url | stylesheet_tag }}
+
+<header class="header-wrapper">
+  <div class="container header">
+    <!-- Mobile Menu Trigger Button -->
+    <button
+      type="button"
+      class="header__icon-btn lg:hidden"
+      aria-label="افتح القائمة الرئيسية"
+      onclick="document.querySelector('#MobileNavDrawer')?.open()"
+    >
+      {% render 'icon', name: 'menu' %}
+    </button>
+
+    <!-- Brand Logo -->
+    <a href="{{ routes.root_url }}" class="header__logo">
+      <span>🌿</span>
+      <span>{{ shop.name | default: 'MATERIA' }}</span>
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    <nav class="header__nav hidden lg:flex" aria-label="التنقل الرئيسي">
+      {%- for link in linklists.main-menu.links -%}
+        <a
+          href="{{ link.url }}"
+          class="header__nav-link{% if link.active %} is-active{% endif %}"
+        >
+          {{ link.title }}
+        </a>
+      {%- default -%}
+        <a href="{{ routes.root_url }}" class="header__nav-link is-active">الرئيسية</a>
+        <a href="/collections/all" class="header__nav-link">منتجاتنا الطبيعية</a>
+        <a href="/pages/about" class="header__nav-link">قصتنا</a>
+        <a href="/blogs/news" class="header__nav-link">مدونة الجمال</a>
+        <a href="/pages/contact" class="header__nav-link">اتصلي بنا</a>
+      {%- endfor -%}
+    </nav>
+
+    <!-- Icons Group (Search, Account, Cart Drawer trigger) -->
+    <div class="header__icons">
+      <a href="{{ routes.search_url }}" class="header__icon-btn" aria-label="البحث في المتجر">
+        {% render 'icon', name: 'search' %}
+      </a>
+
+      <a href="{{ routes.account_url }}" class="header__icon-btn" aria-label="حسابي">
+        {% render 'icon', name: 'user' %}
+      </a>
+
+      <button
+        type="button"
+        class="header__icon-btn"
+        aria-label="سلة التسوق"
+        onclick="document.querySelector('#CartDrawer')?.open()"
+      >
+        {% render 'icon', name: 'cart' %}
+        <span class="header__cart-badge{% if cart.item_count == 0 %} hidden{% endif %}" data-cart-count>
+          {{ cart.item_count }}
+        </span>
+      </button>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "الهيدر الرئيسي",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,67 @@
+{
+  "sections": {
+    "hero_banner": {
+      "type": "hero-banner",
+      "settings": {
+        "title": "استعيدي إشراقة بشرتكِ الطبيعية بأجود الزيوت العضوية",
+        "subtext": "مستحضرات عناية فائقة الجودة مستوحاة من الطبيعة المغربية الغنية، موثقة مخبرياً ومصنوعة بعناية فائقة لتمنحكِ بشرة ناعمة ومشعة.",
+        "btn_link": "/collections/all"
+      }
+    },
+    "ingredients_showcase": {
+      "type": "ingredients-showcase",
+      "settings": {}
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "products_to_show": 4
+      }
+    },
+    "collection_list": {
+      "type": "collection-list",
+      "settings": {}
+    },
+    "why_choose_us": {
+      "type": "why-choose-us",
+      "settings": {}
+    },
+    "skincare_routine": {
+      "type": "skincare-routine",
+      "settings": {}
+    },
+    "before_after": {
+      "type": "before-after",
+      "settings": {}
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {}
+    },
+    "press_certifications": {
+      "type": "press-certifications",
+      "settings": {}
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero_banner",
+    "ingredients_showcase",
+    "featured_collection",
+    "collection_list",
+    "why_choose_us",
+    "skincare_routine",
+    "before_after",
+    "testimonials",
+    "press_certifications",
+    "faq",
+    "newsletter"
+  ]
+}

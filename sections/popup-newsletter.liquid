@@ -1,0 +1,48 @@
+{% comment %}
+  10% first-order discount modal popup
+{% endcomment %}
+<modal-dialog id="NewsletterModal" class="modal-wrapper">
+  <div class="modal-overlay"></div>
+  <div class="modal-content p-8 rounded-lg shadow-lg text-center max-w-md bg-surface" style="background-color: var(--color-bg-surface); max-width: 480px; position: relative;">
+    <button type="button" class="modal-close" data-modal-close aria-label="إغلاق النافذة" style="position: absolute; top: 12px; inset-inline-end: 12px; font-size: 1.5rem;">✕</button>
+    <span class="text-4xl mb-2 block">🌿</span>
+    <h3 class="type-h2 text-forest mb-2">هدية ترحيبية خاصة 🎁</h3>
+    <p class="text-muted text-sm mb-6">احصلي على خصم 10% على طلبكِ الأول عند الاشتراك بنشرتنا البريدية.</p>
+    {% form 'customer', class: 'flex flex-col gap-3' %}
+      <input type="hidden" name="contact[tags]" value="newsletter_popup">
+      <input type="email" name="contact[email]" placeholder="بريدكِ الإلكتروني..." required class="p-3 border rounded-md font-body text-sm" style="border-color: #DDD;">
+      <button type="submit" class="btn-terracotta">احصلي على الكوبون 🌿</button>
+    {% endform %}
+  </div>
+</modal-dialog>
+
+<style>
+  .modal-wrapper {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-wrapper.is-active {
+    display: flex;
+  }
+  .modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+  }
+  .modal-content {
+    position: relative;
+    z-index: 1001;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "نافذة الخصم المنبثقة",
+  "settings": []
+}
+{% endschema %}

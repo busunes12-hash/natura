@@ -1,0 +1,37 @@
+{% comment %}
+  Section 1: Announcement Bar
+  Container: min-height: 36px, padding-block: 8px, background: #2D5F3E, text: #FFF8E7.
+  Responsive: font-size: 12px on mobile (<=480px), 14px on desktop.
+{% endcomment %}
+<div class="announcement-bar text-center font-bold" style="background-color: var(--color-forest); color: var(--color-bg-primary); min-height: 36px; padding-block: 8px;">
+  <div class="container flex items-center justify-center gap-2">
+    <span class="announcement-bar__text text-xs md:text-sm">
+      {{ section.settings.text | default: "🇲🇦 توصيل مجاني وسريع في جميع مدن المغرب • الدفع عند الاستلام 🌿" }}
+    </span>
+  </div>
+</div>
+
+<style>
+  .announcement-bar__text {
+    font-size: 12px;
+  }
+  @media (min-width: 481px) {
+    .announcement-bar__text {
+      font-size: 14px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "شريط الإعلانات",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "نص الإعلان",
+      "default": "🇲🇦 توصيل مجاني وسريع في جميع مدن المغرب • الدفع عند الاستلام 🌿"
+    }
+  ]
+}
+{% endschema %}

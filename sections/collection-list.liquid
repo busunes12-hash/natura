@@ -1,0 +1,92 @@
+{% comment %}
+  Section 6: Shop by Collection
+  Category Card: Square 1:1 image, border-radius: 20px, dark text overlay (from-black/75 to-transparent).
+{% endcomment %}
+<section class="collection-list-section py-12" style="background-color: var(--color-bg-primary);">
+  <div class="container">
+    <div class="section-header text-center mb-8">
+      <h2 class="type-h2">تسوقي حسب التشكيلة 🌿</h2>
+      <p class="text-muted mt-2">عناية مخصصة لمختلف احتياجات بشرتكِ اليومية</p>
+    </div>
+
+    <div class="collection-grid">
+      <div class="category-card">
+        <div class="category-card__image-wrapper">
+          <div class="category-card__dummy-img flex items-center justify-center text-5xl" style="background: linear-gradient(135deg, #2D5F3E, #1E3F2A); width: 100%; height: 100%;">💧</div>
+          <div class="category-card__overlay">
+            <h3 class="category-card__title">سيرومات الوجه المركزّة</h3>
+            <span class="category-card__link">استكشفي المجموعة ←</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="category-card">
+        <div class="category-card__image-wrapper">
+          <div class="category-card__dummy-img flex items-center justify-center text-5xl" style="background: linear-gradient(135deg, #C4724E, #8C472A); width: 100%; height: 100%;">✨</div>
+          <div class="category-card__overlay">
+            <h3 class="category-card__title">كريمات الترطيب الفاخرة</h3>
+            <span class="category-card__link">استكشفي المجموعة ←</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="category-card">
+        <div class="category-card__image-wrapper">
+          <div class="category-card__dummy-img flex items-center justify-center text-5xl" style="background: linear-gradient(135deg, #1E3F2A, #0F2015); width: 100%; height: 100%;">🎁</div>
+          <div class="category-card__overlay">
+            <h3 class="category-card__title">باكات العناية المتكاملة</h3>
+            <span class="category-card__link">توفير حتى 25% ←</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .collection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  @media (max-width: 768px) {
+    .collection-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .category-card__image-wrapper {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  .category-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    color: #FFFFFF;
+  }
+  .category-card__title {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .category-card__link {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-bg-secondary);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "التشكيلات والكتالوجات",
+  "settings": []
+}
+{% endschema %}

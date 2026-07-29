@@ -1,0 +1,59 @@
+{% comment %}
+  Section 4: Ingredients / Pill Capsule Trust Bar
+  Container: Pill capsule shape (rounded-full) on desktop with 1px solid #E8D5B7 border.
+  Icons: 28x28px stroke SVGs.
+{% endcomment %}
+<section class="ingredients-trust-bar py-8" style="background-color: var(--color-bg-primary);">
+  <div class="container">
+    <div class="pill-container flex flex-wrap items-center justify-between gap-6 py-4 px-8 rounded-full border shadow-sm" style="border: 1px solid #E8D5B7; background-color: var(--color-bg-surface);">
+      
+      <div class="pill-item flex items-center gap-3">
+        <span class="pill-icon text-forest" style="width: 28px; height: 28px; display: inline-flex;">
+          {% render 'icon', name: 'truck' %}
+        </span>
+        <div>
+          <h4 class="font-bold text-sm" style="font-size: 0.95rem;">🇲🇦 الدفع عند الاستلام</h4>
+          <p class="text-xs text-muted" style="font-size: 0.8rem; color: #666;">توصيل آمن لجميع المدن</p>
+        </div>
+      </div>
+
+      <div class="pill-item flex items-center gap-3">
+        <span class="pill-icon text-forest" style="width: 28px; height: 28px; display: inline-flex;">
+          {% render 'icon', name: 'flask' %}
+        </span>
+        <div>
+          <h4 class="font-bold text-sm" style="font-size: 0.95rem;">🔬 مختبر جلدياً</h4>
+          <p class="text-xs text-muted" style="font-size: 0.8rem; color: #666;">آمن 100% للبشرة الحساسة</p>
+        </div>
+      </div>
+
+      <div class="pill-item flex items-center gap-3">
+        <span class="pill-icon text-forest" style="width: 28px; height: 28px; display: inline-flex;">
+          {% render 'icon', name: 'shield' %}
+        </span>
+        <div>
+          <h4 class="font-bold text-sm" style="font-size: 0.95rem;">🚚 شحن سريع 24-48h</h4>
+          <p class="text-xs text-muted" style="font-size: 0.8rem; color: #666;">خدمة توصيل فورية</p>
+        </div>
+      </div>
+
+      <div class="pill-item flex items-center gap-3">
+        <span class="pill-icon text-forest" style="width: 28px; height: 28px; display: inline-flex;">
+          {% render 'icon', name: 'leaf' %}
+        </span>
+        <div>
+          <h4 class="font-bold text-sm" style="font-size: 0.95rem;">🌿 مكونات عضوية 100%</h4>
+          <p class="text-xs text-muted" style="font-size: 0.8rem; color: #666;">خالية من المواد الكيميائية</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "شريط الثقة والمكونات",
+  "settings": []
+}
+{% endschema %}

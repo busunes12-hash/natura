@@ -1,0 +1,62 @@
+/* ==========================================================================
+   🌿 MATERIA DTC SKINCARE THEME - COMPONENT FORMS & QUANTITY SELECTOR
+   ========================================================================== */
+
+.quantity-input {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--color-forest);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  background-color: var(--color-bg-surface);
+}
+
+.quantity-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--color-forest);
+  transition: background-color var(--transition-base);
+}
+
+.quantity-btn:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+.quantity-field {
+  width: 50px;
+  text-align: center;
+  border: none;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.1rem;
+  background: transparent;
+  -moz-appearance: textfield;
+}
+
+.quantity-field::-webkit-outer-spin-button,
+.quantity-field::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-select, .form-input {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  border: 1px solid #E8D5B7;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  background-color: var(--color-bg-surface);
+  color: var(--color-charcoal-dark);
+  outline: none;
+  transition: border-color var(--transition-base);
+}
+
+.form-select:focus, .form-input:focus {
+  border-color: var(--color-forest);
+}

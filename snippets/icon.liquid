@@ -1,0 +1,7 @@
+{% comment %}
+  Renders an SVG icon by ID reference
+  Usage: {% render 'icon', name: 'cart' %}
+{% endcomment %}
+<svg class="icon icon-{{ name }}" aria-hidden="true" focusable="false" width="22" height="22">
+  <use href="#icon-{{ name }}"></use>
+</svg>

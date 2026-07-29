@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main_collection": {
+      "type": "main-collection",
+      "settings": {}
+    },
+    "trust_showcase": {
+      "type": "ingredients-showcase",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main_collection",
+    "trust_showcase"
+  ]
+}

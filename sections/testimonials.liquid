@@ -1,0 +1,107 @@
+{% comment %}
+  Section 10: Testimonials & UGC
+  Mobile Swipe: CSS touch snap-scroll (scroll-snap-type: x mandatory) on viewports <=640px.
+  Trust Badges: Verified Moroccan buyer badges (شراء موثق 🇲🇦).
+{% endcomment %}
+<section id="testimonials" class="testimonials-section py-16" style="background-color: var(--color-bg-primary);">
+  <div class="container">
+    <div class="section-header text-center mb-12">
+      <span class="badge-terracotta mb-2">تجارب حقيقية</span>
+      <h2 class="type-h2">ماذا تقول عميلاتنا في المغرب؟ 🇲🇦</h2>
+      <p class="text-muted mt-2">أكثر من 1,200 تقييم 5 نجوم من سيدات جربن منتجاتنا</p>
+    </div>
+
+    <div class="testimonials-carousel">
+      <div class="testimonial-card p-6 bg-surface rounded-lg shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <div class="stars flex gap-1">
+            {%- for i in (1..5) -%}
+              {% render 'icon', name: 'star' %}
+            {%- endfor -%}
+          </div>
+          <span class="badge-forest text-xs">شراء موثق 🇲🇦</span>
+        </div>
+        <p class="testimonial-text mb-4 text-sm leading-relaxed">
+          "صراحة السيروم روعة! فرق كبير لاحظتو من الأسبوع الأول في نضارة الوجه والصفاء. والتوصيل كان سريع بزاف للدار البيضاء ودفعوني حتى وصلتني الأمانة."
+        </p>
+        <div class="author-info flex items-center gap-3">
+          <div class="avatar font-bold text-forest bg-cream rounded-full w-10 h-10 flex items-center justify-center">ف</div>
+          <div>
+            <h4 class="font-bold text-sm">فاطمة الزهراء — الدار البيضاء</h4>
+            <span class="text-xs text-muted">سيروم فيتامين C العضوي</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card p-6 bg-surface rounded-lg shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <div class="stars flex gap-1">
+            {%- for i in (1..5) -%}
+              {% render 'icon', name: 'star' %}
+            {%- endfor -%}
+          </div>
+          <span class="badge-forest text-xs">شراء موثق 🇲🇦</span>
+        </div>
+        <p class="testimonial-text mb-4 text-sm leading-relaxed">
+          "كريم التين الشوكي غزال بزاف على البشرة. كيرطب من الأعماق وريحته طبيعية غزالة. كنشكركم على الجودة وحسن التعامل بالواتساب."
+        </p>
+        <div class="author-info flex items-center gap-3">
+          <div class="avatar font-bold text-forest bg-cream rounded-full w-10 h-10 flex items-center justify-center">س</div>
+          <div>
+            <h4 class="font-bold text-sm">سناء البقالي — الرباط</h4>
+            <span class="text-xs text-muted">كريم التين الشوكي الفاخر</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card p-6 bg-surface rounded-lg shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <div class="stars flex gap-1">
+            {%- for i in (1..5) -%}
+              {% render 'icon', name: 'star' %}
+            {%- endfor -%}
+          </div>
+          <span class="badge-forest text-xs">شراء موثق 🇲🇦</span>
+        </div>
+        <p class="testimonial-text mb-4 text-sm leading-relaxed">
+          "أحسن باك خدتو هاد العام. جودة عالية ومكونات طبيعية 100%. التوصيل لمراكش خذ يومين فقط والتغليف راقي جداً ينفع حتى كهدية."
+        </p>
+        <div class="author-info flex items-center gap-3">
+          <div class="avatar font-bold text-forest bg-cream rounded-full w-10 h-10 flex items-center justify-center">م</div>
+          <div>
+            <h4 class="font-bold text-sm">مريم بناني — مراكش</h4>
+            <span class="text-xs text-muted">باك العناية الملكي</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials-carousel {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  @media (max-width: 768px) {
+    .testimonials-carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 1rem;
+      -webkit-overflow-scrolling: touch;
+    }
+    .testimonial-card {
+      min-width: 85%;
+      scroll-snap-align: center;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "آراء العميلات",
+  "settings": []
+}
+{% endschema %}

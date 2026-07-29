@@ -1,0 +1,31 @@
+{% comment %}
+  Section 3.6: Article Reader Page
+{% endcomment %}
+<section class="main-article-section py-12" style="background-color: var(--color-bg-primary);">
+  <div class="container max-w-3xl" style="max-width: 800px;">
+    {% render 'breadcrumb' %}
+
+    <header class="article-header text-center my-8">
+      <span class="badge-forest mb-2">مدونة الجمال</span>
+      <h1 class="type-h1 mb-4">{{ article.title | default: "أسرار استخدام زيت التين الشوكي المغربي للبشرة" }}</h1>
+      <span class="text-sm text-muted font-medium">{{ article.published_at | date: "%d %B %Y" }} • بقلم فريق ماتيريا</span>
+    </header>
+
+    {%- if article.image -%}
+      <div class="article-featured-image rounded-lg overflow-hidden mb-8 shadow-md" style="aspect-ratio: 16/9;">
+        <img src="{{ article.image | image_url: width: 1000 }}" alt="{{ article.title | escape }}" class="w-full h-full object-cover" width="1000" height="562">
+      </div>
+    {%- endif -%}
+
+    <div class="article-body prose max-w-none text-lg leading-relaxed text-charcoal" style="line-height: 1.8;">
+      {{ article.content | default: "<p>يُعد زيت التين الشوكي المغربي من أندر وأثمن الزيوت العضوية في العالم، حيث يحتوي على نسب قياسية من فيتامين E والأحماض الدهنية الأساسية التي تعمل على تجديد خلايا البشرة ومحاربة التجاعيد والتصبغات بشكل طبيعي وبدون أي آثار جانبية.</p>" }}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "صفحة المقال",
+  "settings": []
+}
+{% endschema %}

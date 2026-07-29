@@ -1,0 +1,29 @@
+{% comment %}
+  Renders product price in Moroccan Dirham (د.م.)
+  Usage: {% render 'price', product: product %}
+{% endcomment %}
+{%- liquid
+  assign target = product
+  if target.price_varies
+    assign price = target.price_min
+  else
+    assign price = target.price
+  endif
+  assign compare_at_price = target.compare_at_price
+-%}
+
+<div class="price-container flex items-center gap-2">
+  <span class="price-item price-item--sale font-bold text-forest" style="color: var(--color-forest); font-weight: 700; font-size: 1.1rem;">
+    {{ price | money_without_currency }} د.م.
+  </span>
+
+  {%- if compare_at_price > price -%}
+    <s class="price-item price-item--regular line-through text-muted" style="color: #777; font-size: 0.95rem;">
+      {{ compare_at_price | money_without_currency }} د.م.
+    </s>
+    {%- assign savings = compare_at_price | minus: price | times: 100 | divided_by: compare_at_price -%}
+    <span class="badge-terracotta">
+      وفري {{ savings }}%
+    </span>
+  {%- endif -%}
+</div>

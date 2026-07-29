@@ -1,0 +1,120 @@
+{% comment %}
+  Section 3.4: AJAX Slide-Out Cart Drawer
+{% endcomment %}
+{{ 'component-drawer.css' | asset_url | stylesheet_tag }}
+
+<drawer-component id="CartDrawer" class="drawer-component">
+  <div class="drawer-overlay"></div>
+
+  <div class="drawer-content">
+    <div class="drawer-header">
+      <h3 class="drawer-title">
+        <span>🌿</span> سلة التسوق
+      </h3>
+      <button type="button" class="drawer-close" data-drawer-close aria-label="إغلاق السلة">
+        {% render 'icon', name: 'close' %}
+      </button>
+    </div>
+
+    <!-- Free Shipping Progress Bar (200 MAD Threshold) -->
+    {%- assign free_shipping_threshold = settings.free_shipping_threshold | default: 200 | times: 100 -%}
+    {%- assign cart_total = cart.total_price -%}
+    {%- assign progress_percentage = cart_total | times: 100 | divided_by: free_shipping_threshold -%}
+    {%- if progress_percentage > 100 -%}{%- assign progress_percentage = 100 -%}{%- endif -%}
+
+    <div class="free-shipping-bar text-xs font-bold text-center">
+      {%- if cart_total >= free_shipping_threshold -%}
+        <span class="text-forest">🎉 مبروك! لقد حصلتِ على شحن مجاني لجميع مدن المغرب!</span>
+      {%- else -%}
+        {%- assign needed = free_shipping_threshold | minus: cart_total -%}
+        <span>أضيفي بـ <strong class="text-terracotta">{{ needed | money_without_currency }} د.م.</strong> إضافي للحصول على شحن مجاني!</span>
+      {%- endif -%}
+      <div class="progress-track">
+        <div class="progress-fill" style="width: {{ progress_percentage }}%;"></div>
+      </div>
+    </div>
+
+    <!-- Drawer Body -->
+    <div class="drawer-body" id="CartDrawerContent">
+      {%- if cart.item_count > 0 -%}
+        <div class="cart-items-list flex flex-col gap-4">
+          {%- for item in cart.items -%}
+            <div class="cart-item flex gap-4 p-3 bg-surface rounded-md border" style="border-color: #E8D5B7;">
+              <div class="cart-item__image w-16 h-16 rounded overflow-hidden flex-shrink-0 bg-cream" style="width: 64px; height: 64px;">
+                {%- if item.image -%}
+                  <img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title | escape }}" class="w-full h-full object-cover" width="64" height="64">
+                {%- else -%}
+                  <div class="flex items-center justify-center h-full text-forest">🌿</div>
+                {%- endif -%}
+              </div>
+
+              <div class="cart-item__details flex-grow flex flex-col justify-between">
+                <div class="flex items-start justify-between">
+                  <h4 class="font-bold text-sm leading-tight">{{ item.product.title }}</h4>
+                  <button
+                    type="button"
+                    class="text-xs text-muted hover:text-terracotta"
+                    onclick="CartManager.changeQuantity('{{ item.key }}', 0)"
+                  >
+                    حذف
+                  </button>
+                </div>
+
+                <div class="flex items-center justify-between mt-2">
+                  <quantity-input class="quantity-input" style="scale: 0.85; transform-origin: right center;">
+                    <button type="button" name="minus" class="quantity-btn" onclick="CartManager.changeQuantity('{{ item.key }}', {{ item.quantity | minus: 1 }})">-</button>
+                    <input type="number" value="{{ item.quantity }}" readonly class="quantity-field" aria-label="الكمية">
+                    <button type="button" name="plus" class="quantity-btn" onclick="CartManager.changeQuantity('{{ item.key }}', {{ item.quantity | plus: 1 }})">+</button>
+                  </quantity-input>
+
+                  <span class="font-bold text-forest text-sm">
+                    {{ item.final_line_price | money_without_currency }} د.م.
+                  </span>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <div class="cart-empty flex flex-col items-center justify-center text-center py-12">
+          <span class="text-5xl mb-4">🛒</span>
+          <h4 class="font-bold text-lg mb-2">سلة التسوق فارغة حالياً</h4>
+          <p class="text-xs text-muted mb-6">استكشفي منتجاتنا العضوية الفاخرة وأضيفي ما يناسبكِ.</p>
+          <a href="/collections/all" class="btn-primary text-sm" data-drawer-close>
+            تصفحي الكتالوج 🌿
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="drawer-footer">
+      <div class="cod-banner p-3 rounded-md bg-cream text-center text-xs font-bold text-forest mb-4" style="background-color: var(--color-bg-secondary);">
+        💰 الدفع عند الاستلام متاح في جميع مدن المغرب
+      </div>
+
+      <div class="subtotal-row flex items-center justify-between mb-4 font-bold text-lg">
+        <span>المجموع الفرعي:</span>
+        <span class="text-forest">{{ cart.total_price | money_without_currency }} د.م.</span>
+      </div>
+
+      <form action="{{ routes.cart_url }}" method="post">
+        <button
+          type="submit"
+          name="checkout"
+          class="btn-terracotta w-full text-center text-base py-4"
+          {% if cart.item_count == 0 %}disabled style="opacity: 0.5; cursor: not-allowed;"{% endif %}
+        >
+          متابعة الطلب — الدفع عند الاستلام 🌿
+        </button>
+      </form>
+    </div>
+  </div>
+</drawer-component>
+
+{% schema %}
+{
+  "name": "سلة التسوق المنزلقة",
+  "settings": []
+}
+{% endschema %}

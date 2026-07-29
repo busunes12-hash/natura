@@ -1,0 +1,21 @@
+{% comment %}
+  404 Not Found Page Section
+{% endcomment %}
+<section class="main-404-section py-24 text-center" style="background-color: var(--color-bg-primary);">
+  <div class="container max-w-md">
+    <span class="text-7xl mb-4 block">🌿</span>
+    <h1 class="type-h1 mb-2">404</h1>
+    <h2 class="type-h2 mb-4">عذراً! الصفحة غير موجودة</h2>
+    <p class="text-muted mb-8">يبدو أن الصفحة التي تبحثين عنها قد تـم نقلها أو غير ممتوفرة حالياً.</p>
+    <a href="{{ routes.root_url }}" class="btn-primary">
+      العودة للرئيسية 🌿
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "صفحة 404",
+  "settings": []
+}
+{% endschema %}

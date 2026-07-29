@@ -1,0 +1,100 @@
+{% comment %}
+  Section 14: Black Luxury Footer
+  Background: Deep Black (#1A1A1A), circular social SVG icons, and regional Morocco COD seals.
+{% endcomment %}
+<footer class="footer-section py-16" style="background-color: var(--color-bg-dark); color: #E5E5E5;">
+  <div class="container">
+    <div class="footer-grid pb-12 border-b" style="border-color: #333333;">
+      <!-- Column 1: Brand Info -->
+      <div class="footer-col">
+        <h3 class="font-heading text-2xl font-bold text-white mb-4 flex items-center gap-2">
+          <span>🌿</span> MATERIA
+        </h3>
+        <p class="text-sm leading-relaxed mb-6 opacity-80" style="max-width: 320px;">
+          علامة مغربية فاخرة متخصصة في مستحضرات العناية بالبشرة المصنوعة من أجود المكونات والزيوت العضوية النادرة.
+        </p>
+        <div class="social-icons flex gap-3">
+          <a href="#" class="w-10 h-10 rounded-full bg-surface/10 flex items-center justify-center hover:bg-forest text-white transition-colors" aria-label="أنستغرام" style="width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%;">
+            📷
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full bg-surface/10 flex items-center justify-center hover:bg-forest text-white transition-colors" aria-label="فيسبوك" style="width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%;">
+            📘
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full bg-surface/10 flex items-center justify-center hover:bg-forest text-white transition-colors" aria-label="تيك توك" style="width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%;">
+            🎵
+          </a>
+        </div>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="footer-col">
+        <h4 class="font-bold text-white mb-4 text-lg">روابط سريعة</h4>
+        <ul class="flex flex-col gap-2 list-none text-sm opacity-80">
+          <li><a href="/collections/all" class="hover:text-white">جميع المنتجات</a></li>
+          <li><a href="/collections/serums" class="hover:text-white">سيرومات الوجه</a></li>
+          <li><a href="/collections/creams" class="hover:text-white">كريمات الترطيب</a></li>
+          <li><a href="/collections/bundles" class="hover:text-white">باكات التوفير</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Customer Service -->
+      <div class="footer-col">
+        <h4 class="font-bold text-white mb-4 text-lg">خدمة العميلات</h4>
+        <ul class="flex flex-col gap-2 list-none text-sm opacity-80">
+          <li><a href="#faq" class="hover:text-white">الأسئلة الشائعة</a></li>
+          <li><a href="/pages/shipping" class="hover:text-white">سياسة الشحن والتوصيل</a></li>
+          <li><a href="/pages/returns" class="hover:text-white">سياسة الاسترجاع 7 أيام</a></li>
+          <li><a href="/pages/contact" class="hover:text-white">تواصل معنا عبر الواتساب</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Morocco COD Regional Seals -->
+      <div class="footer-col">
+        <h4 class="font-bold text-white mb-4 text-lg">الدفع والتوصيل بالمغرب 🇲🇦</h4>
+        <div class="cod-box p-4 rounded-md mb-4" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+          <div class="flex items-center gap-2 mb-2 font-bold text-sm text-terracotta">
+            <span>💰</span> الدفع عند الاستلام 100%
+          </div>
+          <p class="text-xs opacity-75">لا حاجة لبطاقة بنكية. ادفعي نقداً للموزع عند استلام طلبكِ في أي مدينة مغربية.</p>
+        </div>
+        <div class="flex items-center gap-2 text-xs opacity-60">
+          <span>🇲🇦 شحن لـ 12 جهة بالمملكة المغربية</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sub-footer copyright -->
+    <div class="sub-footer pt-8 flex flex-col md:flex-row items-center justify-between text-xs opacity-60 gap-4">
+      <p>© {{ 'now' | date: "%Y" }} MATERIA Organic Skincare Morocco. جميع الحقوق محفوظة.</p>
+      <div class="flex gap-4">
+        <a href="/pages/privacy" class="hover:underline">سياسة الخصوصية</a>
+        <a href="/pages/terms" class="hover:underline">شروط الاستخدام</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 2.5rem;
+  }
+  @media (max-width: 1024px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "الفوتر الفاخر",
+  "settings": []
+}
+{% endschema %}

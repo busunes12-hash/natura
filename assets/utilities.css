@@ -1,0 +1,142 @@
+/* ==========================================================================
+   🌿 MATERIA DTC SKINCARE THEME - RTL LOGICAL UTILITIES
+   Strictly logical CSS properties for RTL layout
+   ========================================================================== */
+
+/* Flexbox Utilities */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.justify-start { justify-content: flex-start; }
+.justify-end { justify-content: flex-end; }
+.gap-2 { gap: 0.5rem; }
+.gap-4 { gap: 1rem; }
+.gap-6 { gap: 1.5rem; }
+.gap-8 { gap: 2rem; }
+
+/* Grid Utilities */
+.grid { display: grid; }
+.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* Text Alignment (Logical) */
+.text-start { text-align: start; }
+.text-center { text-align: center; }
+.text-end { text-align: end; }
+
+/* Visibility & Position */
+.relative { position: relative; }
+.absolute { position: absolute; }
+.sticky { position: sticky; top: 0; z-index: 100; }
+.hidden { display: none !important; }
+
+/* Rounded Tokens */
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-full { border-radius: var(--radius-full); }
+
+/* Shadows */
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+
+/* Badge & Tag Styling */
+.badge-terracotta {
+  background-color: var(--color-terracotta);
+  color: var(--color-bg-surface);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.badge-forest {
+  background-color: var(--color-forest);
+  color: var(--color-bg-primary);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Button Component Styles */
+.btn-primary {
+  background-color: var(--color-forest);
+  color: var(--color-bg-primary);
+  padding: 0.875rem 2rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background-color var(--transition-base), transform var(--transition-base);
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-forest-deep);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-forest);
+  border: 2px solid var(--color-forest);
+  padding: 0.875rem 2rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background-color var(--transition-base), color var(--transition-base);
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-forest);
+  color: var(--color-bg-primary);
+}
+
+.btn-terracotta {
+  background-color: var(--color-terracotta);
+  color: var(--color-bg-surface);
+  padding: 0.875rem 2rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: opacity var(--transition-base), transform var(--transition-base);
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.btn-terracotta:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+}

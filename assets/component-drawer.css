@@ -1,0 +1,107 @@
+/* ==========================================================================
+   🌿 MATERIA DTC SKINCARE THEME - CART & NAV DRAWER STYLES
+   Single Source of Truth: Section 3.4 of THEME_BLUEPRINT.md
+   ========================================================================== */
+
+drawer-component {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+
+drawer-component.is-active {
+  display: flex;
+}
+
+.drawer-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  transition: opacity var(--transition-base);
+}
+
+.drawer-content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-end: 0;
+  width: 100%;
+  max-width: 440px;
+  background-color: var(--color-bg-surface);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  z-index: 1001;
+  transform: translateX(0);
+  transition: transform var(--transition-smooth);
+}
+
+.drawer-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #E8D5B7;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-bg-primary);
+}
+
+.drawer-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-forest);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.drawer-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-charcoal-dark);
+  transition: background-color var(--transition-base);
+}
+
+.drawer-close:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+.free-shipping-bar {
+  padding: 0.875rem 1.5rem;
+  background-color: var(--color-bg-secondary);
+  border-bottom: 1px solid #E8D5B7;
+}
+
+.progress-track {
+  width: 100%;
+  height: 8px;
+  background-color: rgba(45, 95, 62, 0.15);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--color-forest);
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+}
+
+.drawer-body {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.drawer-footer {
+  padding: 1.5rem;
+  border-top: 1px solid #E8D5B7;
+  background-color: var(--color-bg-primary);
+}

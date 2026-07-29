@@ -1,0 +1,53 @@
+{% comment %}
+  Section 9: Before & After Transformation
+  Slider: Range slider input with touch-action: pan-y and Arabic labels (قبل and بعد 🌿).
+{% endcomment %}
+{{ 'section-before-after.css' | asset_url | stylesheet_tag }}
+
+<section class="before-after-section py-16" style="background-color: var(--color-bg-secondary);">
+  <div class="container">
+    <div class="section-header text-center mb-8">
+      <span class="badge-forest mb-2">نتائج حقيقية</span>
+      <h2 class="type-h2">تحول ملحوظ خلال 30 يوماً من الاستخدام 🌿</h2>
+      <p class="text-muted mt-2">اسحبي الشريط للمقارنة بين نتائج العميلات قبل وبعد استعمال سيروم فيتامين C</p>
+    </div>
+
+    <div class="before-after-container" id="BeforeAfterContainer">
+      <div class="ba-image ba-image--before bg-cream flex items-center justify-center text-center p-8">
+        <div>
+          <span class="text-6xl mb-4 block">🥀</span>
+          <h4 class="font-bold text-lg text-muted">البشرة المتعبة والتصبغات قبل الاستخدام</h4>
+        </div>
+      </div>
+
+      <div class="ba-image ba-image--after" id="AfterWrapper">
+        <div class="flex items-center justify-center text-center h-full p-8" style="background-color: var(--color-forest-deep); color: var(--color-bg-primary);">
+          <div>
+            <span class="text-6xl mb-4 block">✨</span>
+            <h4 class="font-bold text-lg">نضارة فائقة وتوحيد اللون بعد 30 يوماً 🌿</h4>
+          </div>
+        </div>
+      </div>
+
+      <span class="ba-label ba-label--before">قبل</span>
+      <span class="ba-label ba-label--after">بعد 🌿</span>
+
+      <input
+        type="range"
+        min="0"
+        max="100"
+        value="50"
+        class="ba-slider-input"
+        aria-label="مقارنة الصورة قبل وبعد"
+        oninput="document.getElementById('AfterWrapper').style.width = this.value + '%'"
+      >
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "نتائج قبل وبعد",
+  "settings": []
+}
+{% endschema %}
