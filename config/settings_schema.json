@@ -2,13 +2,13 @@
   {
     "name": "theme_info",
     "theme_name": "Materia Skincare RTL",
-    "theme_author": "Antigravity Team",
+    "theme_author": "Antigravity Shopify Plus Team",
     "theme_version": "2.0.0",
     "theme_documentation_url": "https://materia-skincare.com",
     "theme_support_url": "https://materia-skincare.com"
   },
   {
-    "name": "شعار المتجر والألوان",
+    "name": "ألوان وهوية العلامة التجارية",
     "settings": [
       { "type": "image_picker", "id": "favicon", "label": "أيقونة المتجر (Favicon)" },
       { "type": "color", "id": "color_primary", "label": "اللون الرئيسي (الأخضر الجبلي)", "default": "#2D5F3E" },
@@ -17,17 +17,24 @@
     ]
   },
   {
-    "name": "الشحن المجاني والعينات",
+    "name": "إعدادات الشحن المجاني والعينات",
     "settings": [
       { "type": "number", "id": "free_shipping_threshold", "label": "الحد الأدنى للشحن المجاني (بالدرهم المغربي)", "default": 200 },
       { "type": "checkbox", "id": "enable_free_sample", "label": "تفعيل العينات المجانية مع الطلبات", "default": true }
     ]
   },
   {
-    "name": "الواتساب والتواصل الاجتماعي",
+    "name": "الواتساب والتواصل السريع",
     "settings": [
       { "type": "text", "id": "whatsapp_number", "label": "رقم الواتساب المغربي (بدون +)", "default": "212600000000" },
       { "type": "text", "id": "whatsapp_message", "label": "رسالة الواتساب التلقائية", "default": "مرحباً، أود الاستفسار عن منتجات العناية بالبشرة" }
+    ]
+  },
+  {
+    "name": "الخطوط وتنسيق RTL",
+    "settings": [
+      { "type": "text", "id": "heading_font", "label": "خط العناوين الرئيسية", "default": "Noto Kufi Arabic" },
+      { "type": "text", "id": "body_font", "label": "خط النصوص العامة", "default": "IBM Plex Sans Arabic" }
     ]
   }
 ]

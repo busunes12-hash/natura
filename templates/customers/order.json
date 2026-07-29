@@ -1,0 +1,12 @@
+{
+  "name": "تفاصيل الطلب",
+  "sections": {
+    "main": {
+      "type": "featured-collection",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

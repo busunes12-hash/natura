@@ -1,43 +1,60 @@
 {% comment %}
   Section 5: Best Sellers / Featured Collection
-  Mobile Grid: 2-column grid (repeat(2, 1fr)) on mobile viewports (<=640px).
-  Product Card: 1:1 aspect-ratio image, hover scale 105%, persistent touch Quick Add button with .is-loading micro-spinner.
-  Currency: Locked to Moroccan Dirham (د.م.).
+  — Schema-controlled collection + product count + heading
+  — "View All" CTA below grid
+  — No emojis in fallback state
+  — Proper placeholder with SVG icon
 {% endcomment %}
+
 <section class="featured-collection py-16 reveal-on-scroll" style="background-color: var(--color-bg-secondary);">
   <div class="container">
     <div class="section-header">
-      <span class="badge-forest mb-2">الأفضل مبيعاً</span>
-      <h2 class="type-h2">منتجاتنا الأكثر طلباً بالمغرب 🌿</h2>
-      <p class="section-subtitle">مستحضرات حازت على ثقة أكثر من 10,000 سيدة في مختلف المدن المغربية</p>
+      <span class="badge-forest mb-4" style="display: inline-flex;">{{ section.settings.badge | default: 'الأكثر مبيعاً' }}</span>
+      <h2 class="type-h2">{{ section.settings.title | default: 'منتجاتنا الأكثر طلباً' }}</h2>
+      <p class="section-subtitle">{{ section.settings.subtitle | default: 'مستحضرات حازت على ثقة أكثر من 10,000 سيدة في المغرب' }}</p>
     </div>
 
     <div class="products-grid">
-      {%- assign collection = section.settings.collection -%}
-      {%- if collection != blank and collection.products.size > 0 -%}
-        {%- for product in collection.products limit: section.settings.products_to_show -%}
+      {%- assign featured_collection = section.settings.collection -%}
+      {%- if featured_collection != blank and featured_collection.products.size > 0 -%}
+        {%- for product in featured_collection.products limit: section.settings.products_to_show -%}
           {% render 'product-card', product: product %}
         {%- endfor -%}
       {%- else -%}
         {%- for i in (1..4) -%}
-          <div class="product-card-dummy product-card">
-            <div class="product-card__image-wrapper flex items-center justify-center bg-cream">
-              <span class="text-4xl">🌿</span>
+          <div class="product-card product-card--placeholder">
+            <div class="product-card__image-wrapper">
+              <div class="product-card__placeholder">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(45,95,62,0.3)" stroke-width="1.5" aria-hidden="true">
+                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                </svg>
+              </div>
             </div>
             <div class="product-card__content">
-              <h3 class="product-card__title">سيروم فيتامين C العضوي بالنباتات {{ i }}</h3>
-              <div class="price-container flex items-center gap-2">
-                <span class="font-bold text-forest">199 د.م.</span>
-                <s class="text-muted text-sm">250 د.م.</s>
+              <div>
+                <div class="product-card__placeholder-title" style="height:1rem;background:var(--color-border-subtle);border-radius:4px;margin-bottom:0.5rem;"></div>
+                <div class="product-card__placeholder-title" style="height:1rem;background:var(--color-border-subtle);border-radius:4px;width:60%;"></div>
               </div>
-              <button type="button" class="btn-primary product-card__quick-add">
-                إضافة للسلة 🛒
-              </button>
+              <div class="product-card__placeholder-title" style="height:2.75rem;background:var(--color-border-subtle);border-radius:var(--radius-full);margin-top:1rem;"></div>
             </div>
           </div>
         {%- endfor -%}
       {%- endif -%}
     </div>
+
+    {%- if section.settings.show_view_all -%}
+      <div class="products-view-all">
+        <a
+          href="{{ featured_collection.url | default: '/collections/all' }}"
+          class="btn-secondary"
+          style="display: inline-flex;"
+        >
+          {{ section.settings.view_all_text | default: 'عرض جميع المنتجات' }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" style="margin-inline-start:0.5rem;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -48,15 +65,17 @@
     gap: 1.5rem;
   }
   @media (max-width: 1024px) {
-    .products-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
+    .products-grid { grid-template-columns: repeat(3, 1fr); }
   }
-  @media (max-width: 640px) {
-    .products-grid {
-      grid-template-columns: repeat(2, 1fr) !important;
-      gap: 0.75rem;
-    }
+  @media (max-width: 768px) {
+    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  }
+  @media (max-width: 400px) {
+    .products-grid { gap: 0.75rem; }
+  }
+  .products-view-all {
+    text-align: center;
+    margin-top: 2.5rem;
   }
 </style>
 
@@ -64,11 +83,10 @@
 {
   "name": "الأكثر مبيعاً",
   "settings": [
-    {
-      "type": "collection",
-      "id": "collection",
-      "label": "المجموعة المعروضة"
-    },
+    { "type": "text", "id": "badge", "label": "نص البادج", "default": "الأكثر مبيعاً" },
+    { "type": "text", "id": "title", "label": "العنوان", "default": "منتجاتنا الأكثر طلباً" },
+    { "type": "textarea", "id": "subtitle", "label": "الوصف", "default": "مستحضرات حازت على ثقة أكثر من 10,000 سيدة في المغرب" },
+    { "type": "collection", "id": "collection", "label": "المجموعة المعروضة" },
     {
       "type": "range",
       "id": "products_to_show",
@@ -76,13 +94,11 @@
       "max": 12,
       "step": 4,
       "default": 4,
-      "label": "عدد المنتجات المعروضة"
-    }
+      "label": "عدد المنتجات"
+    },
+    { "type": "checkbox", "id": "show_view_all", "label": "عرض زر 'عرض الكل'", "default": true },
+    { "type": "text", "id": "view_all_text", "label": "نص زر 'عرض الكل'", "default": "عرض جميع المنتجات" }
   ],
-  "presets": [
-    {
-      "name": "الأكثر مبيعاً"
-    }
-  ]
+  "presets": [{ "name": "الأكثر مبيعاً" }]
 }
 {% endschema %}

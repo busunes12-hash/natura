@@ -1,26 +1,114 @@
 {% comment %}
-  Section 1: Announcement Bar
-  Container: min-height: 36px, padding-block: 8px, background: #2D5F3E, text: #FFF8E7.
-  Responsive: font-size: 12px on mobile (<=480px), 14px on desktop.
+  Section 1: Announcement Bar — Auto-rotating 3-message cycle
 {% endcomment %}
-<div class="announcement-bar text-center font-bold" style="background-color: var(--color-forest); color: var(--color-bg-primary); min-height: 36px; padding-block: 8px;">
-  <div class="container flex items-center justify-center gap-2">
-    <span class="announcement-bar__text text-xs md:text-sm">
-      {{ section.settings.text | default: "🇲🇦 توصيل مجاني وسريع في جميع مدن المغرب • الدفع عند الاستلام 🌿" }}
-    </span>
+
+<div
+  class="announcement-bar"
+  style="background-color: var(--color-forest); color: var(--color-bg-primary);"
+  role="banner"
+  aria-label="إعلانات المتجر"
+>
+  <div class="container">
+    <div class="announcement-track" id="AnnouncementTrack">
+
+      <div class="announcement-slide is-active" role="status" aria-live="polite">
+        <span class="announcement-icon">{% render 'icon', name: 'truck' %}</span>
+        <span>{{ section.settings.text_1 | default: 'توصيل مجاني وسريع لجميع مدن المغرب' }}</span>
+      </div>
+
+      <div class="announcement-slide" aria-hidden="true">
+        <span class="announcement-icon">{% render 'icon', name: 'shield' %}</span>
+        <span>{{ section.settings.text_2 | default: 'الدفع عند الاستلام — ادفعي نقداً عند وصول طلبكِ' }}</span>
+      </div>
+
+      <div class="announcement-slide" aria-hidden="true">
+        <span class="announcement-icon">{% render 'icon', name: 'sparkle' %}</span>
+        <span>{{ section.settings.text_3 | default: 'ضمان استرجاع 7 أيام — جربي بدون مخاطرة' }}</span>
+      </div>
+
+    </div>
   </div>
 </div>
 
 <style>
-  .announcement-bar__text {
-    font-size: 12px;
+  .announcement-bar {
+    min-height: 40px;
+    padding-block: 10px;
+    overflow: hidden;
   }
-  @media (min-width: 481px) {
-    .announcement-bar__text {
-      font-size: 14px;
+
+  .announcement-bar .container {
+    position: relative;
+  }
+
+  .announcement-track {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 20px;
+  }
+
+  .announcement-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: var(--font-body);
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+  }
+
+  .announcement-slide.is-active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .announcement-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 480px) {
+    .announcement-slide {
+      font-size: 0.78rem;
+      white-space: normal;
+      text-align: center;
+    }
+    .announcement-track {
+      height: auto;
+      min-height: 20px;
     }
   }
 </style>
+
+<script>
+  (function() {
+    var slides = document.querySelectorAll('#AnnouncementTrack .announcement-slide');
+    if (!slides || slides.length < 2) return;
+    var current = 0;
+    var interval = {{ section.settings.interval | default: 4000 }};
+    setInterval(function() {
+      slides[current].classList.remove('is-active');
+      slides[current].setAttribute('aria-hidden', 'true');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('is-active');
+      slides[current].removeAttribute('aria-hidden');
+    }, interval);
+  })();
+</script>
 
 {% schema %}
 {
@@ -28,9 +116,30 @@
   "settings": [
     {
       "type": "text",
-      "id": "text",
-      "label": "نص الإعلان",
-      "default": "🇲🇦 توصيل مجاني وسريع في جميع مدن المغرب • الدفع عند الاستلام 🌿"
+      "id": "text_1",
+      "label": "الإعلان الأول",
+      "default": "توصيل مجاني وسريع لجميع مدن المغرب"
+    },
+    {
+      "type": "text",
+      "id": "text_2",
+      "label": "الإعلان الثاني",
+      "default": "الدفع عند الاستلام — ادفعي نقداً عند وصول طلبكِ"
+    },
+    {
+      "type": "text",
+      "id": "text_3",
+      "label": "الإعلان الثالث",
+      "default": "ضمان استرجاع 7 أيام — جربي بدون مخاطرة"
+    },
+    {
+      "type": "range",
+      "id": "interval",
+      "min": 3000,
+      "max": 8000,
+      "step": 500,
+      "default": 4000,
+      "label": "سرعة التبديل (مللي ثانية)"
     }
   ]
 }

@@ -1,34 +1,120 @@
 {% comment %}
-  Section 13: Newsletter
-  Form: Integrated with Shopify Customer Form API ({% form 'customer' %}), Terracotta submit button.
+  Section 13: Newsletter — Uses Shopify contact form (not customer form)
+  — No emojis in heading or button
+  — Schema-controlled content
 {% endcomment %}
-<section class="newsletter-section py-16 text-center reveal-on-scroll" style="background-color: var(--color-forest); color: var(--color-bg-primary);">
-  <div class="container max-w-2xl" style="max-width: 700px;">
-    <span class="badge-terracotta mb-4">نشرتنا البريدية</span>
-    <h2 class="type-h2 mb-4" style="color: var(--color-bg-primary);">انضمي لمجتمع ماتيريا للجمال الطبيعي 💌</h2>
-    <p class="mb-8 opacity-90 text-lg leading-relaxed" style="font-family: var(--font-body);">اشتركي بنشرتنا البريدية واحصلي فوراً على خصم 10% على طلبكِ الأول بالإضافة إلى نصائح العناية الحصرية.</p>
 
-    {% form 'customer', class: 'newsletter-form flex flex-col md:flex-row gap-3 justify-center' %}
-      <input type="hidden" name="contact[tags]" value="newsletter">
-      <input
-        type="email"
-        name="contact[email]"
-        class="newsletter-input px-6 py-4 rounded-full text-charcoal bg-surface font-body border-none outline-none focus:ring-2 focus:ring-terracotta"
-        placeholder="أدخلي بريدكِ الإلكتروني..."
-        required
-        aria-label="البريد الإلكتروني"
-        style="min-width: 300px; color: var(--color-charcoal-dark); background-color: var(--color-bg-surface);"
-      >
-      <button type="submit" class="btn-terracotta whitespace-nowrap">
-        اشتركي الآن 🌿
-      </button>
+<section class="newsletter-section py-16 text-center reveal-on-scroll" style="background-color: var(--color-forest); color: var(--color-bg-primary);">
+  <div class="container" style="max-width: 700px;">
+    <span class="badge-terracotta mb-4" style="display: inline-flex;">{{ section.settings.badge | default: 'نشرتنا البريدية' }}</span>
+    <h2 class="type-h2 mb-4" style="color: var(--color-bg-primary);">{{ section.settings.title | default: 'انضمي لمجتمع ناتورا للجمال الطبيعي' }}</h2>
+    <p class="mb-8 leading-relaxed" style="font-family: var(--font-body); font-size: 1.05rem; opacity: 0.9;">{{ section.settings.description | default: 'اشتركي بنشرتنا البريدية واحصلي فوراً على خصم 10% على طلبكِ الأول بالإضافة إلى نصائح العناية الحصرية.' }}</p>
+
+    {% form 'contact', class: 'newsletter-form' %}
+      {%- if form.posted_successfully? -%}
+        <p class="newsletter-success" role="status">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-left:0.5rem;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          شكراً! تم تسجيل بريدكِ بنجاح. ستصلكِ رسالة الخصم قريباً.
+        </p>
+      {%- else -%}
+        <div class="newsletter-fields">
+          <label for="NewsletterEmail" class="visually-hidden">البريد الإلكتروني</label>
+          <input
+            type="email"
+            name="contact[email]"
+            id="NewsletterEmail"
+            class="newsletter-input"
+            placeholder="{{ section.settings.placeholder | default: 'أدخلي بريدكِ الإلكتروني...' }}"
+            required
+            aria-label="البريد الإلكتروني"
+            autocomplete="email"
+          >
+          <input type="hidden" name="contact[body]" value="newsletter-signup">
+          <button type="submit" class="btn-terracotta newsletter-btn">
+            {{ section.settings.btn_text | default: 'اشتركي الآن' }}
+          </button>
+        </div>
+        {%- if form.errors -%}
+          <p class="newsletter-error" role="alert">
+            {{ form.errors.translated_fields.email | capitalize }}: {{ form.errors.messages.email }}
+          </p>
+        {%- endif -%}
+      {%- endif -%}
     {% endform %}
+
+    <p class="newsletter-disclaimer">{{ section.settings.disclaimer | default: 'بإشتراككِ، أنتِ توافقين على تلقي رسائل تسويقية. يمكنكِ إلغاء الاشتراك في أي وقت.' }}</p>
   </div>
 </section>
+
+<style>
+  .newsletter-form { width: 100%; }
+  .newsletter-fields {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .newsletter-input {
+    flex: 1;
+    min-width: 240px;
+    max-width: 380px;
+    padding: 0.875rem 1.5rem;
+    border-radius: var(--radius-full);
+    border: none;
+    outline: none;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-charcoal-dark);
+    background-color: var(--color-bg-surface);
+    transition: box-shadow var(--transition-base);
+  }
+  .newsletter-input:focus {
+    box-shadow: 0 0 0 3px rgba(255, 248, 231, 0.5);
+  }
+  .newsletter-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .newsletter-success {
+    font-size: 1rem;
+    font-weight: 600;
+    opacity: 0.95;
+  }
+  .newsletter-error {
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+    color: #fca5a5;
+  }
+  .newsletter-disclaimer {
+    margin-top: 1.25rem;
+    font-size: 0.8rem;
+    opacity: 0.6;
+    font-family: var(--font-body);
+  }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
 
 {% schema %}
 {
   "name": "النشرة البريدية",
-  "settings": []
+  "settings": [
+    { "type": "text", "id": "badge", "label": "نص البادج", "default": "نشرتنا البريدية" },
+    { "type": "text", "id": "title", "label": "العنوان", "default": "انضمي لمجتمع ناتورا للجمال الطبيعي" },
+    { "type": "textarea", "id": "description", "label": "الوصف" },
+    { "type": "text", "id": "placeholder", "label": "نص placeholder للحقل", "default": "أدخلي بريدكِ الإلكتروني..." },
+    { "type": "text", "id": "btn_text", "label": "نص الزر", "default": "اشتركي الآن" },
+    { "type": "text", "id": "disclaimer", "label": "نص التنبيه", "default": "بإشتراككِ، أنتِ توافقين على تلقي رسائل تسويقية." }
+  ],
+  "presets": [{ "name": "النشرة البريدية" }]
 }
 {% endschema %}

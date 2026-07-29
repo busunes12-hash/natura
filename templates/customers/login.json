@@ -1,0 +1,12 @@
+{
+  "name": "تسجيل الدخول",
+  "sections": {
+    "main": {
+      "type": "announcement-bar",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

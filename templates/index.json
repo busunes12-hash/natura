@@ -1,66 +1,64 @@
 {
   "sections": {
-    "hero_banner": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "disabled": false
+    },
+    "hero-banner": {
       "type": "hero-banner",
-      "settings": {
-        "title": "استعيدي إشراقة بشرتكِ الطبيعية بأجود الزيوت العضوية",
-        "subtext": "مستحضرات عناية فائقة الجودة مستوحاة من الطبيعة المغربية الغنية، موثقة مخبرياً ومصنوعة بعناية فائقة لتمنحكِ بشرة ناعمة ومشعة.",
-        "btn_link": "/collections/all"
-      }
+      "disabled": false
     },
-    "ingredients_showcase": {
+    "ingredients-trust-bar": {
       "type": "ingredients-showcase",
-      "settings": {}
+      "disabled": false
     },
-    "featured_collection": {
+    "featured-collection": {
       "type": "featured-collection",
-      "settings": {
-        "products_to_show": 4
-      }
+      "disabled": false
     },
-    "collection_list": {
+    "collection-list": {
       "type": "collection-list",
-      "settings": {}
+      "disabled": false
     },
-    "why_choose_us": {
-      "type": "why-choose-us",
-      "settings": {}
-    },
-    "skincare_routine": {
+    "skincare-routine": {
       "type": "skincare-routine",
-      "settings": {}
+      "disabled": false
     },
-    "before_after": {
+    "why-choose-us": {
+      "type": "why-choose-us",
+      "disabled": false
+    },
+    "before-after": {
       "type": "before-after",
-      "settings": {}
+      "disabled": false
     },
     "testimonials": {
       "type": "testimonials",
-      "settings": {}
+      "disabled": false
     },
-    "press_certifications": {
+    "press-certifications": {
       "type": "press-certifications",
-      "settings": {}
+      "disabled": false
     },
     "faq": {
       "type": "faq",
-      "settings": {}
+      "disabled": false
     },
     "newsletter": {
       "type": "newsletter",
-      "settings": {}
+      "disabled": false
     }
   },
   "order": [
-    "hero_banner",
-    "ingredients_showcase",
-    "featured_collection",
-    "collection_list",
-    "why_choose_us",
-    "skincare_routine",
-    "before_after",
+    "hero-banner",
+    "ingredients-trust-bar",
+    "featured-collection",
+    "collection-list",
+    "skincare-routine",
+    "why-choose-us",
+    "before-after",
     "testimonials",
-    "press_certifications",
+    "press-certifications",
     "faq",
     "newsletter"
   ]

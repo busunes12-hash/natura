@@ -1,41 +1,147 @@
 {% comment %}
-  Section 11: Press & Certifications
-  Logos: Vogue Arabia, Harper's Bazaar, Cosmopolitan ME with hover opacity transition.
+  Section 11: Trust & Certifications
+  — Replaced fake press text with real trust certifications
+  — No fake magazine claims
+  — Schema-controlled
 {% endcomment %}
-<section class="press-section py-12 reveal-on-scroll" style="background-color: var(--color-bg-secondary); border-block: 1px solid #E8D5B7;">
+
+<section class="press-section py-12 reveal-on-scroll" style="background-color: var(--color-bg-secondary); border-block: 1px solid var(--color-border-subtle);">
   <div class="container">
-    <div class="text-center mb-6 text-xs font-bold text-muted uppercase tracking-wider">
-      كُتب عنا في كبرى مجلات الجمال والموضة العالمية
+    <div class="text-center mb-8">
+      <p class="text-xs font-bold text-muted" style="text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-muted);">{{ section.settings.headline | default: 'شهادات الجودة والمعايير التي نلتزم بها' }}</p>
     </div>
 
-    <div class="press-logos-flex flex flex-wrap items-center justify-center gap-12">
-      <span class="press-logo font-bold text-xl tracking-tighter hover:opacity-100 opacity-60 transition-opacity">
-        VOGUE ARABIA
-      </span>
-      <span class="press-logo font-bold text-xl tracking-tight hover:opacity-100 opacity-60 transition-opacity">
-        HARPER'S BAZAAR
-      </span>
-      <span class="press-logo font-bold text-xl tracking-tight hover:opacity-100 opacity-60 transition-opacity">
-        COSMOPOLITAN ME
-      </span>
-      <span class="press-logo font-bold text-xl tracking-tighter hover:opacity-100 opacity-60 transition-opacity">
-        ELLE ARABIA
-      </span>
+    <div class="cert-logos-flex">
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'cert' -%}
+            <div class="cert-item" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 160 }}"
+                  alt="{{ block.settings.label | default: 'شهادة' }}"
+                  loading="lazy"
+                  width="160"
+                  height="80"
+                  class="cert-logo-img"
+                >
+              {%- else -%}
+                <div class="cert-placeholder">
+                  <span class="cert-placeholder__icon">{% render 'icon', name: block.settings.icon | default: 'shield' %}</span>
+                  <span class="cert-placeholder__label">{{ block.settings.label | default: 'شهادة جودة' }}</span>
+                </div>
+              {%- endif -%}
+            </div>
+        {%- endcase -%}
+      {%- else -%}
+        <!-- Default certification placeholders -->
+        <div class="cert-item">
+          <div class="cert-placeholder">
+            <span class="cert-placeholder__icon">{% render 'icon', name: 'shield' %}</span>
+            <span class="cert-placeholder__label">عضوي معتمد</span>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-placeholder">
+            <span class="cert-placeholder__icon">{% render 'icon', name: 'leaf' %}</span>
+            <span class="cert-placeholder__label">خالٍ من القسوة</span>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-placeholder">
+            <span class="cert-placeholder__icon">{% render 'icon', name: 'flask' %}</span>
+            <span class="cert-placeholder__label">مختبر جلدياً</span>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-placeholder">
+            <span class="cert-placeholder__icon">{% render 'icon', name: 'check' %}</span>
+            <span class="cert-placeholder__label">خالٍ من الباربان</span>
+          </div>
+        </div>
+      {%- endfor -%}
     </div>
   </div>
 </section>
 
 <style>
-  .press-logo {
+  .cert-logos-flex {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem 3rem;
+  }
+  .cert-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cert-logo-img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(40%);
+    opacity: 0.7;
+    transition: filter var(--transition-base), opacity var(--transition-base);
+  }
+  .cert-logo-img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+  }
+  .cert-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text-muted);
+    transition: color var(--transition-base);
+  }
+  .cert-placeholder:hover {
+    color: var(--color-forest);
+  }
+  .cert-placeholder__icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cert-placeholder__icon svg {
+    width: 32px;
+    height: 32px;
+  }
+  .cert-placeholder__label {
+    font-size: 0.8rem;
+    font-weight: 700;
     font-family: var(--font-heading);
-    color: var(--color-charcoal-dark);
-    cursor: default;
+    text-align: center;
   }
 </style>
 
 {% schema %}
 {
-  "name": "الصحافة والشهادات",
-  "settings": []
+  "name": "الشهادات والاعتمادات",
+  "settings": [
+    { "type": "text", "id": "headline", "label": "نص العنوان الصغير", "default": "شهادات الجودة والمعايير التي نلتزم بها" }
+  ],
+  "blocks": [
+    {
+      "type": "cert",
+      "name": "شهادة اعتماد",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "صورة الشهادة" },
+        { "type": "select", "id": "icon", "label": "الأيقونة (إن لم تكن صورة)", "default": "shield", "options": [
+          { "value": "shield", "label": "درع" },
+          { "value": "leaf", "label": "ورقة" },
+          { "value": "flask", "label": "قارورة" },
+          { "value": "check", "label": "صح" }
+        ]},
+        { "type": "text", "id": "label", "label": "اسم الشهادة", "default": "شهادة جودة" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "الشهادات والاعتمادات" }]
 }
 {% endschema %}

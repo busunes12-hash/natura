@@ -1,74 +1,151 @@
 {% comment %}
-  Section 2: Sticky Header
-  Container: height: 72px (desktop) / 60px (mobile), background: rgba(255, 255, 255, 0.95), backdrop-filter: blur(12px).
-  Icons: 44x44px circular touch targets with 22x22px SVG icons.
+  Section 2: Sticky Glassmorphism Header
+  — SVG wordmark logo (no emoji)
+  — Desktop nav with hover underline
+  — Mobile hamburger triggering #MobileNavDrawer (defined in mobile-nav-drawer.liquid)
+  — Search, Account, Wishlist, Cart icons (44×44px touch targets)
+  — Scroll-aware class via JS
 {% endcomment %}
 {{ 'component-header.css' | asset_url | stylesheet_tag }}
 
-<header class="header-wrapper">
+<header class="header-wrapper" id="SiteHeader">
   <div class="container header">
-    <!-- Mobile Menu Trigger Button -->
+
+    <!-- Mobile Menu Trigger -->
     <button
       type="button"
       class="header__icon-btn lg:hidden"
       aria-label="افتح القائمة الرئيسية"
+      aria-expanded="false"
+      aria-controls="MobileNavDrawer"
       onclick="document.querySelector('#MobileNavDrawer')?.open()"
     >
       {% render 'icon', name: 'menu' %}
     </button>
 
     <!-- Brand Logo -->
-    <a href="{{ routes.root_url }}" class="header__logo">
-      <span>🌿</span>
-      <span>{{ shop.name | default: 'MATERIA' }}</span>
+    <a href="{{ routes.root_url }}" class="header__logo" aria-label="{{ shop.name }} — الصفحة الرئيسية">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Leaf / N logomark -->
+        <circle cx="20" cy="20" r="19" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M12 28 C12 20 16 14 24 12 C24 20 20 26 12 28Z" fill="currentColor" opacity="0.9"/>
+        <path d="M24 12 C24 18 22 24 16 28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span class="header__logo-text">{{ shop.name | default: 'NATURA' }}</span>
     </a>
 
-    <!-- Desktop Navigation Links -->
+    <!-- Desktop Navigation -->
     <nav class="header__nav hidden lg:flex" aria-label="التنقل الرئيسي">
       {%- for link in linklists.main-menu.links -%}
-        <a
-          href="{{ link.url }}"
-          class="header__nav-link{% if link.active %} is-active{% endif %}"
-        >
-          {{ link.title }}
-        </a>
+        {%- if link.links.size > 0 -%}
+          <div class="header__nav-item">
+            <a
+              href="{{ link.url }}"
+              class="header__nav-link{% if link.active %} is-active{% endif %}"
+              aria-haspopup="true"
+            >
+              {{ link.title }}
+            </a>
+          </div>
+        {%- else -%}
+          <a
+            href="{{ link.url }}"
+            class="header__nav-link{% if link.active %} is-active{% endif %}"
+          >
+            {{ link.title }}
+          </a>
+        {%- endif -%}
       {%- else -%}
         <a href="{{ routes.root_url }}" class="header__nav-link is-active">الرئيسية</a>
-        <a href="/collections/all" class="header__nav-link">منتجاتنا الطبيعية</a>
+        <a href="/collections/all" class="header__nav-link">منتجاتنا</a>
         <a href="/pages/about" class="header__nav-link">قصتنا</a>
         <a href="/blogs/news" class="header__nav-link">مدونة الجمال</a>
         <a href="/pages/contact" class="header__nav-link">اتصلي بنا</a>
       {%- endfor -%}
     </nav>
 
-    <!-- Icons Group (Search, Account, Cart Drawer trigger) -->
+    <!-- Header Icon Actions -->
     <div class="header__icons">
-      <a href="{{ routes.search_url }}" class="header__icon-btn" aria-label="البحث في المتجر">
-        {% render 'icon', name: 'search' %}
-      </a>
 
-      <a href="{{ routes.account_url }}" class="header__icon-btn" aria-label="حسابي">
-        {% render 'icon', name: 'user' %}
-      </a>
-
+      <!-- Search -->
       <button
         type="button"
         class="header__icon-btn"
-        aria-label="سلة التسوق"
+        aria-label="البحث في المتجر"
+        id="SearchToggleBtn"
+        onclick="window.location.href='{{ routes.search_url }}'"
+      >
+        {% render 'icon', name: 'search' %}
+      </button>
+
+      <!-- Account -->
+      <a
+        href="{{ routes.account_url }}"
+        class="header__icon-btn"
+        aria-label="{% if customer %}حسابي — {{ customer.first_name }}{% else %}تسجيل الدخول{% endif %}"
+      >
+        {% render 'icon', name: 'user' %}
+      </a>
+
+      <!-- Wishlist -->
+      <button
+        type="button"
+        class="header__icon-btn header__icon-btn--wishlist"
+        aria-label="قائمة الرغبات"
+      >
+        {% render 'icon', name: 'heart' %}
+      </button>
+
+      <!-- Cart -->
+      <button
+        type="button"
+        class="header__icon-btn"
+        aria-label="سلة التسوق — {{ cart.item_count }} منتج"
+        aria-expanded="false"
+        aria-controls="CartDrawer"
         onclick="document.querySelector('#CartDrawer')?.open()"
       >
         {% render 'icon', name: 'cart' %}
-        <span class="header__cart-badge{% if cart.item_count == 0 %} hidden{% endif %}" data-cart-count>
+        <span
+          class="header__cart-badge{% if cart.item_count == 0 %} hidden{% endif %}"
+          data-cart-count
+          aria-live="polite"
+        >
           {{ cart.item_count }}
         </span>
       </button>
+
     </div>
   </div>
 </header>
 
+<script>
+  (function() {
+    var header = document.getElementById('SiteHeader');
+    if (!header) return;
+    var threshold = 80;
+    function onScroll() {
+      if (window.scrollY > threshold) {
+        header.classList.add('is-scrolled');
+      } else {
+        header.classList.remove('is-scrolled');
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+
 {% schema %}
 {
   "name": "الهيدر الرئيسي",
-  "settings": []
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "قائمة التنقل",
+      "default": "main-menu"
+    }
+  ]
 }
 {% endschema %}

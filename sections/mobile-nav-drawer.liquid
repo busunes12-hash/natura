@@ -1,0 +1,246 @@
+{% comment %}
+  Mobile Navigation Drawer
+  Triggered by header hamburger button via DrawerComponent.open()
+  Implements full-height slide-in panel with brand logo, nav links, and trust icons.
+{% endcomment %}
+
+<drawer-component
+  id="MobileNavDrawer"
+  class="mobile-nav-drawer"
+  aria-hidden="true"
+  aria-label="القائمة الرئيسية"
+  role="dialog"
+  aria-modal="true"
+>
+  <div class="drawer-overlay mobile-nav-overlay" data-drawer-close aria-hidden="true"></div>
+
+  <div class="mobile-nav-panel">
+
+    <!-- Panel Header -->
+    <div class="mobile-nav-panel__header">
+      <a href="{{ routes.root_url }}" class="mobile-nav-panel__logo" aria-label="{{ shop.name }}">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="32" aria-hidden="true">
+          <circle cx="20" cy="20" r="19" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M12 28 C12 20 16 14 24 12 C24 20 20 26 12 28Z" fill="currentColor" opacity="0.9"/>
+          <path d="M24 12 C24 18 22 24 16 28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span>{{ shop.name | default: 'NATURA' }}</span>
+      </a>
+      <button
+        type="button"
+        class="mobile-nav-panel__close"
+        data-drawer-close
+        aria-label="إغلاق القائمة"
+      >
+        {% render 'icon', name: 'close' %}
+      </button>
+    </div>
+
+    <!-- Navigation Links -->
+    <nav class="mobile-nav-panel__nav" aria-label="التنقل الرئيسي">
+      {%- for link in linklists.main-menu.links -%}
+        <a
+          href="{{ link.url }}"
+          class="mobile-nav-link{% if link.active %} is-active{% endif %}"
+          onclick="document.querySelector('#MobileNavDrawer')?.close()"
+        >
+          <span>{{ link.title }}</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </a>
+      {%- else -%}
+        <a href="{{ routes.root_url }}" class="mobile-nav-link is-active" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+          <span>الرئيسية</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </a>
+        <a href="/collections/all" class="mobile-nav-link" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+          <span>منتجاتنا</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </a>
+        <a href="/pages/about" class="mobile-nav-link" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+          <span>قصتنا</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </a>
+        <a href="/blogs/news" class="mobile-nav-link" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+          <span>مدونة الجمال</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </a>
+        <a href="/pages/contact" class="mobile-nav-link" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+          <span>اتصلي بنا</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </a>
+      {%- endfor -%}
+    </nav>
+
+    <!-- Trust Badges -->
+    <div class="mobile-nav-panel__trust">
+      <div class="mobile-trust-item">
+        <span class="mobile-trust-icon">{% render 'icon', name: 'truck' %}</span>
+        <span>توصيل مجاني وسريع</span>
+      </div>
+      <div class="mobile-trust-item">
+        <span class="mobile-trust-icon">{% render 'icon', name: 'shield' %}</span>
+        <span>الدفع عند الاستلام</span>
+      </div>
+      <div class="mobile-trust-item">
+        <span class="mobile-trust-icon">{% render 'icon', name: 'leaf' %}</span>
+        <span>مكونات عضوية 100%</span>
+      </div>
+    </div>
+
+    <!-- Shop CTA -->
+    <div class="mobile-nav-panel__cta">
+      <a href="/collections/all" class="btn-primary w-full justify-center" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+        تسوقي الآن
+      </a>
+    </div>
+
+  </div>
+</drawer-component>
+
+<style>
+  .mobile-nav-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    pointer-events: none;
+  }
+
+  .mobile-nav-drawer.is-active {
+    pointer-events: auto;
+  }
+
+  .mobile-nav-panel {
+    position: fixed;
+    top: 0;
+    inset-inline-start: 0;
+    width: min(340px, 90vw);
+    height: 100dvh;
+    background-color: var(--color-bg-surface);
+    z-index: 501;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 8px 0 40px rgba(0,0,0,0.15);
+    transform: translateX(100%);
+    transition: transform var(--transition-smooth);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  [dir="rtl"] .mobile-nav-panel {
+    inset-inline-start: 0;
+    transform: translateX(100%);
+  }
+
+  .mobile-nav-drawer.is-active .mobile-nav-panel {
+    transform: translateX(0);
+  }
+
+  .mobile-nav-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--color-border-subtle);
+    flex-shrink: 0;
+  }
+
+  .mobile-nav-panel__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-forest);
+    text-decoration: none;
+  }
+
+  .mobile-nav-panel__close {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-charcoal-dark);
+    background: var(--color-bg-secondary);
+    transition: background-color var(--transition-base);
+  }
+
+  .mobile-nav-panel__close:hover {
+    background: var(--color-border-subtle);
+  }
+
+  .mobile-nav-panel__nav {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+    flex: 1;
+  }
+
+  .mobile-nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-charcoal-dark);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-border-subtle);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .mobile-nav-link:hover,
+  .mobile-nav-link.is-active {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-forest);
+  }
+
+  .mobile-nav-link svg {
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+    transform: scaleX(-1); /* RTL: flip chevron direction */
+  }
+
+  .mobile-nav-panel__trust {
+    padding: 1.25rem 1.5rem;
+    border-top: 1px solid var(--color-border-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .mobile-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .mobile-trust-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-forest);
+    flex-shrink: 0;
+  }
+
+  .mobile-nav-panel__cta {
+    padding: 1.25rem 1.5rem 2rem;
+    flex-shrink: 0;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "قائمة الجوال",
+  "settings": []
+}
+{% endschema %}

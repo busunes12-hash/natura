@@ -22,35 +22,41 @@
             >
           {%- else -%}
             <div class="flex items-center justify-center h-full bg-cream text-forest text-6xl">
-              🌿
+              {% render 'icon', name: 'leaf' %}
             </div>
           {%- endif -%}
         </div>
 
+        {%- if product.media.size > 1 -%}
+          <div class="product-thumbnails mb-6">
+            {%- for media in product.media -%}
+              <button
+                type="button"
+                class="thumbnail-btn {% if forloop.first %}is-active{% endif %}"
+                data-image-src="{{ media | image_url: width: 800 }}"
+                aria-label="عرض الصورة {{ forloop.index }}"
+              >
+                <img src="{{ media | image_url: width: 150 }}" alt="{{ media.alt | default: product.title | escape }}" width="72" height="72" loading="lazy">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
         <!-- Clinical Study Results Box -->
-        <div class="clinical-box p-6 rounded-md border bg-surface" style="border-color: var(--color-border-subtle); background-color: var(--color-bg-surface);">
-          <h4 class="font-bold text-forest mb-2 flex items-center gap-2" style="font-family: var(--font-heading);">
-            <span>🔬</span> نتائج الاختبارات السريرية:
-          </h4>
-          <ul class="flex flex-col gap-2 text-sm text-muted list-none">
-            <li class="flex items-center gap-2">
-              <span class="text-forest font-bold">✓</span> 98% نضارة فورية من الأسبوع الأول
-            </li>
-            <li class="flex items-center gap-2">
-              <span class="text-forest font-bold">✓</span> 95% توحيد لون البشرة والتخلص من التصبغات
-            </li>
-            <li class="flex items-center gap-2">
-              <span class="text-forest font-bold">✓</span> 100% ترطيب عميق بدون ملمس دهني
-            </li>
-          </ul>
-        </div>
+        {% render 'clinical-box' %}
       </div>
 
       <!-- Column 2: Product Info & COD Order Form -->
       <div class="product-info flex flex-col gap-6">
         <div class="tags-row flex items-center gap-2">
-          <span class="badge-forest">🌿 عضوي 100%</span>
-          <span class="badge-terracotta">🔬 مختبر طبياً</span>
+          <span class="badge-forest flex items-center gap-1.5">
+            <span class="w-3.5 h-3.5 inline-flex items-center justify-center">{% render 'icon', name: 'leaf' %}</span>
+            <span>عضوي 100%</span>
+          </span>
+          <span class="badge-terracotta flex items-center gap-1.5">
+            <span class="w-3.5 h-3.5 inline-flex items-center justify-center">{% render 'icon', name: 'badge-check' %}</span>
+            <span>مختبر طبياً</span>
+          </span>
         </div>
 
         <h1 class="type-h1">{{ product.title | default: "سيروم فيتامين C العضوي بالنباتات المغربية" }}</h1>
@@ -61,15 +67,13 @@
               {% render 'icon', name: 'star' %}
             {%- endfor -%}
           </div>
-          <span class="font-bold text-forest">★★★★★ (4.9/5 - 1,240 تقييم موثق)</span>
+          <span class="font-bold text-forest">4.9/5 (1,240 تقييم موثق)</span>
         </div>
 
         {% render 'price', product: product %}
 
-        <!-- Stock Scarcity Urgency Badge -->
-        <div class="stock-badge p-3 rounded-md bg-terracotta/10 text-terracotta font-bold text-sm flex items-center gap-2" style="background-color: #FDF2EE; color: var(--color-terracotta); border: 1px solid #F5C6B3;">
-          <span>🔥</span> باقي 6 قطع فقط بالمخزون بالمغرب!
-        </div>
+        <!-- Stock Scarcity Urgency Badge Snippet -->
+        {% render 'scarcity-badge', product: product %}
 
         {% form 'product', product, class: 'product-form flex flex-col gap-4' %}
           <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
@@ -77,13 +81,18 @@
           {%- if product.has_only_default_variant == false -%}
             <div class="variant-select-wrapper">
               <label class="font-bold text-sm mb-2 block">اختر السعة:</label>
-              <select name="id" class="form-select">
+              <div class="variant-pills">
                 {%- for variant in product.variants -%}
-                  <option value="{{ variant.id }}">
-                    {{ variant.title }} — {{ variant.price | money_without_currency }} د.م.
-                  </option>
+                  <button
+                    type="button"
+                    class="variant-pill {% if variant.id == product.selected_or_first_available_variant.id %}is-active{% endif %}"
+                    data-variant-id="{{ variant.id }}"
+                  >
+                    <span>{{ variant.title }}</span>
+                    <span class="opacity-80">({{ variant.price | money_without_currency }} د.م.)</span>
+                  </button>
                 {%- endfor -%}
-              </select>
+              </div>
             </div>
           {%- endif -%}
 
@@ -99,29 +108,47 @@
           <button
             type="submit"
             name="add"
-            class="btn-terracotta text-lg py-4 w-full shadow-lg"
+            class="btn-terracotta text-lg py-4 w-full shadow-lg flex items-center justify-center gap-2"
             data-quick-add="{{ product.selected_or_first_available_variant.id }}"
           >
-            طلب الآن — الدفع عند الاستلام 🇲🇦
+            <span class="w-5 h-5 inline-flex items-center justify-center">{% render 'icon', name: 'truck' %}</span>
+            <span>طلب الآن — الدفع عند الاستلام</span>
           </button>
         {% endform %}
 
         {% render 'trust-bar' %}
 
+        <!-- Shopify OS 2.0 App Blocks Injection Point -->
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when '@app' -%}
+              {% render block %}
+          {%- endcase -%}
+        {%- endfor -%}
+
         <!-- Accordions -->
         <div class="product-accordions flex flex-col gap-3 mt-4">
           <details class="p-4 bg-surface rounded-md border" style="border-color: var(--color-border-subtle); border-radius: var(--radius-md);">
-            <summary class="font-bold cursor-pointer select-none" style="font-family: var(--font-heading);">🌱 المكونات العضوية 100%</summary>
+            <summary class="font-bold cursor-pointer select-none flex items-center gap-2" style="font-family: var(--font-heading);">
+              <span class="w-4 h-4 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'leaf' %}</span>
+              <span>المكونات العضوية 100%</span>
+            </summary>
             <p class="pt-3 text-sm text-muted">زيت الأرغان المغربي البكر، مستخلص فيتامين C النقي من الحمضيات، زيت التين الشوكي المعصور على البارد، وماء الورد البلدي.</p>
           </details>
 
           <details class="p-4 bg-surface rounded-md border" style="border-color: var(--color-border-subtle); border-radius: var(--radius-md);">
-            <summary class="font-bold cursor-pointer select-none" style="font-family: var(--font-heading);">✨ طريقة الاستخدام الصحيحة</summary>
+            <summary class="font-bold cursor-pointer select-none flex items-center gap-2" style="font-family: var(--font-heading);">
+              <span class="w-4 h-4 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'sparkle' %}</span>
+              <span>طريقة الاستخدام الصحيحة</span>
+            </summary>
             <p class="pt-3 text-sm text-muted">ضعي 3 إلى 4 قطرات على بشرة نظيفة وجافة صباحاً ومساءً، ثم دلكي بحركات دائرية لطيفة حتى الامتصاص التام.</p>
           </details>
 
           <details class="p-4 bg-surface rounded-md border" style="border-color: var(--color-border-subtle); border-radius: var(--radius-md);">
-            <summary class="font-bold cursor-pointer select-none" style="font-family: var(--font-heading);">🚚 سياسة الشحن والدفع بالمغرب</summary>
+            <summary class="font-bold cursor-pointer select-none flex items-center gap-2" style="font-family: var(--font-heading);">
+              <span class="w-4 h-4 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'truck' %}</span>
+              <span>سياسة الشحن والدفع بالمغرب</span>
+            </summary>
             <p class="pt-3 text-sm text-muted">شحن سريع 24-48 ساعة لجميع مدن المغرب. الدفع نقداً عند استلام طلبكِ ومعاينته مع موزع الشحن.</p>
           </details>
         </div>
@@ -131,18 +158,19 @@
 </section>
 
 <!-- Mobile Sticky COD Buy Bar -->
-<div class="sticky-mobile-buy-bar fixed bottom-0 inset-x-0 z-40 p-3 bg-surface border-t shadow-lg flex items-center justify-between gap-3 md:hidden" style="position: fixed; bottom: 0; inset-inline-start: 0; inset-inline-end: 0; z-index: 400; background-color: var(--color-bg-surface); border-top: 1px solid var(--color-border-subtle); box-shadow: 0 -4px 16px rgba(0,0,0,0.08);">
+<div class="sticky-mobile-buy-bar fixed bottom-0 inset-x-0 z-40 p-3 bg-surface border-t shadow-lg flex items-center justify-between gap-3 md:hidden" style="position: fixed; bottom: 0; inset-inline-start: 0; inset-inline-end: 0; z-index: 400; background-color: var(--color-bg-surface); border-top: 1px solid var(--color-border-subtle); box-shadow: 0 -8px 24px rgba(0,0,0,0.06);">
   <div>
     <h4 class="font-bold text-xs line-clamp-1" style="font-family: var(--font-heading);">{{ product.title | default: "سيروم فيتامين C" }}</h4>
     <span class="font-bold text-forest text-sm">{{ product.price | default: 19900 | money_without_currency }} د.م.</span>
   </div>
   <button
     type="button"
-    class="btn-terracotta text-sm py-2 px-4 whitespace-nowrap"
+    class="btn-terracotta text-sm py-2 px-4 whitespace-nowrap flex items-center gap-1.5"
     style="min-height: 42px;"
     data-quick-add="{{ product.selected_or_first_available_variant.id }}"
   >
-    طلب الآن 🇲🇦
+    <span class="w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'truck' %}</span>
+    <span>طلب الآن — COD</span>
   </button>
 </div>
 
@@ -152,7 +180,7 @@
   "@context": "https://schema.org/",
   "@type": "Product",
   "name": {{ product.title | default: "سيروم فيتامين C العضوي" | json }},
-  "image": [ {{ product.featured_media | image_url | default: "https://store.com/cdn/luxury-hero-skincare.jpg" | json }} ],
+  "image": [ {{ product.featured_media | image_url: width: 800 | default: "luxury-hero-skincare.jpg" | prepend: 'https:' | json }} ],
   "description": {{ product.description | strip_html | default: "سيروم مركز غني بمستخلص فيتامين C النقي وزيت الأرغان المغربي البكر." | json }},
   "brand": { "@type": "Brand", "name": "MATERIA Organic Skincare" },
   "offers": {
@@ -168,6 +196,11 @@
 {% schema %}
 {
   "name": "تفاصيل المنتج الرئيسية",
-  "settings": []
+  "settings": [],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
 }
 {% endschema %}

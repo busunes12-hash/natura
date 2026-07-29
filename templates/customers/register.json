@@ -1,0 +1,12 @@
+{
+  "name": "إنشاء حساب جديد",
+  "sections": {
+    "main": {
+      "type": "announcement-bar",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

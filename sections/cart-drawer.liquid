@@ -8,8 +8,9 @@
 
   <div class="drawer-content">
     <div class="drawer-header">
-      <h3 class="drawer-title">
-        <span>🌿</span> سلة التسوق
+      <h3 class="drawer-title flex items-center gap-2">
+        <span class="w-5 h-5 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'cart' %}</span>
+        <span>سلة التسوق</span>
       </h3>
       <button type="button" class="drawer-close" data-drawer-close aria-label="إغلاق السلة">
         {% render 'icon', name: 'close' %}
@@ -24,7 +25,10 @@
 
     <div class="free-shipping-bar text-xs font-bold text-center">
       {%- if cart_total >= free_shipping_threshold -%}
-        <span class="text-forest">🎉 مبروك! لقد حصلتِ على شحن مجاني لجميع مدن المغرب!</span>
+        <span class="text-forest flex items-center justify-center gap-1.5">
+          <span class="w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'sparkle' %}</span>
+          <span>مبروك! لقد حصلتِ على شحن مجاني لجميع مدن المغرب!</span>
+        </span>
       {%- else -%}
         {%- assign needed = free_shipping_threshold | minus: cart_total -%}
         <span>أضيفي بـ <strong class="text-terracotta">{{ needed | money_without_currency }} د.م.</strong> إضافي للحصول على شحن مجاني!</span>
@@ -44,7 +48,9 @@
                 {%- if item.image -%}
                   <img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title | escape }}" class="w-full h-full object-cover" width="64" height="64">
                 {%- else -%}
-                  <div class="flex items-center justify-center h-full text-forest">🌿</div>
+                  <div class="flex items-center justify-center h-full text-forest">
+                    {% render 'icon', name: 'leaf' %}
+                  </div>
                 {%- endif -%}
               </div>
 
@@ -54,7 +60,8 @@
                   <button
                     type="button"
                     class="text-xs text-muted hover:text-terracotta"
-                    onclick="CartManager.changeQuantity('{{ item.key }}', 0)"
+                    data-cart-remove="{{ item.key }}"
+                    aria-label="حذف المنتج من السلة"
                   >
                     حذف
                   </button>
@@ -81,7 +88,7 @@
           <div class="upsell-widget p-3 mt-4 rounded-md border bg-cream" style="background-color: var(--color-bg-secondary); border-color: var(--color-border-subtle);">
             <div class="flex items-center justify-between gap-2">
               <div class="flex items-center gap-2">
-                <span class="text-xl">🌸</span>
+                <span class="w-5 h-5 text-forest flex-shrink-0 inline-flex items-center justify-center">{% render 'icon', name: 'leaf' %}</span>
                 <div>
                   <h5 class="font-bold text-xs">أضيفي ماء الورد البلدي (50ml)</h5>
                   <span class="text-xs text-forest font-bold">+49 د.م. فقط (للحصول على شحن مجاني)</span>
@@ -89,11 +96,11 @@
               </div>
               <button
                 type="button"
-                class="btn-primary text-xs py-1 px-3"
+                class="btn-primary text-xs py-1 px-3 flex items-center gap-1"
                 style="min-height: 36px;"
                 onclick="CartManager.addItem('{{ all_products['rose-water'].selected_or_first_available_variant.id | default: '1' }}', 1, this)"
               >
-                + إضافة
+                <span>+ إضافة</span>
               </button>
             </div>
           </div>
@@ -101,11 +108,11 @@
 
       {%- else -%}
         <div class="cart-empty flex flex-col items-center justify-center text-center py-12">
-          <span class="text-5xl mb-4">🛒</span>
+          <span class="w-12 h-12 text-forest mb-3 inline-flex items-center justify-center">{% render 'icon', name: 'cart' %}</span>
           <h4 class="font-bold text-lg mb-2">سلة التسوق فارغة حالياً</h4>
           <p class="text-xs text-muted mb-6">استكشفي منتجاتنا العضوية الفاخرة وأضيفي ما يناسبكِ.</p>
-          <a href="/collections/all" class="btn-primary text-sm" data-drawer-close>
-            تصفحي الكتالوج 🌿
+          <a href="/collections/all" class="btn-primary text-sm inline-flex items-center gap-2" data-drawer-close>
+            <span>تصفحي الكتالوج</span>
           </a>
         </div>
       {%- endif -%}
@@ -113,12 +120,14 @@
 
     <!-- Drawer Footer -->
     <div class="drawer-footer">
-      <div class="cod-banner p-3 rounded-md bg-cream text-center text-xs font-bold text-forest mb-2" style="background-color: var(--color-bg-secondary);">
-        💰 الدفع عند الاستلام متاح في جميع مدن المغرب
+      <div class="cod-banner p-3 rounded-md bg-cream text-center text-xs font-bold text-forest mb-2 flex items-center justify-center gap-1.5" style="background-color: var(--color-bg-secondary);">
+        <span class="w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'truck' %}</span>
+        <span>الدفع عند الاستلام متاح في جميع مدن المغرب</span>
       </div>
 
-      <div class="text-center text-xs text-muted mb-4">
-        🔍 معاينة الطلب مجانية عند الاستلام قبل تسليم المبلغ للموزع
+      <div class="text-center text-xs text-muted mb-4 flex items-center justify-center gap-1">
+        <span class="w-3.5 h-3.5 inline-flex items-center justify-center">{% render 'icon', name: 'shield' %}</span>
+        <span>معاينة الطلب مجانية عند الاستلام قبل تسليم المبلغ للموزع</span>
       </div>
 
       <div class="subtotal-row flex items-center justify-between mb-4 font-bold text-lg">
@@ -130,10 +139,11 @@
         <button
           type="submit"
           name="checkout"
-          class="btn-terracotta w-full text-center text-base py-4"
+          class="btn-terracotta w-full text-center text-base py-4 flex items-center justify-center gap-2"
           {% if cart.item_count == 0 %}disabled style="opacity: 0.5; cursor: not-allowed;"{% endif %}
         >
-          متابعة الطلب — الدفع عند الاستلام 🌿
+          <span class="w-5 h-5 inline-flex items-center justify-center">{% render 'icon', name: 'lock' %}</span>
+          <span>متابعة الطلب — الدفع عند الاستلام</span>
         </button>
       </form>
     </div>
@@ -143,6 +153,12 @@
 {% schema %}
 {
   "name": "سلة التسوق المنزلقة",
-  "settings": []
+  "settings": [
+    {
+      "type": "product",
+      "id": "upsell_product",
+      "label": "منتج العرض الإضافي (Upsell Product)"
+    }
+  ]
 }
 {% endschema %}

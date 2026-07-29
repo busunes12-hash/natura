@@ -1,39 +1,48 @@
 {% comment %}
-  Section 7: Why Choose Us
-  Icons: Stroke line SVGs (Lab Flask, Botanical Shield, Crown Badge) inside 64x64px circular sage containers.
+  Section 7: Why Choose Us — USP Pillars
+  — No emojis in headings
+  — Schema-controlled (all text editable)
+  — 3-column on desktop, 1-column on mobile
 {% endcomment %}
+
 <section class="why-choose-us py-16 reveal-on-scroll" style="background-color: var(--color-bg-secondary);">
   <div class="container">
     <div class="section-header">
-      <span class="badge-terracotta mb-2">جودة لا تضاهى</span>
-      <h2 class="type-h2">لماذا تميزت منتجات ماتيريا؟ 🔬</h2>
-      <p class="section-subtitle">معايير رفيعة تجمع بين الأصالة المغربية والبحث العلمي الحديث</p>
+      <span class="badge-terracotta mb-4" style="display: inline-flex;">{{ section.settings.badge | default: 'جودة لا تضاهى' }}</span>
+      <h2 class="type-h2">{{ section.settings.title | default: 'لماذا تميزت منتجات ناتورا؟' }}</h2>
+      <p class="section-subtitle">{{ section.settings.subtitle | default: 'معايير رفيعة تجمع بين الأصالة المغربية والبحث العلمي الحديث' }}</p>
     </div>
 
     <div class="pillars-grid">
-      <div class="pillar-card text-center flex flex-col items-center p-6 bg-surface rounded-lg shadow-sm" style="border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md);">
-        <div class="pillar-icon-wrapper flex items-center justify-center rounded-full mb-4 shadow-sm" style="width: 64px; height: 64px; background-color: rgba(45, 95, 62, 0.1); color: var(--color-forest);">
-          {% render 'icon', name: 'flask' %}
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'pillar' -%}
+            <div class="pillar-card text-center" {{ block.shopify_attributes }}>
+              <div class="pillar-icon-wrapper">
+                {% render 'icon', name: block.settings.icon | default: 'leaf' %}
+              </div>
+              <h3 class="font-bold mb-2" style="font-family: var(--font-heading); font-size: 1.2rem;">{{ block.settings.title | default: 'ميزة رئيسية' }}</h3>
+              <p class="text-muted text-sm leading-relaxed">{{ block.settings.description | default: 'وصف الميزة الرئيسية لمنتجاتنا الطبيعية الفاخرة.' }}</p>
+            </div>
+        {%- endcase -%}
+      {%- else -%}
+        <!-- Default 3 pillars -->
+        <div class="pillar-card text-center">
+          <div class="pillar-icon-wrapper">{% render 'icon', name: 'flask' %}</div>
+          <h3 class="font-bold mb-2" style="font-family: var(--font-heading); font-size: 1.2rem;">تركيبات موثقة طبياً</h3>
+          <p class="text-muted text-sm leading-relaxed">مختبرة سريرياً من طرف أطباء الجلد لضمان أقصى درجات الفعالية والأمان على بشرتكِ.</p>
         </div>
-        <h3 class="font-bold text-xl mb-2" style="font-family: var(--font-heading);">تركيبات موثقة طبياً</h3>
-        <p class="text-muted text-sm leading-relaxed">مختبرة سريراً من طرف أطباء الجلد لضمان أقصى درجات الفعالية والأمان على بشرتكِ.</p>
-      </div>
-
-      <div class="pillar-card text-center flex flex-col items-center p-6 bg-surface rounded-lg shadow-sm" style="border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md);">
-        <div class="pillar-icon-wrapper flex items-center justify-center rounded-full mb-4 shadow-sm" style="width: 64px; height: 64px; background-color: rgba(45, 95, 62, 0.1); color: var(--color-forest);">
-          {% render 'icon', name: 'leaf' %}
+        <div class="pillar-card text-center">
+          <div class="pillar-icon-wrapper">{% render 'icon', name: 'leaf' %}</div>
+          <h3 class="font-bold mb-2" style="font-family: var(--font-heading); font-size: 1.2rem;">زيوت عضوية 100%</h3>
+          <p class="text-muted text-sm leading-relaxed">مكونات نقية من قلب الأطلس وسوس، بدون بارابين أو كبريتات أو معطرات صناعية.</p>
         </div>
-        <h3 class="font-bold text-xl mb-2" style="font-family: var(--font-heading);">زيوت عضويّة 100%</h3>
-        <p class="text-muted text-sm leading-relaxed">مكونات نية من قلب الأطلس وسوس، بدون بارابين أو كبريتات أو معطرات صناعية.</p>
-      </div>
-
-      <div class="pillar-card text-center flex flex-col items-center p-6 bg-surface rounded-lg shadow-sm" style="border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md);">
-        <div class="pillar-icon-wrapper flex items-center justify-center rounded-full mb-4 shadow-sm" style="width: 64px; height: 64px; background-color: rgba(45, 95, 62, 0.1); color: var(--color-forest);">
-          {% render 'icon', name: 'shield' %}
+        <div class="pillar-card text-center">
+          <div class="pillar-icon-wrapper">{% render 'icon', name: 'shield' %}</div>
+          <h3 class="font-bold mb-2" style="font-family: var(--font-heading); font-size: 1.2rem;">ضمان رضا تام</h3>
+          <p class="text-muted text-sm leading-relaxed">خدمة عميلات بالواتساب على مدار الساعة، شحن سريع، دفع عند الاستلام، واسترجاع مضمون 7 أيام.</p>
         </div>
-        <h3 class="font-bold text-xl mb-2" style="font-family: var(--font-heading);">تجربة تسوق رفيعة</h3>
-        <p class="text-muted text-sm leading-relaxed">خدمة عميلات متواصلة بالواتساب، شحن سريع ودفع عند الاستلام مع ضمان الاسترجاع.</p>
-      </div>
+      {%- endfor -%}
     </div>
   </div>
 </section>
@@ -45,23 +54,69 @@
     gap: 1.5rem;
   }
   .pillar-card {
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     transition: transform var(--transition-base), box-shadow var(--transition-base);
   }
   .pillar-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-md);
   }
-  @media (max-width: 768px) {
-    .pillars-grid {
-      grid-template-columns: 1fr;
-      gap: 1.25rem;
-    }
+  .pillar-icon-wrapper {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(45, 95, 62, 0.1);
+    color: var(--color-forest);
+    margin-bottom: 1.25rem;
+    flex-shrink: 0;
+  }
+  .pillar-icon-wrapper svg {
+    width: 32px;
+    height: 32px;
+  }
+  @media (max-width: 1024px) {
+    .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .pillars-grid { grid-template-columns: 1fr; }
   }
 </style>
 
 {% schema %}
 {
   "name": "لماذا تميزت منتجاتنا",
-  "settings": []
+  "settings": [
+    { "type": "text", "id": "badge", "label": "نص البادج", "default": "جودة لا تضاهى" },
+    { "type": "text", "id": "title", "label": "العنوان", "default": "لماذا تميزت منتجات ناتورا؟" },
+    { "type": "textarea", "id": "subtitle", "label": "الوصف", "default": "معايير رفيعة تجمع بين الأصالة المغربية والبحث العلمي الحديث" }
+  ],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "دعامة",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "الأيقونة", "default": "leaf", "options": [
+          { "value": "leaf", "label": "ورقة" },
+          { "value": "flask", "label": "قارورة" },
+          { "value": "shield", "label": "درع" },
+          { "value": "truck", "label": "شاحنة" },
+          { "value": "star", "label": "نجمة" },
+          { "value": "sparkle", "label": "بريق" }
+        ]},
+        { "type": "text", "id": "title", "label": "العنوان", "default": "ميزة رئيسية" },
+        { "type": "textarea", "id": "description", "label": "الوصف", "default": "وصف الميزة الرئيسية لمنتجاتنا الطبيعية الفاخرة." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "لماذا تميزت منتجاتنا" }]
 }
 {% endschema %}

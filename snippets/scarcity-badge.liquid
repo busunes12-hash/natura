@@ -1,0 +1,15 @@
+{% comment %}
+  Dynamic stock scarcity badge snippet
+{% endcomment %}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- if current_variant.inventory_management != blank and current_variant.inventory_quantity > 0 and current_variant.inventory_quantity <= 10 -%}
+  <div class="stock-badge p-3 rounded-md text-terracotta font-bold text-sm flex items-center gap-2" style="background-color: #FDF2EE; color: var(--color-terracotta); border: 1px solid #F5C6B3;">
+    <span class="w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'flame' %}</span>
+    <span>باقي {{ current_variant.inventory_quantity }} قطع فقط بالمخزون بالمغرب!</span>
+  </div>
+{%- else -%}
+  <div class="stock-badge p-3 rounded-md text-terracotta font-bold text-sm flex items-center gap-2" style="background-color: #FDF2EE; color: var(--color-terracotta); border: 1px solid #F5C6B3;">
+    <span class="w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'flame' %}</span>
+    <span>طلب عالي! متوفر كمية محدودة لليوم فقط بالمغرب</span>
+  </div>
+{%- endif -%}

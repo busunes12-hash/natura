@@ -3,12 +3,14 @@
 {% endcomment %}
 <section class="main-404-section py-24 text-center" style="background-color: var(--color-bg-primary);">
   <div class="container max-w-md">
-    <span class="text-7xl mb-4 block">🌿</span>
+    <span style="width:80px;height:80px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;background:rgba(45,95,62,0.1);border-radius:50%;color:var(--color-forest);">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+    </span>
     <h1 class="type-h1 mb-2">404</h1>
     <h2 class="type-h2 mb-4">عذراً! الصفحة غير موجودة</h2>
     <p class="text-muted mb-8">يبدو أن الصفحة التي تبحثين عنها قد تـم نقلها أو غير ممتوفرة حالياً.</p>
     <a href="{{ routes.root_url }}" class="btn-primary">
-      العودة للرئيسية 🌿
+      العودة للرئيسية
     </a>
   </div>
 </section>

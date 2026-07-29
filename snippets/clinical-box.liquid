@@ -1,0 +1,20 @@
+{% comment %}
+  Clinical study results snippet for PDP and landing pages
+{% endcomment %}
+<div class="clinical-box rounded-md border bg-surface" style="padding: 1.75rem; border-color: var(--color-border-subtle); background-color: var(--color-bg-surface);">
+  <h4 class="font-bold text-forest mb-3 flex items-center gap-2" style="font-family: var(--font-heading);">
+    <span class="w-5 h-5 inline-flex items-center justify-center">{% render 'icon', name: 'flask' %}</span>
+    <span>نتائج الاختبارات السريرية:</span>
+  </h4>
+  <ul class="flex flex-col gap-2.5 text-sm text-muted list-none">
+    <li class="flex items-center gap-2">
+      <span class="text-forest font-bold w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'check' %}</span> 98% نضارة فورية من الأسبوع الأول
+    </li>
+    <li class="flex items-center gap-2">
+      <span class="text-forest font-bold w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'check' %}</span> 95% توحيد لون البشرة والتخلص من التصبغات
+    </li>
+    <li class="flex items-center gap-2">
+      <span class="text-forest font-bold w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'check' %}</span> 100% ترطيب عميق بدون ملمس دهني
+    </li>
+  </ul>
+</div>

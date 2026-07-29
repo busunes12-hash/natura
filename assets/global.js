@@ -56,12 +56,16 @@ class DrawerComponent extends HTMLElement {
 
   open() {
     this.classList.add('is-active');
+    this.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    document.querySelectorAll(`[aria-controls="${this.id}"]`).forEach(btn => btn.setAttribute('aria-expanded', 'true'));
   }
 
   close() {
     this.classList.remove('is-active');
+    this.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    document.querySelectorAll(`[aria-controls="${this.id}"]`).forEach(btn => btn.setAttribute('aria-expanded', 'false'));
   }
 }
 customElements.define('drawer-component', DrawerComponent);
@@ -81,12 +85,16 @@ class ModalDialog extends HTMLElement {
 
   open() {
     this.classList.add('is-active');
+    this.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    document.querySelectorAll(`[aria-controls="${this.id}"]`).forEach(btn => btn.setAttribute('aria-expanded', 'true'));
   }
 
   close() {
     this.classList.remove('is-active');
+    this.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    document.querySelectorAll(`[aria-controls="${this.id}"]`).forEach(btn => btn.setAttribute('aria-expanded', 'false'));
   }
 }
 customElements.define('modal-dialog', ModalDialog);
@@ -126,7 +134,50 @@ class ImageLoadManager {
   }
 }
 
-/* 6. RTL Enforcer */
+/* 6. Product Gallery Thumbnail Switcher */
+class ProductGallery {
+  static init() {
+    document.querySelectorAll('.thumbnail-btn').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const targetSrc = btn.getAttribute('data-image-src');
+        const mainImg = document.querySelector('.main-image-wrapper img');
+        if (mainImg && targetSrc) {
+          mainImg.src = targetSrc;
+          document.querySelectorAll('.thumbnail-btn').forEach(b => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+        }
+      });
+    });
+  }
+}
+
+/* 7. Custom Variant Pill Selector */
+class VariantPillPicker {
+  static init() {
+    document.querySelectorAll('.variant-pill').forEach((pill) => {
+      pill.addEventListener('click', () => {
+        const variantId = pill.getAttribute('data-variant-id');
+        const hiddenInput = document.querySelector('input[name="id"]');
+        const submitBtn = document.querySelector('.product-form [data-quick-add]');
+
+        if (hiddenInput && variantId) {
+          hiddenInput.value = variantId;
+        }
+        if (submitBtn && variantId) {
+          submitBtn.setAttribute('data-quick-add', variantId);
+        }
+
+        const parent = pill.closest('.variant-pills');
+        if (parent) {
+          parent.querySelectorAll('.variant-pill').forEach(p => p.classList.remove('is-active'));
+        }
+        pill.classList.add('is-active');
+      });
+    });
+  }
+}
+
+/* 8. RTL Enforcer */
 class RTLEnforcer {
   static init() {
     if (document.documentElement.getAttribute('dir') !== 'rtl') {
@@ -139,4 +190,14 @@ document.addEventListener('DOMContentLoaded', () => {
   RTLEnforcer.init();
   ScrollRevealManager.init();
   ImageLoadManager.init();
+  ProductGallery.init();
+  VariantPillPicker.init();
+
+  window.addEventListener('cart:updated', () => {
+    const cartDrawer = document.querySelector('drawer-component#CartDrawer');
+    if (cartDrawer) {
+      cartDrawer.open();
+    }
+  });
 });
+

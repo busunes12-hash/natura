@@ -1,61 +1,109 @@
 {% comment %}
-  Section 4: Ingredients / Pill Capsule Trust Bar
-  Container: Pill capsule shape (rounded-full) on desktop with 1px solid var(--color-border-subtle) border.
-  Icons: 28x28px stroke SVGs.
+  Section 4: Trust Bar — 4 key trust signals
+  — Schema-controlled (all 4 items editable)
+  — No emojis mixed with SVG icons
+  — Responsive pill container
 {% endcomment %}
-<section class="ingredients-trust-bar py-8 reveal-on-scroll" style="background-color: var(--color-bg-primary);">
+
+<section class="ingredients-trust-bar py-10 reveal-on-scroll" style="background-color: var(--color-bg-primary);">
   <div class="container">
-    <div class="pill-container flex flex-wrap items-center justify-between gap-6 py-5 px-8 rounded-full border shadow-sm" style="border: 1px solid var(--color-border-subtle); background-color: var(--color-bg-surface);">
-      
-      <div class="pill-item flex items-center gap-3">
-        <span class="pill-icon text-forest flex items-center justify-center rounded-full" style="width: 40px; height: 40px; background-color: rgba(45, 95, 62, 0.08);">
-          {% render 'icon', name: 'truck' %}
-        </span>
-        <div>
-          <h4 class="font-bold text-sm" style="font-size: 0.95rem; color: var(--color-charcoal-dark);">🇲🇦 الدفع عند الاستلام</h4>
-          <p class="text-xs text-muted" style="font-size: 0.825rem; color: var(--color-text-muted);">توصيل آمن لجميع المدن</p>
-        </div>
-      </div>
+    <div class="pill-container">
 
-      <div class="pill-item flex items-center gap-3">
-        <span class="pill-icon text-forest flex items-center justify-center rounded-full" style="width: 40px; height: 40px; background-color: rgba(45, 95, 62, 0.08);">
-          {% render 'icon', name: 'flask' %}
-        </span>
-        <div>
-          <h4 class="font-bold text-sm" style="font-size: 0.95rem; color: var(--color-charcoal-dark);">🔬 مختبر جلدياً</h4>
-          <p class="text-xs text-muted" style="font-size: 0.825rem; color: var(--color-text-muted);">آمن 100% للبشرة الحساسة</p>
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'trust_item' -%}
+            <div class="pill-item" {{ block.shopify_attributes }}>
+              <span class="pill-icon" style="color: var(--color-forest); background-color: rgba(45,95,62,0.08);">
+                {% render 'icon', name: block.settings.icon | default: 'leaf' %}
+              </span>
+              <div>
+                <h4 class="font-bold" style="font-size: 0.95rem; color: var(--color-charcoal-dark);">{{ block.settings.title | default: 'ميزة' }}</h4>
+                <p class="text-xs text-muted">{{ block.settings.subtitle | default: 'وصف قصير' }}</p>
+              </div>
+            </div>
+        {%- endcase -%}
+      {%- else -%}
+        <div class="pill-item">
+          <span class="pill-icon">{% render 'icon', name: 'truck' %}</span>
+          <div>
+            <h4 class="font-bold" style="font-size: 0.95rem; color: var(--color-charcoal-dark);">الدفع عند الاستلام</h4>
+            <p class="text-xs text-muted">توصيل آمن لجميع المدن المغربية</p>
+          </div>
         </div>
-      </div>
-
-      <div class="pill-item flex items-center gap-3">
-        <span class="pill-icon text-forest flex items-center justify-center rounded-full" style="width: 40px; height: 40px; background-color: rgba(45, 95, 62, 0.08);">
-          {% render 'icon', name: 'shield' %}
-        </span>
-        <div>
-          <h4 class="font-bold text-sm" style="font-size: 0.95rem; color: var(--color-charcoal-dark);">🚚 شحن سريع 24-48h</h4>
-          <p class="text-xs text-muted" style="font-size: 0.825rem; color: var(--color-text-muted);">خدمة توصيل فورية</p>
+        <div class="pill-item">
+          <span class="pill-icon">{% render 'icon', name: 'flask' %}</span>
+          <div>
+            <h4 class="font-bold" style="font-size: 0.95rem; color: var(--color-charcoal-dark);">مختبر جلدياً</h4>
+            <p class="text-xs text-muted">آمن 100% للبشرة الحساسة</p>
+          </div>
         </div>
-      </div>
-
-      <div class="pill-item flex items-center gap-3">
-        <span class="pill-icon text-forest flex items-center justify-center rounded-full" style="width: 40px; height: 40px; background-color: rgba(45, 95, 62, 0.08);">
-          {% render 'icon', name: 'leaf' %}
-        </span>
-        <div>
-          <h4 class="font-bold text-sm" style="font-size: 0.95rem; color: var(--color-charcoal-dark);">🌿 مكونات عضوية 100%</h4>
-          <p class="text-xs text-muted" style="font-size: 0.825rem; color: var(--color-text-muted);">خالية من المواد الكيميائية</p>
+        <div class="pill-item">
+          <span class="pill-icon">{% render 'icon', name: 'shield' %}</span>
+          <div>
+            <h4 class="font-bold" style="font-size: 0.95rem; color: var(--color-charcoal-dark);">شحن سريع 24-48h</h4>
+            <p class="text-xs text-muted">خدمة توصيل فورية لباب منزلكِ</p>
+          </div>
         </div>
-      </div>
+        <div class="pill-item">
+          <span class="pill-icon">{% render 'icon', name: 'leaf' %}</span>
+          <div>
+            <h4 class="font-bold" style="font-size: 0.95rem; color: var(--color-charcoal-dark);">مكونات عضوية 100%</h4>
+            <p class="text-xs text-muted">خالية من المواد الكيميائية الضارة</p>
+          </div>
+        </div>
+      {%- endfor -%}
 
     </div>
   </div>
 </section>
 
 <style>
+  .pill-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem 2.5rem;
+    padding: 1.5rem 2rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border-subtle);
+    background-color: var(--color-bg-surface);
+    box-shadow: var(--shadow-sm);
+  }
+  .pill-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+  .pill-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-forest);
+    background-color: rgba(45, 95, 62, 0.08);
+    flex-shrink: 0;
+  }
+  .pill-icon svg {
+    width: 22px;
+    height: 22px;
+  }
   @media (max-width: 768px) {
     .pill-container {
-      border-radius: var(--radius-lg) !important;
-      padding: 1.25rem !important;
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      gap: 1rem 1.5rem;
+    }
+    .pill-item {
+      width: calc(50% - 0.75rem);
+    }
+  }
+  @media (max-width: 400px) {
+    .pill-item {
+      width: 100%;
     }
   }
 </style>
@@ -63,6 +111,26 @@
 {% schema %}
 {
   "name": "شريط الثقة والمكونات",
-  "settings": []
+  "settings": [],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "عنصر ثقة",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "الأيقونة", "default": "leaf", "options": [
+          { "value": "leaf", "label": "ورقة" },
+          { "value": "flask", "label": "قارورة" },
+          { "value": "shield", "label": "درع" },
+          { "value": "truck", "label": "شاحنة" },
+          { "value": "star", "label": "نجمة" },
+          { "value": "sparkle", "label": "بريق" },
+          { "value": "check", "label": "صح" }
+        ]},
+        { "type": "text", "id": "title", "label": "العنوان", "default": "ميزة" },
+        { "type": "text", "id": "subtitle", "label": "الوصف", "default": "وصف قصير" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "شريط الثقة والمكونات" }]
 }
 {% endschema %}

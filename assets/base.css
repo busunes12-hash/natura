@@ -16,6 +16,10 @@
   --color-terracotta: #C4724E;
   --color-text-muted: #555555;
   --color-border-subtle: #E8D5B7;
+  --color-success: #1A7A4A;
+  --color-error: #C0392B;
+  --color-warning: #E67E22;
+  --color-gold: #D4AF37;
 
   /* Typography Fonts */
   --font-heading: 'Noto Kufi Arabic', sans-serif;
@@ -29,8 +33,8 @@
 
   /* 1.5 Elevation & Shadow Tokens */
   --shadow-sm: 0 2px 8px rgba(45, 95, 62, 0.06);
-  --shadow-md: 0 8px 24px rgba(45, 95, 62, 0.08);
-  --shadow-lg: 0 16px 48px rgba(45, 95, 62, 0.12);
+  --shadow-md: 0 2px 4px rgba(45, 95, 62, 0.04), 0 8px 24px rgba(45, 95, 62, 0.08);
+  --shadow-lg: 0 4px 8px rgba(45, 95, 62, 0.04), 0 16px 48px rgba(45, 95, 62, 0.12);
 
   /* 1.6 Transitions & Animation Curves */
   --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -53,7 +57,12 @@
 html {
   font-size: 16px;
   scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
   -webkit-text-size-adjust: 100%;
+}
+
+[id] {
+  scroll-margin-top: 80px;
 }
 
 body {
@@ -66,30 +75,74 @@ body {
   direction: rtl;
   text-align: right;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* 1.2 Typography System (Strict 3-Style Scale) */
-.type-h1, h1 {
+/* 1.2 Typography System — 5-Level Scale */
+.type-display, .type-h1, h1 {
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 700;
-  line-height: 1.25;
+  font-size: clamp(2.25rem, 5.5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.2;
   color: var(--color-charcoal-dark);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
-.type-h2, h2, h3, h4, h5, h6 {
+.type-h2, h2 {
   font-family: var(--font-heading);
   font-size: clamp(1.65rem, 4vw, 2.25rem);
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.3;
   color: var(--color-charcoal-dark);
   letter-spacing: -0.01em;
 }
 
-.type-body, p, span, a, button, input, select, textarea, label {
+.type-h3, h3 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--color-charcoal-dark);
+  letter-spacing: 0;
+}
+
+.type-h4, h4 {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-charcoal-dark);
+}
+
+.type-h5, h5 {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--color-charcoal-dark);
+}
+
+.type-h6, h6 {
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.type-body, p {
   font-family: var(--font-body);
   font-size: 1.05rem;
+  line-height: 1.72;
+  font-weight: 400;
+}
+
+span, a, button, input, select, textarea, label {
+  font-family: var(--font-body);
+  font-size: 1rem;
   line-height: 1.65;
   font-weight: 400;
 }
@@ -124,6 +177,15 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
+.btn-primary:active, .btn-terracotta:active, .btn-secondary:active {
+  transform: scale(0.98);
+}
+
+/* Section Divider Utility Rule */
+.section-divider {
+  border-block-end: 1px solid rgba(45, 95, 62, 0.08);
+}
+
 /* Standardized Section Header Block */
 .section-header {
   text-align: center;
@@ -134,7 +196,7 @@ button {
   font-size: 1.05rem;
   color: var(--color-text-muted);
   margin-top: 0.5rem;
-  line-height: 1.6;
+  line-height: 1.75;
   max-width: 640px;
   margin-inline: auto;
 }
@@ -154,8 +216,20 @@ button {
 
 /* Accessibility Focus Ring */
 :focus-visible {
-  outline: 3px solid var(--color-forest);
-  outline-offset: 3px;
+  outline: 2.5px solid var(--color-forest);
+  outline-offset: 2px;
+}
+
+/* Badge Alignment Precision */
+.badge-forest, .badge-terracotta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-forest svg, .badge-terracotta svg {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 /* Skip to Content */

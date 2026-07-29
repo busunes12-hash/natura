@@ -18,26 +18,70 @@
       {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
-    {% if page_description %}
+    {%- if page_description -%}
       <meta name="description" content="{{ page_description | escape }}">
-    {% endif %}
+    {%- else -%}
+      <meta name="description" content="{{ shop.name }} — مستحضرات عناية طبيعية فاخرة مصنوعة في المغرب. زيوت عضوية، سيرومات، وكريمات مختبرة جلدياً. الدفع عند الاستلام في جميع المدن المغربية.">
+    {%- endif -%}
 
-    <!-- Google Fonts Preconnect -->
+    <!-- Google Fonts: Preconnect + Swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@600;700;800&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    >
 
-    <!-- LCP Hero Photography Preload (Performance optimization strategy 8.1) -->
+    <!-- LCP Hero Preload (homepage only) -->
     {%- if template.name == 'index' -%}
       <link rel="preload" as="image" href="{{ 'luxury-hero-skincare.jpg' | asset_url }}">
     {%- endif -%}
 
-    <!-- CSS Theme Assets -->
+    <!-- Core CSS -->
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'utilities.css' | asset_url | stylesheet_tag }}
     {{ 'rtl-enforcer.css' | asset_url | stylesheet_tag }}
 
     {{ content_for_header }}
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": {{ shop.name | json }},
+      "url": {{ shop.url | json }},
+      "logo": {
+        "@type": "ImageObject",
+        "url": {{ shop.url | append: '/assets/luxury-hero-skincare.jpg' | json }}
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "availableLanguage": ["Arabic", "French"]
+      },
+      "areaServed": "MA"
+    }
+    </script>
+
+    {%- if template.name == 'index' -%}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": {{ shop.name | json }},
+      "url": {{ shop.url | json }},
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": {{ shop.url | append: '/search?q={search_term_string}' | json }}
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    {%- endif -%}
 
     <script>
       document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
@@ -45,42 +89,43 @@
       window.Shopify.routes = window.Shopify.routes || { root: '{{ routes.root_url }}' };
     </script>
 
-    <!-- Global JavaScript Web Components -->
+    <!-- JS -->
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'component-cart.js' | asset_url }}" defer="defer"></script>
   </head>
 
   <body class="template-{{ template.name }}">
     <!-- Accessibility Skip Link -->
-    <a class="skip-to-content-link" href="#MainContent">
-      الانتقال إلى المحتوى الرئيسي
-    </a>
+    <a class="skip-to-content-link" href="#MainContent">الانتقال إلى المحتوى الرئيسي</a>
 
-    <!-- Master SVG Icons Catalog -->
+    <!-- Master SVG Icon Sprite -->
     {% render 'icons' %}
 
-    <!-- Section 1: Announcement Bar -->
+    <!-- Announcement Bar -->
     {% section 'announcement-bar' %}
 
-    <!-- Section 2: Sticky Header -->
+    <!-- Sticky Header -->
     {% section 'header' %}
 
-    <!-- Main Content Area -->
+    <!-- Mobile Nav Drawer -->
+    {% section 'mobile-nav-drawer' %}
+
+    <!-- Main Content -->
     <main id="MainContent" class="content-for-layout focus-none" tabindex="-1">
       {{ content_for_layout }}
     </main>
 
-    <!-- Section 14: Black Luxury Footer -->
+    <!-- Footer -->
     {% section 'footer' %}
 
-    <!-- Slide-Out Cart Drawer Component -->
+    <!-- Cart Drawer -->
     {% section 'cart-drawer' %}
 
-    <!-- Modals & Popups -->
+    <!-- Popups -->
     {% section 'popup-newsletter' %}
     {% section 'popup-cookie-consent' %}
 
-    <!-- WhatsApp Floating CTA Button -->
+    <!-- WhatsApp Floating Button -->
     {% render 'whatsapp-button' %}
   </body>
 </html>

@@ -1,49 +1,113 @@
 {% comment %}
   Section 3: Hero Banner
-  Preload Tag: Dynamically preloads luxury-hero-skincare.jpg via <link rel="preload" as="image">
-  Image Container: aspect-ratio: 1/1, object-fit: cover, border-radius: 20px, box-shadow: var(--shadow-lg)
+  — Schema-controlled headline, subtext, CTA link, and hero image
+  — Uses Shopify image CDN (image_url) for responsive WebP delivery
+  — Fallback to asset image if no schema image set
+  — No emojis. Clean SVG icons only.
 {% endcomment %}
 {{ 'section-hero.css' | asset_url | stylesheet_tag }}
 
-<section class="hero-section py-16 reveal-on-scroll" style="background-color: var(--color-bg-primary);">
+<section class="hero-section reveal-on-scroll" aria-label="القسم الرئيسي">
   <div class="container hero-grid">
+
+    <!-- Text Content -->
     <div class="hero-content">
-      <div class="badge-forest mb-4">
-        <span>🔬</span>
-        <span>تركيبات طبيعية فاخرة مصممة للبشرة المغربية</span>
+
+      <!-- Eyebrow badge -->
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow__icon">{% render 'icon', name: 'leaf' %}</span>
+        <span>{{ section.settings.eyebrow | default: 'تركيبات طبيعية فاخرة — مصنوعة في المغرب' }}</span>
       </div>
 
-      <h1 class="hero-content__title type-h1 mb-4">
-        {{ section.settings.title | default: "استعيدي إشراقة بشرتكِ الطبيعية بأجود الزيوت العضوية" }}
+      <!-- H1 Headline -->
+      <h1 class="hero-content__title">
+        {{ section.settings.title | default: 'استعيدي إشراقة بشرتكِ الطبيعية' }}
       </h1>
 
-      <p class="section-subtitle mb-8 text-start" style="margin-inline: 0;">
-        {{ section.settings.subtext | default: "مستحضرات عناية فائقة الجودة مستوحاة من الطبيعة المغربية الغنية، موثقة مخبرياً ومصنوعة بعناية فائقة لتمنحكِ بشرة ناعمة ومشعة." }}
+      <!-- Subtext -->
+      <p class="hero-content__subtext">
+        {{ section.settings.subtext | default: 'مستحضرات فاخرة مستوحاة من الطبيعة المغربية، موثقة مخبرياً ومُصنَّعة بعناية لبشرة ناعمة ومشرقة طوال اليوم.' }}
       </p>
 
-      <div class="hero-content__actions flex items-center gap-4">
-        <a href="{{ section.settings.btn_link | default: '/collections/all' }}" class="btn-primary">
-          تسوّقي المجموعة 🌿
+      <!-- Social Proof Strip -->
+      <div class="hero-social-proof">
+        <div class="hero-stars">
+          {%- for i in (1..5) -%}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#D4AF37" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          {%- endfor -%}
+        </div>
+        <span class="hero-social-proof__text">
+          <strong>4.9/5</strong> — أكثر من <strong>10,000</strong> عميلة سعيدة
+        </span>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div class="hero-content__actions">
+        <a
+          href="{{ section.settings.btn_primary_link | default: '/collections/best-sellers' }}"
+          class="btn-primary"
+        >
+          {{ section.settings.btn_primary_text | default: 'تسوقي الأكثر مبيعاً' }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </a>
-        <a href="#testimonials" class="btn-secondary">
-          آراء العميلات ⭐ (4.9/5)
+        <a
+          href="{{ section.settings.btn_secondary_link | default: '/pages/about' }}"
+          class="btn-secondary"
+        >
+          {{ section.settings.btn_secondary_text | default: 'اكتشفي قصتنا' }}
         </a>
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when '@app' -%}
+            {% render block %}
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    <!-- Hero Image -->
+    <div class="hero-image" aria-hidden="true">
+      <div class="hero-image__wrapper">
+        {%- if section.settings.image != blank -%}
+          <img
+            srcset="
+              {{ section.settings.image | image_url: width: 400, format: 'webp' }} 400w,
+              {{ section.settings.image | image_url: width: 800, format: 'webp' }} 800w,
+              {{ section.settings.image | image_url: width: 1200, format: 'webp' }} 1200w
+            "
+            src="{{ section.settings.image | image_url: width: 800, format: 'webp' }}"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            alt="{{ section.settings.image.alt | default: shop.name | escape }}"
+            class="hero-image__img is-loaded"
+            loading="eager"
+            fetchpriority="high"
+            width="{{ section.settings.image.width }}"
+            height="{{ section.settings.image.height }}"
+          >
+        {%- else -%}
+          <img
+            src="{{ 'luxury-hero-skincare.jpg' | asset_url }}"
+            srcset="{{ 'luxury-hero-skincare.jpg' | asset_url }} 800w"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            alt="{{ shop.name }} — مستحضرات العناية بالبشرة الطبيعية المغربية"
+            class="hero-image__img is-loaded"
+            loading="eager"
+            fetchpriority="high"
+            width="800"
+            height="800"
+          >
+        {%- endif -%}
+
+        <!-- Floating trust pill -->
+        <div class="hero-image__trust-pill">
+          <span class="hero-image__trust-icon">{% render 'icon', name: 'flask' %}</span>
+          <span>مختبر جلدياً ومعتمد</span>
+        </div>
+
       </div>
     </div>
 
-    <div class="hero-image">
-      <div class="hero-image__wrapper rounded-lg shadow-lg overflow-hidden" style="aspect-ratio: 1/1; border-radius: var(--radius-lg);">
-        <img
-          src="{{ 'luxury-hero-skincare.jpg' | asset_url }}"
-          alt="مستحضرات ماتيريا الفاخرة للعناية بالبشرة"
-          class="hero-image__img w-full h-full object-cover"
-          loading="eager"
-          fetchpriority="high"
-          width="800"
-          height="800"
-        >
-      </div>
-    </div>
   </div>
 </section>
 
@@ -52,22 +116,59 @@
   "name": "الهيرو الرئيسي",
   "settings": [
     {
+      "type": "image_picker",
+      "id": "image",
+      "label": "صورة الهيرو"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "النص الصغير فوق العنوان",
+      "default": "تركيبات طبيعية فاخرة — مصنوعة في المغرب"
+    },
+    {
       "type": "text",
       "id": "title",
       "label": "العنوان الرئيسي",
-      "default": "استعيدي إشراقة بشرتكِ الطبيعية بأجود الزيوت العضوية"
+      "default": "استعيدي إشراقة بشرتكِ الطبيعية"
     },
     {
       "type": "textarea",
       "id": "subtext",
       "label": "الوصف الفرعي",
-      "default": "مستحضرات عناية فائقة الجودة مستوحاة من الطبيعة المغربية الغنية، موثقة مخبرياً ومصنوعة بعناية فائقة لتمنحكِ بشرة ناعمة ومشعة."
+      "default": "مستحضرات فاخرة مستوحاة من الطبيعة المغربية، موثقة مخبرياً ومُصنَّعة بعناية لبشرة ناعمة ومشرقة طوال اليوم."
+    },
+    {
+      "type": "text",
+      "id": "btn_primary_text",
+      "label": "نص الزر الأساسي",
+      "default": "تسوقي الأكثر مبيعاً"
     },
     {
       "type": "url",
-      "id": "btn_link",
-      "label": "رابط زر التسوق",
-      "default": "/collections/all"
+      "id": "btn_primary_link",
+      "label": "رابط الزر الأساسي"
+    },
+    {
+      "type": "text",
+      "id": "btn_secondary_text",
+      "label": "نص الزر الثانوي",
+      "default": "اكتشفي قصتنا"
+    },
+    {
+      "type": "url",
+      "id": "btn_secondary_link",
+      "label": "رابط الزر الثانوي"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "الهيرو الرئيسي"
     }
   ]
 }

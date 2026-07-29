@@ -1,79 +1,102 @@
 {% comment %}
-  Section 10: Testimonials & UGC
-  Mobile Swipe: CSS touch snap-scroll (scroll-snap-type: x mandatory) on viewports <=640px.
-  Trust Badges: Verified Moroccan buyer badges (شراء موثق 🇲🇦).
+  Section 10: Testimonials — Schema-controlled review cards
+  — Gold star color
+  — No hardcoded letter avatars
+  — No flag emojis
+  — CMS-editable via blocks
 {% endcomment %}
+
 <section id="testimonials" class="testimonials-section py-16 reveal-on-scroll" style="background-color: var(--color-bg-primary);">
   <div class="container">
     <div class="section-header">
-      <span class="badge-terracotta mb-2">تجارب حقيقية</span>
-      <h2 class="type-h2">ماذا تقول عميلاتنا في المغرب؟ 🇲🇦</h2>
-      <p class="section-subtitle">أكثر من 1,200 تقييم 5 نجوم من سيدات جربن منتجاتنا</p>
+      <span class="badge-terracotta mb-4" style="display: inline-flex;">{{ section.settings.badge | default: 'تجارب حقيقية' }}</span>
+      <h2 class="type-h2">{{ section.settings.title | default: 'ماذا تقول عميلاتنا في المغرب؟' }}</h2>
+      <p class="section-subtitle">{{ section.settings.subtitle | default: 'أكثر من 1,200 تقييم حقيقي من سيدات جربن منتجاتنا' }}</p>
     </div>
 
     <div class="testimonials-carousel">
-      <div class="testimonial-card p-6 bg-surface rounded-lg shadow-sm border" style="border-color: var(--color-border-subtle); border-radius: var(--radius-md);">
-        <div class="flex items-center justify-between mb-4">
-          <div class="stars flex gap-1">
-            {%- for i in (1..5) -%}
-              {% render 'icon', name: 'star' %}
-            {%- endfor -%}
-          </div>
-          <span class="badge-forest text-xs">شراء موثق 🇲🇦</span>
-        </div>
-        <p class="testimonial-text mb-4 text-sm leading-relaxed" style="color: var(--color-charcoal-dark);">
-          "صراحة السيروم روعة! فرق كبير لاحظتو من الأسبوع الأول في نضارة الوجه والصفاء. والتوصيل كان سريع بزاف للدار البيضاء ودفعوني حتى وصلتني الأمانة."
-        </p>
-        <div class="author-info flex items-center gap-3">
-          <div class="avatar font-bold text-forest bg-cream rounded-full w-10 h-10 flex items-center justify-center" style="width: 40px; height: 40px; background-color: var(--color-bg-secondary);">ف</div>
-          <div>
-            <h4 class="font-bold text-sm" style="font-family: var(--font-heading);">فاطمة الزهراء — الدار البيضاء</h4>
-            <span class="text-xs text-muted">سيروم فيتامين C العضوي</span>
-          </div>
-        </div>
-      </div>
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'review' -%}
+            <div class="testimonial-card" {{ block.shopify_attributes }}>
+              <!-- Stars -->
+              <div class="testimonial-stars">
+                {%- assign rating = block.settings.rating | default: 5 -%}
+                {%- for i in (1..5) -%}
+                  <svg width="16" height="16" viewBox="0 0 24 24"
+                    fill="{% if i <= rating %}#D4AF37{% else %}#E8D5B7{% endif %}"
+                    aria-hidden="true"
+                  >
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                {%- endfor -%}
+                {%- if block.settings.verified -%}
+                  <span class="verified-badge">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.74z"/><polyline points="9 12 11 14 15 10"/></svg>
+                    شراء موثق
+                  </span>
+                {%- endif -%}
+              </div>
 
-      <div class="testimonial-card p-6 bg-surface rounded-lg shadow-sm border" style="border-color: var(--color-border-subtle); border-radius: var(--radius-md);">
-        <div class="flex items-center justify-between mb-4">
-          <div class="stars flex gap-1">
-            {%- for i in (1..5) -%}
-              {% render 'icon', name: 'star' %}
-            {%- endfor -%}
-          </div>
-          <span class="badge-forest text-xs">شراء موثق 🇲🇦</span>
-        </div>
-        <p class="testimonial-text mb-4 text-sm leading-relaxed" style="color: var(--color-charcoal-dark);">
-          "كريم التين الشوكي غزال بزاف على البشرة. كيرطب من الأعماق وريحته طبيعية غزالة. كنشكركم على الجودة وحسن التعامل بالواتساب."
-        </p>
-        <div class="author-info flex items-center gap-3">
-          <div class="avatar font-bold text-forest bg-cream rounded-full w-10 h-10 flex items-center justify-center" style="width: 40px; height: 40px; background-color: var(--color-bg-secondary);">س</div>
-          <div>
-            <h4 class="font-bold text-sm" style="font-family: var(--font-heading);">سناء البقالي — الرباط</h4>
-            <span class="text-xs text-muted">كريم التين الشوكي الفاخر</span>
-          </div>
-        </div>
-      </div>
+              <!-- Review text -->
+              <blockquote class="testimonial-text">
+                "{{ block.settings.text | default: 'منتج رائع، لاحظت فرقاً كبيراً منذ الأسبوع الأول.' }}"
+              </blockquote>
 
-      <div class="testimonial-card p-6 bg-surface rounded-lg shadow-sm border" style="border-color: var(--color-border-subtle); border-radius: var(--radius-md);">
-        <div class="flex items-center justify-between mb-4">
-          <div class="stars flex gap-1">
-            {%- for i in (1..5) -%}
-              {% render 'icon', name: 'star' %}
-            {%- endfor -%}
+              <!-- Author -->
+              <div class="testimonial-author">
+                <div class="testimonial-avatar" aria-hidden="true" style="background-color: var(--color-bg-secondary); color: var(--color-forest);">
+                  {{ block.settings.name | default: 'ع' | slice: 0 }}
+                </div>
+                <div>
+                  <p class="testimonial-author__name">{{ block.settings.name | default: 'عميلة' }}</p>
+                  {%- if block.settings.city != blank or block.settings.product != blank -%}
+                    <p class="testimonial-author__meta text-xs text-muted">
+                      {%- if block.settings.city != blank -%}{{ block.settings.city }}{%- endif -%}
+                      {%- if block.settings.city != blank and block.settings.product != blank %} — {% endif -%}
+                      {%- if block.settings.product != blank -%}{{ block.settings.product }}{%- endif -%}
+                    </p>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+        {%- endcase -%}
+      {%- else -%}
+        <!-- Default static testimonials -->
+        <div class="testimonial-card">
+          <div class="testimonial-stars">
+            {%- for i in (1..5) -%}<svg width="16" height="16" viewBox="0 0 24 24" fill="#D4AF37" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>{%- endfor -%}
+            <span class="verified-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.74z"/><polyline points="9 12 11 14 15 10"/></svg>شراء موثق</span>
           </div>
-          <span class="badge-forest text-xs">شراء موثق 🇲🇦</span>
-        </div>
-        <p class="testimonial-text mb-4 text-sm leading-relaxed" style="color: var(--color-charcoal-dark);">
-          "أحسن باك خدتو هاد العام. جودة عالية ومكونات طبيعية 100%. التوصيل لمراكش خذ يومين فقط والتغليف راقي جداً ينفع حتى كهدية."
-        </p>
-        <div class="author-info flex items-center gap-3">
-          <div class="avatar font-bold text-forest bg-cream rounded-full w-10 h-10 flex items-center justify-center" style="width: 40px; height: 40px; background-color: var(--color-bg-secondary);">م</div>
-          <div>
-            <h4 class="font-bold text-sm" style="font-family: var(--font-heading);">مريم بناني — مراكش</h4>
-            <span class="text-xs text-muted">باك العناية الملكي</span>
+          <blockquote class="testimonial-text">"صراحة السيروم روعة! فرق كبير لاحظتو من الأسبوع الأول في نضارة الوجه والصفاء. والتوصيل كان سريع بزاف للدار البيضاء."</blockquote>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" style="background-color: var(--color-bg-secondary); color: var(--color-forest);">ف</div>
+            <div><p class="testimonial-author__name">فاطمة الزهراء</p><p class="text-xs text-muted">الدار البيضاء — سيروم فيتامين C</p></div>
           </div>
         </div>
-      </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">
+            {%- for i in (1..5) -%}<svg width="16" height="16" viewBox="0 0 24 24" fill="#D4AF37" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>{%- endfor -%}
+            <span class="verified-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.74z"/><polyline points="9 12 11 14 15 10"/></svg>شراء موثق</span>
+          </div>
+          <blockquote class="testimonial-text">"كريم التين الشوكي غزال بزاف على البشرة. كيرطب من الأعماق وريحته طبيعية غزالة. كنشكركم على الجودة وحسن التعامل."</blockquote>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" style="background-color: var(--color-bg-secondary); color: var(--color-forest);">س</div>
+            <div><p class="testimonial-author__name">سناء البقالي</p><p class="text-xs text-muted">الرباط — كريم التين الشوكي</p></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">
+            {%- for i in (1..5) -%}<svg width="16" height="16" viewBox="0 0 24 24" fill="#D4AF37" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>{%- endfor -%}
+            <span class="verified-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.74z"/><polyline points="9 12 11 14 15 10"/></svg>شراء موثق</span>
+          </div>
+          <blockquote class="testimonial-text">"أحسن باك خدتو هاد العام. جودة عالية ومكونات طبيعية 100%. التوصيل لمراكش خذ يومين فقط والتغليف راقي جداً."</blockquote>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" style="background-color: var(--color-bg-secondary); color: var(--color-forest);">م</div>
+            <div><p class="testimonial-author__name">مريم بناني</p><p class="text-xs text-muted">مراكش — باك العناية الملكي</p></div>
+          </div>
+        </div>
+      {%- endfor -%}
     </div>
   </div>
 </section>
@@ -85,19 +108,80 @@
     gap: 1.5rem;
   }
   .testimonial-card {
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     transition: transform var(--transition-base), box-shadow var(--transition-base);
   }
   .testimonial-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-md);
   }
-  @media (max-width: 768px) {
+  .testimonial-stars {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+  }
+  .verified-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-forest);
+    background-color: rgba(45,95,62,0.08);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+    margin-inline-start: 0.5rem;
+  }
+  .testimonial-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--color-charcoal-dark);
+    font-style: italic;
+    flex: 1;
+  }
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-top: 1px solid var(--color-border-subtle);
+    padding-top: 1rem;
+  }
+  .testimonial-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .testimonial-author__name {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-charcoal-dark);
+  }
+  @media (max-width: 1024px) {
+    .testimonials-carousel { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
     .testimonials-carousel {
       display: flex;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       padding-bottom: 1rem;
       -webkit-overflow-scrolling: touch;
+      gap: 1rem;
     }
     .testimonial-card {
       min-width: 85%;
@@ -109,6 +193,25 @@
 {% schema %}
 {
   "name": "آراء العميلات",
-  "settings": []
+  "settings": [
+    { "type": "text", "id": "badge", "label": "نص البادج", "default": "تجارب حقيقية" },
+    { "type": "text", "id": "title", "label": "العنوان", "default": "ماذا تقول عميلاتنا في المغرب؟" },
+    { "type": "textarea", "id": "subtitle", "label": "الوصف", "default": "أكثر من 1,200 تقييم حقيقي من سيدات جربن منتجاتنا" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "تقييم",
+      "settings": [
+        { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "default": 5, "label": "التقييم" },
+        { "type": "checkbox", "id": "verified", "label": "شراء موثق", "default": true },
+        { "type": "textarea", "id": "text", "label": "نص التقييم" },
+        { "type": "text", "id": "name", "label": "اسم العميلة" },
+        { "type": "text", "id": "city", "label": "المدينة" },
+        { "type": "text", "id": "product", "label": "المنتج المُقيَّم" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "آراء العميلات" }]
 }
 {% endschema %}

@@ -29,14 +29,10 @@ class CartManager {
       const item = await response.json();
       await CartManager.refreshCartDrawer();
 
-      // Open Cart Drawer automatically
-      const cartDrawer = document.querySelector('drawer-component#CartDrawer');
-      if (cartDrawer) {
-        cartDrawer.open();
-      }
+      window.dispatchEvent(new CustomEvent('cart:updated'));
     } catch (error) {
       console.error('Cart Error:', error);
-      alert('تعذر إضافة المنتج. يرجى المحاولة مرة أخرى.');
+      window.dispatchEvent(new CustomEvent('theme:error', { detail: { message: 'تعذر إضافة المنتج. يرجى المحاولة مرة أخرى.' } }));
     } finally {
       if (buttonElement) {
         buttonElement.classList.remove('is-loading');
@@ -62,6 +58,7 @@ class CartManager {
       if (!response.ok) throw new Error('فشل تحديث الكمية');
 
       await CartManager.refreshCartDrawer();
+      window.dispatchEvent(new CustomEvent('cart:updated'));
     } catch (error) {
       console.error('Cart Quantity Error:', error);
     }
@@ -95,7 +92,7 @@ class CartManager {
   }
 }
 
-// Global Quick Add event listener
+// Delegated Quick Add and Cart Change Event Listeners
 document.addEventListener('click', (event) => {
   const quickAddBtn = event.target.closest('[data-quick-add]');
   if (quickAddBtn) {
@@ -104,5 +101,12 @@ document.addEventListener('click', (event) => {
     if (variantId) {
       CartManager.addItem(variantId, 1, quickAddBtn);
     }
+  }
+
+  const removeBtn = event.target.closest('[data-cart-remove]');
+  if (removeBtn) {
+    event.preventDefault();
+    const key = removeBtn.dataset.cartRemove;
+    if (key) CartManager.changeQuantity(key, 0);
   }
 });

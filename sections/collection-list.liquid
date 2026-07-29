@@ -1,50 +1,99 @@
 {% comment %}
   Section 6: Shop by Collection
-  Category Card: Square 1:1 image, border-radius: 20px, dark text overlay (from-black/75 to-transparent).
+  — Uses Shopify collection image picker via schema blocks
+  — RTL-correct arrow direction
+  — Horizontal scroll carousel on mobile
 {% endcomment %}
-<section class="collection-list-section py-16 reveal-on-scroll" style="background-color: var(--color-bg-primary);">
+
+<section class="collection-list-section py-16 reveal-on-scroll">
   <div class="container">
     <div class="section-header">
-      <span class="badge-terracotta mb-2">تشكيلاتنا</span>
-      <h2 class="type-h2">تسوقي حسب التشكيلة 🌿</h2>
-      <p class="section-subtitle">عناية مخصصة لمختلف احتياجات بشرتكِ اليومية</p>
+      <span class="badge-terracotta mb-4" style="display: inline-flex;">{{ section.settings.badge | default: 'تشكيلاتنا' }}</span>
+      <h2 class="type-h2">{{ section.settings.title | default: 'تسوقي حسب التشكيلة' }}</h2>
+      <p class="section-subtitle">{{ section.settings.subtitle | default: 'عناية مخصصة لمختلف احتياجات بشرتكِ اليومية' }}</p>
     </div>
 
     <div class="collection-grid">
-      <div class="category-card">
-        <div class="category-card__image-wrapper">
-          <div class="category-card__dummy-img flex items-center justify-center text-5xl" style="background: linear-gradient(135deg, #2D5F3E, #1E3F2A); width: 100%; height: 100%;">💧</div>
-          <div class="category-card__overlay">
-            <h3 class="category-card__title">سيرومات الوجه المركزّة</h3>
-            <span class="category-card__link">استكشفي المجموعة ←</span>
-          </div>
-        </div>
-      </div>
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'collection_card' -%}
+            <div class="category-card" {{ block.shopify_attributes }}>
+              <a
+                href="{{ block.settings.collection_link | default: '#' }}"
+                class="category-card__image-wrapper"
+                aria-label="{{ block.settings.title | default: 'تشكيلة' }}"
+              >
+                {%- if block.settings.image != blank -%}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 600, format: 'webp' }}"
+                    srcset="{{ block.settings.image | image_url: width: 400, format: 'webp' }} 400w, {{ block.settings.image | image_url: width: 700, format: 'webp' }} 700w"
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                    alt="{{ block.settings.title | default: 'تشكيلة' }}"
+                    loading="lazy"
+                    width="600"
+                    height="600"
+                    style="width:100%;height:100%;object-fit:cover;display:block;"
+                  >
+                {%- else -%}
+                  <div style="width:100%;height:100%;background: linear-gradient(135deg, {{ block.settings.gradient_from | default: '#2D5F3E' }}, {{ block.settings.gradient_to | default: '#1E3F2A' }});display:flex;align-items:center;justify-content:center;">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+                  </div>
+                {%- endif -%}
 
-      <div class="category-card">
-        <div class="category-card__image-wrapper">
-          <div class="category-card__dummy-img flex items-center justify-center text-5xl" style="background: linear-gradient(135deg, #C4724E, #8C472A); width: 100%; height: 100%;">✨</div>
-          <div class="category-card__overlay">
-            <h3 class="category-card__title">كريمات الترطيب الفاخرة</h3>
-            <span class="category-card__link">استكشفي المجموعة ←</span>
-          </div>
+                <div class="category-card__overlay">
+                  <h3 class="category-card__title">{{ block.settings.title | default: 'تشكيلة المنتجات' }}</h3>
+                  <span class="category-card__link">
+                    {{ block.settings.cta | default: 'استكشفي المجموعة' }}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </span>
+                </div>
+              </a>
+            </div>
+        {%- endcase -%}
+      {%- else -%}
+        <!-- Default 3 cards fallback -->
+        <div class="category-card">
+          <a href="/collections/serums" class="category-card__image-wrapper" aria-label="سيرومات الوجه">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,#2D5F3E,#1E3F2A);display:flex;align-items:center;justify-content:center;">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"><path d="M9 3h6M10 9V3M14 9V3M6 20h12a2 2 0 0 0 2-2.18l-2-10A2 2 0 0 0 16 6H8a2 2 0 0 0-2 1.82l-2 10A2 2 0 0 0 6 20z"/></svg>
+            </div>
+            <div class="category-card__overlay">
+              <h3 class="category-card__title">سيرومات الوجه المركّزة</h3>
+              <span class="category-card__link">استكشفي المجموعة <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+          </a>
         </div>
-      </div>
-
-      <div class="category-card">
-        <div class="category-card__image-wrapper">
-          <div class="category-card__dummy-img flex items-center justify-center text-5xl" style="background: linear-gradient(135deg, #1E3F2A, #0F2015); width: 100%; height: 100%;">🎁</div>
-          <div class="category-card__overlay">
-            <h3 class="category-card__title">باكات العناية المتكاملة</h3>
-            <span class="category-card__link">توفير حتى 25% ←</span>
-          </div>
+        <div class="category-card">
+          <a href="/collections/moisturizers" class="category-card__image-wrapper" aria-label="كريمات الترطيب">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,#C4724E,#8C472A);display:flex;align-items:center;justify-content:center;">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+            </div>
+            <div class="category-card__overlay">
+              <h3 class="category-card__title">كريمات الترطيب الفاخرة</h3>
+              <span class="category-card__link">استكشفي المجموعة <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+          </a>
         </div>
-      </div>
+        <div class="category-card">
+          <a href="/collections/bundles" class="category-card__image-wrapper" aria-label="باكات العناية">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,#1E3F2A,#0F2015);display:flex;align-items:center;justify-content:center;">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="category-card__overlay">
+              <h3 class="category-card__title">باكات العناية المتكاملة</h3>
+              <span class="category-card__link">توفير حتى 25% <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </div>
+          </a>
+        </div>
+      {%- endfor -%}
     </div>
   </div>
 </section>
 
 <style>
+  .collection-list-section {
+    background-color: var(--color-bg-primary);
+  }
   .collection-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -52,52 +101,88 @@
   }
   @media (max-width: 768px) {
     .collection-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+  }
+  @media (max-width: 480px) {
+    .collection-grid {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 1rem;
+      padding-bottom: 1rem;
+      -webkit-overflow-scrolling: touch;
+    }
+    .category-card {
+      min-width: 75vw;
+      scroll-snap-align: center;
     }
   }
   .category-card__image-wrapper {
     position: relative;
+    display: block;
     aspect-ratio: 1 / 1;
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-md);
     transition: transform var(--transition-base), box-shadow var(--transition-base);
+    text-decoration: none;
   }
   .category-card__image-wrapper:hover {
-    transform: translateY(-4px);
+    transform: translateY(-6px) scale(1.01);
     box-shadow: var(--shadow-lg);
   }
   .category-card__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+    background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, transparent 55%);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     padding: 1.5rem;
-    color: #FFFFFF;
+    color: #fff;
   }
   .category-card__title {
     font-family: var(--font-heading);
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     font-weight: 700;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
   }
   .category-card__link {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    color: var(--color-bg-secondary);
+    color: rgba(255,248,231,0.9);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
   }
 </style>
 
 {% schema %}
 {
   "name": "التشكيلات والكتالوجات",
-  "settings": [],
-  "presets": [
+  "settings": [
+    { "type": "text", "id": "badge", "label": "نص البادج", "default": "تشكيلاتنا" },
+    { "type": "text", "id": "title", "label": "العنوان", "default": "تسوقي حسب التشكيلة" },
+    { "type": "textarea", "id": "subtitle", "label": "الوصف", "default": "عناية مخصصة لمختلف احتياجات بشرتكِ اليومية" }
+  ],
+  "blocks": [
     {
-      "name": "التشكيلات والكتالوجات"
+      "type": "collection_card",
+      "name": "بطاقة تشكيلة",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "صورة التشكيلة" },
+        { "type": "text", "id": "title", "label": "اسم التشكيلة", "default": "تشكيلة المنتجات" },
+        { "type": "text", "id": "cta", "label": "نص الرابط", "default": "استكشفي المجموعة" },
+        { "type": "url", "id": "collection_link", "label": "رابط التشكيلة" },
+        { "type": "color", "id": "gradient_from", "label": "لون البداية (للتدرج)", "default": "#2D5F3E" },
+        { "type": "color", "id": "gradient_to", "label": "لون النهاية (للتدرج)", "default": "#1E3F2A" }
+      ]
     }
-  ]
+  ],
+  "presets": [{ "name": "التشكيلات والكتالوجات" }]
 }
 {% endschema %}

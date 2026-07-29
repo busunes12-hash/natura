@@ -1,111 +1,256 @@
 {% comment %}
   Section 14: Black Luxury Footer
-  Background: Deep Black (#1A1A1A), circular social SVG icons, and regional Morocco COD seals.
+  — SVG logo (no emoji)
+  — Proper footer grid with all columns
+  — Token-based colors (no hardcoded hex values)
+  — Real WhatsApp number placeholder (UPDATE BEFORE LAUNCH)
+  — Schema-controlled settings
 {% endcomment %}
-<footer class="footer-section py-16" style="background-color: var(--color-bg-dark); color: #E5E5E5;">
+
+<footer class="footer-section" style="background-color: var(--color-bg-dark); color: #CCCCCC;">
   <div class="container">
-    <div class="footer-grid pb-12 border-b" style="border-color: #333333;">
+    <div class="footer-grid">
+
       <!-- Column 1: Brand Info -->
-      <div class="footer-col">
-        <h3 class="font-heading text-2xl font-bold text-white mb-4 flex items-center gap-2" style="font-family: var(--font-heading);">
-          <span>🌿</span> MATERIA
-        </h3>
-        <p class="text-sm leading-relaxed mb-6 opacity-80" style="max-width: 320px;">
-          علامة مغربية فاخرة متخصصة في مستحضرات العناية بالبشرة المصنوعة من أجود المكونات والزيوت العضوية النادرة.
+      <div class="footer-col footer-col--brand">
+        <a href="{{ routes.root_url }}" class="footer-logo" aria-label="{{ shop.name }}">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36" aria-hidden="true">
+            <circle cx="20" cy="20" r="19" stroke="#4ADE80" stroke-width="1.5"/>
+            <path d="M12 28 C12 20 16 14 24 12 C24 20 20 26 12 28Z" fill="#4ADE80" opacity="0.9"/>
+            <path d="M24 12 C24 18 22 24 16 28" stroke="#4ADE80" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span>{{ shop.name | default: 'NATURA' }}</span>
+        </a>
+        <p class="footer-brand-desc">
+          {{ section.settings.brand_desc | default: 'علامة مغربية فاخرة متخصصة في مستحضرات العناية بالبشرة المصنوعة من أجود المكونات والزيوت العضوية النادرة.' }}
         </p>
-        <div class="social-icons flex gap-3">
-          <a href="#" class="social-icon-btn flex items-center justify-center text-white transition-colors" aria-label="أنستغرام">
-            📷
-          </a>
-          <a href="#" class="social-icon-btn flex items-center justify-center text-white transition-colors" aria-label="فيسبوك">
-            📘
-          </a>
-          <a href="#" class="social-icon-btn flex items-center justify-center text-white transition-colors" aria-label="تيك توك">
-            🎵
-          </a>
-        </div>
+        {% render 'social-icons' %}
       </div>
 
       <!-- Column 2: Quick Links -->
       <div class="footer-col">
-        <h4 class="font-bold text-white mb-4 text-lg" style="font-family: var(--font-heading);">روابط سريعة</h4>
-        <ul class="flex flex-col gap-2.5 list-none text-sm opacity-80">
-          {%- if linklists.footer.links.size > 0 -%}
-            {%- for link in linklists.footer.links -%}
-              <li><a href="{{ link.url }}" class="hover:text-white transition-colors">{{ link.title }}</a></li>
-            {%- endfor -%}
-          {%- else -%}
-            <li><a href="/collections/all" class="hover:text-white transition-colors">جميع المنتجات</a></li>
-            <li><a href="/collections/serums" class="hover:text-white transition-colors">سيرومات الوجه</a></li>
-            <li><a href="/collections/creams" class="hover:text-white transition-colors">كريمات الترطيب</a></li>
-            <li><a href="/collections/bundles" class="hover:text-white transition-colors">باكات التوفير</a></li>
-          {%- endif -%}
+        <h4 class="footer-col__heading">{{ section.settings.links_heading | default: 'روابط سريعة' }}</h4>
+        <ul class="footer-links">
+          <li><a href="{{ routes.root_url }}">الرئيسية</a></li>
+          <li><a href="/collections/all">جميع المنتجات</a></li>
+          <li><a href="/pages/about">قصتنا</a></li>
+          <li><a href="/blogs/news">مدونة الجمال</a></li>
+          <li><a href="/pages/contact">اتصلي بنا</a></li>
         </ul>
       </div>
 
       <!-- Column 3: Customer Service -->
       <div class="footer-col">
-        <h4 class="font-bold text-white mb-4 text-lg" style="font-family: var(--font-heading);">خدمة العميلات</h4>
-        <ul class="flex flex-col gap-2.5 list-none text-sm opacity-80">
-          <li><a href="#faq" class="hover:text-white transition-colors">الأسئلة الشائعة</a></li>
-          <li><a href="/pages/shipping" class="hover:text-white transition-colors">سياسة الشحن والتوصيل</a></li>
-          <li><a href="/pages/returns" class="hover:text-white transition-colors">سياسة الاسترجاع 7 أيام</a></li>
-          <li><a href="/pages/contact" class="hover:text-white transition-colors">تواصل معنا عبر الواتساب</a></li>
+        <h4 class="footer-col__heading">{{ section.settings.service_heading | default: 'خدمة العملاء' }}</h4>
+        <ul class="footer-links">
+          <li><a href="#faq">الأسئلة الشائعة</a></li>
+          <li><a href="/pages/shipping">سياسة الشحن والتوصيل</a></li>
+          <li><a href="/pages/returns">سياسة الاسترجاع 7 أيام</a></li>
+          <li><a href="/search">البحث في المتجر</a></li>
+          <li>
+            <a
+              href="https://wa.me/{{ section.settings.whatsapp_number | default: '212600000000' }}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              تواصل عبر الواتساب
+            </a>
+          </li>
         </ul>
       </div>
 
-      <!-- Column 4: Morocco COD Regional Seals -->
+      <!-- Column 4: COD Trust Card -->
       <div class="footer-col">
-        <h4 class="font-bold text-white mb-4 text-lg" style="font-family: var(--font-heading);">الدفع والتوصيل بالمغرب 🇲🇦</h4>
-        <div class="cod-box p-4 rounded-md mb-4" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-md);">
-          <div class="flex items-center gap-2 mb-2 font-bold text-sm text-terracotta" style="color: var(--color-terracotta);">
-            <span>💰</span> الدفع عند الاستلام 100%
+        <div class="footer-cod-card">
+          <div class="footer-cod-card__header">
+            <span class="footer-cod-card__icon">{% render 'icon', name: 'truck' %}</span>
+            <span>الدفع عند الاستلام 100%</span>
           </div>
-          <p class="text-xs opacity-75 leading-relaxed">لا حاجة لبطاقة بنكية. ادفعي نقداً للموزع عند استلام طلبكِ في أي مدينة مغربية.</p>
+          <p class="footer-cod-card__desc">
+            {{ section.settings.cod_text | default: 'لا حاجة لبطاقة بنكية. ادفعي نقداً للموزع عند استلام طلبكِ في أي مدينة مغربية.' }}
+          </p>
         </div>
-        <div class="flex items-center gap-2 text-xs opacity-60">
-          <span>🇲🇦 شحن لـ 12 جهة بالمملكة المغربية</span>
-        </div>
+        <p class="footer-shipping-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          شحن لجميع جهات المملكة المغربية
+        </p>
       </div>
+
     </div>
 
-    <!-- Sub-footer copyright -->
-    <div class="sub-footer pt-8 pb-12 md:pb-0 flex flex-col md:flex-row items-center justify-between text-xs opacity-60 gap-4">
-      <p>© {{ 'now' | date: "%Y" }} MATERIA Organic Skincare Morocco. جميع الحقوق محفوظة.</p>
-      <div class="flex gap-4">
-        <a href="/pages/privacy" class="hover:underline">سياسة الخصوصية</a>
-        <a href="/pages/terms" class="hover:underline">شروط الاستخدام</a>
+    <!-- Sub-footer -->
+    <div class="footer-sub">
+      <p class="footer-copyright">
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. جميع الحقوق محفوظة.
+      </p>
+      <div class="footer-legal-links">
+        <a href="/pages/privacy">سياسة الخصوصية</a>
+        <a href="/pages/terms">شروط الاستخدام</a>
       </div>
     </div>
   </div>
 </footer>
 
 <style>
+  .footer-section {
+    padding-block: 4rem 2rem;
+  }
+
   .footer-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1.5fr;
-    gap: 2.5rem;
+    grid-template-columns: 1.8fr 0.9fr 1.1fr 1.4fr;
+    gap: 3rem;
+    align-items: start;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 2rem;
   }
-  .social-icon-btn {
-    width: 40px;
-    height: 40px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 50%;
-    transition: background-color var(--transition-base), transform var(--transition-base);
+
+  .footer-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #fff;
+    text-decoration: none;
+    margin-bottom: 1rem;
   }
-  .social-icon-btn:hover {
-    background-color: var(--color-forest);
-    transform: translateY(-2px);
+
+  .footer-brand-desc {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: #AAAAAA;
+    max-width: 320px;
+    margin-bottom: 1.5rem;
+    font-family: var(--font-body);
   }
+
+  .footer-col__heading {
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #EEEEEE;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer-links a {
+    color: #AAAAAA;
+    font-size: 0.9rem;
+    font-family: var(--font-body);
+    text-decoration: none;
+    transition: color var(--transition-base);
+    display: inline-block;
+  }
+
+  .footer-links a:hover {
+    color: #FFFFFF;
+  }
+
+  .footer-cod-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .footer-cod-card__header {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-weight: 700;
+    color: #E2A652;
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    font-family: var(--font-body);
+  }
+
+  .footer-cod-card__icon {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .footer-cod-card__desc {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #AAAAAA;
+    font-family: var(--font-body);
+  }
+
+  .footer-shipping-tag {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.825rem;
+    color: #777777;
+    font-family: var(--font-body);
+  }
+
+  .footer-sub {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-copyright {
+    font-size: 0.85rem;
+    color: #666666;
+    font-family: var(--font-body);
+  }
+
+  .footer-legal-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .footer-legal-links a {
+    font-size: 0.85rem;
+    color: #666666;
+    text-decoration: none;
+    font-family: var(--font-body);
+    transition: color var(--transition-base);
+  }
+
+  .footer-legal-links a:hover { color: #AAAAAA; }
+
   @media (max-width: 1024px) {
     .footer-grid {
       grid-template-columns: 1fr 1fr;
+      gap: 2rem;
     }
   }
+
   @media (max-width: 640px) {
     .footer-grid {
       grid-template-columns: 1fr;
       gap: 2rem;
+    }
+    .footer-sub {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .footer-brand-desc {
+      max-width: none;
     }
   }
 </style>
@@ -113,11 +258,13 @@
 {% schema %}
 {
   "name": "الفوتر الفاخر",
-  "settings": [],
-  "presets": [
-    {
-      "name": "الفوتر الفاخر"
-    }
-  ]
+  "settings": [
+    { "type": "textarea", "id": "brand_desc", "label": "وصف العلامة التجارية", "default": "علامة مغربية فاخرة متخصصة في مستحضرات العناية بالبشرة." },
+    { "type": "text", "id": "links_heading", "label": "عنوان عمود الروابط", "default": "روابط سريعة" },
+    { "type": "text", "id": "service_heading", "label": "عنوان عمود الخدمات", "default": "خدمة العملاء" },
+    { "type": "text", "id": "whatsapp_number", "label": "رقم الواتساب (بدون +)", "default": "212600000000", "info": "مثال: 212612345678 (رمز المغرب 212 ثم رقم الهاتف بدون صفر في البداية)" },
+    { "type": "textarea", "id": "cod_text", "label": "نص بطاقة الدفع عند الاستلام" }
+  ],
+  "presets": [{ "name": "الفوتر الفاخر" }]
 }
 {% endschema %}

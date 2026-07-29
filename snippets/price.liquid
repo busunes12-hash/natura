@@ -12,19 +12,21 @@
   assign compare_at_price = target.compare_at_price
 -%}
 
-<div class="price-container flex items-center gap-2 flex-wrap">
-  <span class="price-item price-item--sale font-bold text-forest" style="color: var(--color-forest); font-weight: 700; font-size: 1.15rem;">
-    {{ price | money_without_currency }} د.م.
-  </span>
-
-  {%- if compare_at_price > price -%}
-    <s class="price-item price-item--regular line-through text-muted" style="color: #777; font-size: 0.95rem;">
-      {{ compare_at_price | money_without_currency }} د.م.
-    </s>
-    {%- assign savings_amount = compare_at_price | minus: price -%}
-    {%- assign savings_pct = savings_amount | times: 100 | divided_by: compare_at_price -%}
-    <span class="badge-terracotta">
-      وفري {{ savings_amount | money_without_currency }} د.م. ({{ savings_pct }}%-)
+{%- if target != blank -%}
+  <div class="price-container flex items-center gap-2 flex-wrap">
+    <span class="price-item price-item--sale font-bold text-forest" style="color: var(--color-forest); font-weight: 700; font-size: 1.15rem;">
+      {{ price | money_without_currency | default: '199' }} د.م.
     </span>
-  {%- endif -%}
-</div>
+
+    {%- if compare_at_price > price -%}
+      <s class="price-item price-item--regular line-through text-muted" style="color: #777; font-size: 0.95rem;">
+        {{ compare_at_price | money_without_currency }} د.م.
+      </s>
+      {%- assign savings_amount = compare_at_price | minus: price -%}
+      {%- assign savings_pct = savings_amount | times: 100 | divided_by: compare_at_price -%}
+      <span class="badge-terracotta">
+        وفري {{ savings_amount | money_without_currency }} د.م. ({{ savings_pct }}%-)
+      </span>
+    {%- endif -%}
+  </div>
+{%- endif -%}

@@ -1,0 +1,12 @@
+{
+  "name": "عناوين التوصيل",
+  "sections": {
+    "main": {
+      "type": "announcement-bar",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

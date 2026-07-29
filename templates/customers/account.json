@@ -1,0 +1,12 @@
+{
+  "name": "حساب العميل",
+  "sections": {
+    "main": {
+      "type": "featured-collection",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
