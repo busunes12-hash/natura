@@ -46,7 +46,8 @@
 
     <!-- Navigation Links -->
     <nav class="mobile-nav-panel__nav" aria-label="التنقل الرئيسي">
-      {%- assign mobile_menu = linklists[section.settings.menu | default: 'main-menu'] -%}
+      {%- assign menu_handle = section.settings.menu | default: 'main-menu' -%}
+      {%- assign mobile_menu = linklists[menu_handle] -%}
       {%- if mobile_menu.links.size > 0 -%}
         {%- for link in mobile_menu.links -%}
           <a href="{{ link.url }}" class="mobile-nav-link{% if link.active %} is-active{% endif %}" onclick="document.querySelector('#MobileNavDrawer')?.close()">
