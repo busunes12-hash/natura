@@ -5,35 +5,46 @@
 .quantity-input {
   display: inline-flex;
   align-items: center;
-  border: 1px solid var(--color-forest);
+  border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-full);
   overflow: hidden;
   background-color: var(--color-bg-surface);
+  min-height: 48px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.quantity-input:focus-within {
+  border-color: var(--color-forest);
+  box-shadow: 0 0 0 3px rgba(45, 95, 62, 0.1);
 }
 
 .quantity-btn {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 1.25rem;
+  font-weight: 600;
+  font-size: 1.2rem;
   color: var(--color-forest);
-  transition: background-color var(--transition-base);
+  transition: background-color var(--transition-base), color var(--transition-base);
+  user-select: none;
 }
 
 .quantity-btn:hover {
   background-color: var(--color-bg-secondary);
+  color: var(--color-forest-deep);
 }
 
 .quantity-field {
-  width: 50px;
+  width: 48px;
   text-align: center;
   border: none;
   font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 1.1rem;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--color-charcoal-dark);
   background: transparent;
   -moz-appearance: textfield;
 }
@@ -47,18 +58,20 @@
 .form-select, .form-input {
   width: 100%;
   padding: 0.875rem 1.25rem;
-  border: 1px solid #E8D5B7;
+  min-height: 48px;
+  border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-md);
   font-family: var(--font-body);
   font-size: 1rem;
   background-color: var(--color-bg-surface);
   color: var(--color-charcoal-dark);
   outline: none;
-  transition: border-color var(--transition-base);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
 }
 
 .form-select:focus, .form-input:focus {
   border-color: var(--color-forest);
+  box-shadow: 0 0 0 3px rgba(45, 95, 62, 0.1);
 }
 
 /* Luxury Custom Variant Pill Selector */
@@ -70,8 +83,9 @@
 }
 
 .variant-pill {
-  padding: 0.65rem 1.25rem;
-  border: 1.5px solid var(--color-border-subtle);
+  min-height: 48px;
+  padding: 0.65rem 1.35rem;
+  border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-full);
   background-color: var(--color-bg-surface);
   color: var(--color-charcoal-dark);
@@ -79,53 +93,63 @@
   font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: border-color var(--transition-base), background-color var(--transition-base), color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02);
 }
 
 .variant-pill:hover {
   border-color: var(--color-forest);
   background-color: var(--color-bg-secondary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }
 
 .variant-pill.is-active {
   border-color: var(--color-forest);
   background-color: var(--color-forest);
   color: #FFFFFF;
-  box-shadow: var(--shadow-sm);
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(45, 95, 62, 0.2);
+}
+
+.variant-pill.is-active span {
+  color: #FFFFFF !important;
 }
 
 /* Interactive Product Gallery Thumbnails */
 .product-thumbnails {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.85rem;
   overflow-x: auto;
-  padding-block-end: 0.25rem;
+  padding-block-end: 0.5rem;
+  scrollbar-width: thin;
 }
 
 .thumbnail-btn {
-  width: 72px;
-  height: 72px;
+  width: 76px;
+  height: 76px;
   border-radius: var(--radius-md);
   overflow: hidden;
-  border: 2px solid transparent;
+  border: 1px solid var(--color-border-subtle);
   padding: 0;
   cursor: pointer;
   flex-shrink: 0;
-  transition: border-color var(--transition-base), transform var(--transition-base), outline var(--transition-base);
+  background-color: var(--color-bg-surface);
+  transition: border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
 }
 
 .thumbnail-btn:hover {
   transform: translateY(-2px);
+  border-color: var(--color-forest);
+  box-shadow: var(--shadow-sm);
 }
 
 .thumbnail-btn.is-active {
   border-color: var(--color-forest);
-  outline: 2px solid var(--color-forest);
-  outline-offset: 2px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 0 0 2px var(--color-forest), var(--shadow-sm);
 }
 
 .thumbnail-btn img {
@@ -133,4 +157,5 @@
   height: 100%;
   object-fit: cover;
 }
+
 

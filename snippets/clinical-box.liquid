@@ -1,20 +1,85 @@
 {% comment %}
-  Clinical study results snippet for PDP and landing pages
+  Clinical study results snippet for PDP and landing pages — Quiet Luxury Refinement
 {% endcomment %}
-<div class="clinical-box rounded-md border bg-surface" style="padding: 1.75rem; border-color: var(--color-border-subtle); background-color: var(--color-bg-surface);">
-  <h4 class="font-bold text-forest mb-3 flex items-center gap-2" style="font-family: var(--font-heading);">
-    <span class="w-5 h-5 inline-flex items-center justify-center">{% render 'icon', name: 'flask' %}</span>
+<div class="clinical-box">
+  <h4 class="clinical-title">
+    <span class="clinical-title-icon">{% render 'icon', name: 'flask' %}</span>
     <span>نتائج الاختبارات السريرية المعتمدة (عينة من 250 سيدة):</span>
   </h4>
-  <ul class="flex flex-col gap-2.5 text-sm text-muted list-none">
-    <li class="flex items-center gap-2">
-      <span class="text-forest font-bold w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'check' %}</span> 98% لاحظن نضارة فورية وتوهجاً في ملمس البشرة من أول 7 أيام
+  <ul class="clinical-list">
+    <li class="clinical-item">
+      <span class="clinical-check-disk">{% render 'icon', name: 'check' %}</span>
+      <span>98% لاحظن نضارة فورية وتوهجاً في ملمس البشرة من أول 7 أيام</span>
     </li>
-    <li class="flex items-center gap-2">
-      <span class="text-forest font-bold w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'check' %}</span> 95% اختفت لديهن البقع والتصبغات الجوفاء بعد 14 يوماً من الاستخدام المنتظم
+    <li class="clinical-item">
+      <span class="clinical-check-disk">{% render 'icon', name: 'check' %}</span>
+      <span>95% اختفت لديهن البقع والتصبغات الجوفاء بعد 14 يوماً من الاستخدام المنتظم</span>
     </li>
-    <li class="flex items-center gap-2">
-      <span class="text-forest font-bold w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'check' %}</span> 100% ترطيب عميق ومستمر لـ 48 ساعة دون ترك أي أثر دهني
+    <li class="clinical-item">
+      <span class="clinical-check-disk">{% render 'icon', name: 'check' %}</span>
+      <span>100% ترطيب عميق ومستمر لـ 48 ساعة دون ترك أي أثر دهني</span>
     </li>
   </ul>
 </div>
+
+<style>
+  .clinical-box {
+    padding: 1.5rem 1.65rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border-subtle);
+    background-color: var(--color-bg-primary);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .clinical-title {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-charcoal-dark);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .clinical-title-icon {
+    width: 1.35rem;
+    height: 1.35rem;
+    color: var(--color-forest);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .clinical-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .clinical-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.925rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+
+  .clinical-check-disk {
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: var(--radius-full);
+    background-color: rgba(45, 95, 62, 0.1);
+    color: var(--color-forest);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    padding: 0.2rem;
+  }
+</style>

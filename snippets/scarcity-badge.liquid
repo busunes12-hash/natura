@@ -1,15 +1,40 @@
 {% comment %}
-  Dynamic stock scarcity badge snippet
+  Dynamic stock scarcity badge snippet — Quiet Luxury Refinement
 {% endcomment %}
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 {%- if current_variant.inventory_management != blank and current_variant.inventory_quantity > 0 and current_variant.inventory_quantity <= 10 -%}
-  <div class="stock-badge p-3 rounded-md text-terracotta font-bold text-sm flex items-center gap-2" style="background-color: #FDF2EE; color: var(--color-terracotta); border: 1px solid #F5C6B3;">
-    <span class="w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'flame' %}</span>
-    <span>⏳ وجبة إنتاج طازجة محدودة: باقي {{ current_variant.inventory_quantity }} قوارير فقط من دفعة هذا الأسبوع المعصورة على البارد</span>
+  <div class="stock-scarcity-badge">
+    <span class="scarcity-icon">{% render 'icon', name: 'sparkle' %}</span>
+    <span>وجبة إنتاج طازجة محدودة: باقي {{ current_variant.inventory_quantity }} قوارير فقط من دفعة هذا الأسبوع المعصورة على البارد</span>
   </div>
 {%- else -%}
-  <div class="stock-badge p-3 rounded-md text-terracotta font-bold text-sm flex items-center gap-2" style="background-color: #FDF2EE; color: var(--color-terracotta); border: 1px solid #F5C6B3;">
-    <span class="w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'flame' %}</span>
-    <span>⏳ دفعة نادرة معصورة على البارد: متوفر كمية محدودة لليوم فقط بالمغرب</span>
+  <div class="stock-scarcity-badge">
+    <span class="scarcity-icon">{% render 'icon', name: 'sparkle' %}</span>
+    <span>دفعة نادرة معصورة على البارد: متوفر كمية محدودة لليوم فقط بالمغرب</span>
   </div>
 {%- endif -%}
+
+<style>
+  .stock-scarcity-badge {
+    padding: 0.85rem 1.15rem;
+    border-radius: var(--radius-md);
+    background-color: var(--color-terracotta-soft);
+    color: var(--color-terracotta);
+    border: 1px solid rgba(184, 107, 73, 0.18);
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    line-height: 1.45;
+  }
+
+  .scarcity-icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+</style>

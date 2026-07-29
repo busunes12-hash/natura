@@ -51,47 +51,61 @@
 /* Badge & Tag Styling System */
 .badge-terracotta {
   background-color: var(--color-terracotta);
-  color: var(--color-bg-surface);
-  padding: 0.35rem 0.875rem;
+  color: #FFFFFF;
+  padding: 0.4rem 0.95rem;
   border-radius: var(--radius-full);
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 0.825rem;
+  font-weight: 600;
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  letter-spacing: -0.01em;
+  gap: 0.4rem;
+  letter-spacing: 0.01em;
   transition: transform var(--transition-base);
 }
 
 .badge-forest {
-  background-color: var(--color-forest);
-  color: var(--color-bg-primary);
-  padding: 0.35rem 0.875rem;
+  background-color: rgba(45, 95, 62, 0.08);
+  color: var(--color-forest);
+  padding: 0.4rem 0.95rem;
   border-radius: var(--radius-full);
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 0.825rem;
+  font-weight: 600;
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  letter-spacing: -0.01em;
+  gap: 0.4rem;
+  letter-spacing: 0.01em;
+  border: 1px solid rgba(45, 95, 62, 0.15);
   transition: transform var(--transition-base);
+}
+
+.badge-terracotta-subtle {
+  background-color: var(--color-terracotta-soft);
+  color: var(--color-terracotta);
+  padding: 0.4rem 0.95rem;
+  border-radius: var(--radius-full);
+  font-size: 0.825rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid rgba(184, 107, 73, 0.2);
 }
 
 /* Button Component Styles & Micro-Interactions */
 .btn-primary, .btn-secondary, .btn-terracotta {
   font-family: var(--font-body);
-  font-size: 1.05rem;
-  font-weight: 700;
-  padding: 0.875rem 2rem;
+  font-size: 1.025rem;
+  font-weight: 600;
+  padding: 0.95rem 2.25rem;
   border-radius: var(--radius-full);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  min-height: 48px;
+  gap: 0.65rem;
+  min-height: 52px;
   min-width: 48px;
   text-align: center;
-  line-height: 1.2;
+  line-height: 1.25;
   transition: background-color var(--transition-base), color var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
   will-change: transform;
@@ -100,15 +114,15 @@
 
 .btn-primary {
   background-color: var(--color-forest);
-  color: var(--color-bg-primary);
-  box-shadow: 0 4px 14px rgba(45, 95, 62, 0.18);
-  border: 2px solid transparent;
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(45, 95, 62, 0.2);
+  border: 1px solid transparent;
 }
 
 .btn-primary:hover {
   background-color: var(--color-forest-deep);
   transform: translate3d(0, -2px, 0);
-  box-shadow: 0 6px 20px rgba(45, 95, 62, 0.25);
+  box-shadow: 0 8px 24px rgba(45, 95, 62, 0.28);
 }
 
 .btn-primary:active {
@@ -119,15 +133,15 @@
 .btn-secondary {
   background-color: transparent;
   color: var(--color-forest);
-  border: 2px solid var(--color-forest);
+  border: 1.5px solid var(--color-forest);
 }
 
 .btn-secondary:hover {
-  background-color: var(--color-bg-secondary);
+  background-color: rgba(45, 95, 62, 0.05);
   color: var(--color-forest-deep);
   border-color: var(--color-forest-deep);
   transform: translate3d(0, -2px, 0);
-  box-shadow: 0 4px 14px rgba(45, 95, 62, 0.14);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-secondary:active {
@@ -136,20 +150,20 @@
 
 .btn-terracotta {
   background-color: var(--color-terracotta);
-  color: var(--color-bg-surface);
-  box-shadow: 0 4px 14px rgba(196, 114, 78, 0.22);
-  border: 2px solid transparent;
+  color: #FFFFFF;
+  box-shadow: 0 4px 18px rgba(184, 107, 73, 0.24);
+  border: 1px solid transparent;
 }
 
 .btn-terracotta:hover {
-  opacity: 0.94;
+  background-color: #A35A39;
   transform: translate3d(0, -2px, 0);
-  box-shadow: 0 6px 20px rgba(196, 114, 78, 0.3);
+  box-shadow: 0 8px 24px rgba(184, 107, 73, 0.32);
 }
 
 .btn-terracotta:active {
   transform: translate3d(0, 0, 0) scale(0.98);
-  box-shadow: 0 2px 8px rgba(196, 114, 78, 0.2);
+  box-shadow: 0 2px 8px rgba(184, 107, 73, 0.2);
 }
 
 /* Form Inputs Micro-Interactions */

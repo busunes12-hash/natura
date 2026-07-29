@@ -1,21 +1,64 @@
 {% comment %}
-  Secondary inline trust bar snippet
+  Secondary inline trust bar snippet — Quiet Luxury Refinement
 {% endcomment %}
-<div class="trust-bar-inline flex items-center justify-between gap-4 py-4 px-6 rounded-full border" style="border-color: #E8D5B7; background: var(--color-bg-surface);">
-  <div class="trust-item flex items-center gap-2">
-    {% render 'icon', name: 'truck' %}
-    <span class="text-xs font-bold">🇲🇦 الدفع عند الاستلام بالمغرب</span>
+<div class="trust-bar-inline">
+  <div class="trust-item">
+    <span class="trust-icon">{% render 'icon', name: 'truck' %}</span>
+    <span class="trust-text">الدفع عند الاستلام بالمغرب</span>
   </div>
-  <div class="trust-item flex items-center gap-2">
-    {% render 'icon', name: 'flask' %}
-    <span class="text-xs font-bold">🔬 مختبر طبياً 100%</span>
+  <div class="trust-item">
+    <span class="trust-icon">{% render 'icon', name: 'flask' %}</span>
+    <span class="trust-text">مختبر طبياً 100%</span>
   </div>
-  <div class="trust-item flex items-center gap-2">
-    {% render 'icon', name: 'shield' %}
-    <span class="text-xs font-bold">🚚 توصيل 24-48 ساعة</span>
+  <div class="trust-item">
+    <span class="trust-icon">{% render 'icon', name: 'shield' %}</span>
+    <span class="trust-text">توصيل 24-48 ساعة</span>
   </div>
-  <div class="trust-item flex items-center gap-2">
-    {% render 'icon', name: 'leaf' %}
-    <span class="text-xs font-bold">🌿 مكونات عضوية فاخرة</span>
+  <div class="trust-item">
+    <span class="trust-icon">{% render 'icon', name: 'leaf' %}</span>
+    <span class="trust-text">مكونات عضوية فاخرة</span>
   </div>
 </div>
+
+<style>
+  .trust-bar-inline {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem 1rem;
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border-subtle);
+    background-color: var(--color-bg-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  @media (min-width: 640px) {
+    .trust-bar-inline {
+      grid-template-columns: repeat(4, 1fr);
+      padding: 0.85rem 1.25rem;
+    }
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .trust-icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    color: var(--color-forest);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .trust-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-charcoal-dark);
+    line-height: 1.3;
+  }
+</style>

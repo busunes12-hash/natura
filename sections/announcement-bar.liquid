@@ -1,5 +1,5 @@
 {% comment %}
-  Section 1: Announcement Bar — Auto-rotating 3-message cycle
+  Section 1: Announcement Bar — Auto-rotating 3-message cycle with Emojis positioned at left
 {% endcomment %}
 
 <div
@@ -12,18 +12,18 @@
     <div class="announcement-track" id="AnnouncementTrack">
 
       <div class="announcement-slide is-active" role="status" aria-live="polite">
-        <span class="announcement-icon">{% render 'icon', name: 'truck' %}</span>
-        <span>{{ section.settings.text_1 | default: 'توصيل ملكي مجاني في 24-48 ساعة داخل جميع مدن المغرب للطلبات الفوق 200 د.م.' }}</span>
+        <span class="announcement-emoji" aria-hidden="true">{% if section.settings.emoji_1 != blank %}{{ section.settings.emoji_1 }}{% else %}🚚{% endif %}</span>
+        <span class="announcement-text">{{ section.settings.text_1 | default: 'توصيل ملكي مجاني في 24-48 ساعة داخل جميع مدن المغرب للطلبات الفوق 200 د.م.' }}</span>
       </div>
 
       <div class="announcement-slide" aria-hidden="true">
-        <span class="announcement-icon">{% render 'icon', name: 'shield' %}</span>
-        <span>{{ section.settings.text_2 | default: 'معاينة الشحنة مجاناً عند باب منزلكِ قبل الدفع — الدفع نقداً عند الاستلام 100%' }}</span>
+        <span class="announcement-emoji" aria-hidden="true">{% if section.settings.emoji_2 != blank %}{{ section.settings.emoji_2 }}{% else %}🛡️{% endif %}</span>
+        <span class="announcement-text">{{ section.settings.text_2 | default: 'معاينة الشحنة مجاناً عند باب منزلكِ قبل الدفع — الدفع نقداً عند الاستلام 100%' }}</span>
       </div>
 
       <div class="announcement-slide" aria-hidden="true">
-        <span class="announcement-icon">{% render 'icon', name: 'sparkle' %}</span>
-        <span>{{ section.settings.text_3 | default: 'ضمان إشراقة 30 يوماً: إذا لم تلاحظي فرقاً ملموساً نعيد لكِ جميع أموالكِ فوراً' }}</span>
+        <span class="announcement-emoji" aria-hidden="true">{% if section.settings.emoji_3 != blank %}{{ section.settings.emoji_3 }}{% else %}✨{% endif %}</span>
+        <span class="announcement-text">{{ section.settings.text_3 | default: 'ضمان إشراقة 30 يوماً: إذا لم تلاحظي فرقاً ملموساً نعيد لكِ جميع أموالكِ فوراً' }}</span>
       </div>
 
     </div>
@@ -55,7 +55,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
     font-size: 0.875rem;
     font-weight: 600;
     font-family: var(--font-body);
@@ -64,6 +64,7 @@
     transform: translateY(8px);
     transition: opacity 0.5s ease, transform 0.5s ease;
     pointer-events: none;
+    direction: ltr; /* Force Left-to-Right layout so Emoji is strictly on the LEFT */
   }
 
   .announcement-slide.is-active {
@@ -72,13 +73,24 @@
     pointer-events: auto;
   }
 
-  .announcement-icon {
-    width: 16px;
-    height: 16px;
+  .announcement-emoji {
+    font-size: 1.15rem;
+    line-height: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+  }
+
+  .announcement-emoji svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+
+  .announcement-text {
+    direction: rtl; /* Preserve right-to-left alignment for Arabic text */
+    text-align: right;
   }
 
   @media (max-width: 480px) {
@@ -116,15 +128,33 @@
   "settings": [
     {
       "type": "text",
+      "id": "emoji_1",
+      "label": "الرمز التعبيري الأول (Emoji)",
+      "default": "🚚"
+    },
+    {
+      "type": "text",
       "id": "text_1",
       "label": "الإعلان الأول",
       "default": "توصيل ملكي مجاني في 24-48 ساعة داخل جميع مدن المغرب للطلبات الفوق 200 د.م."
     },
     {
       "type": "text",
+      "id": "emoji_2",
+      "label": "الرمز التعبيري الثاني (Emoji)",
+      "default": "🛡️"
+    },
+    {
+      "type": "text",
       "id": "text_2",
       "label": "الإعلان الثاني",
       "default": "معاينة الشحنة مجاناً عند باب منزلكِ قبل الدفع — الدفع نقداً عند الاستلام 100%"
+    },
+    {
+      "type": "text",
+      "id": "emoji_3",
+      "label": "الرمز التعبيري الثالث (Emoji)",
+      "default": "✨"
     },
     {
       "type": "text",
