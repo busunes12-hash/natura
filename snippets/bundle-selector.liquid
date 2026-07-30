@@ -1,67 +1,69 @@
 {% comment %}
   🌿 Snippet: Dynamic Tiered Volume Discount Bundle Selector
-  Target: Boost AOV from 250 MAD to 550+ MAD
+  Phase 4: Removed emojis, clean design tokens, unified borders & typography
 {% endcomment %}
 
 {% assign base_price = product.price | default: 25000 %}
 {% assign price_2_pack = base_price | times: 2 | times: 0.80 %}
 {% assign price_3_pack = base_price | times: 3 | times: 0.65 %}
 
-<div class="bundle-selector-wrapper my-5 p-4 rounded-xl bg-stone-50 border border-stone-200" data-bundle-selector>
+<div class="bundle-selector-wrapper my-5 p-4 rounded-xl bg-cream border border-subtle-token" data-bundle-selector>
   <div class="bundle-header mb-3 flex items-center justify-between">
-    <h4 class="text-sm font-bold text-stone-900 flex items-center gap-1.5">
-      <span>🎁 عروض المجموعات العائلية (توفير أكبر)</span>
+    <h4 class="text-sm font-bold text-dark flex items-center gap-1.5">
+      <span class="w-4 h-4 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'sparkle' %}</span>
+      <span>عروض المجموعات العائلية (توفير أكبر)</span>
     </h4>
-    <span class="text-[11px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+    <span class="text-[11px] font-bold text-forest bg-surface px-2.5 py-0.5 rounded-full border border-subtle-token">
       شحن مجاني لكافة المدن
     </span>
   </div>
 
   <div class="bundle-options flex flex-col gap-2.5">
     <!-- Option 3: Royal Bundle (Best Value - Pre-selected) -->
-    <label class="bundle-card is-active relative flex items-center justify-between p-3.5 rounded-lg border-2 border-emerald-800 bg-white cursor-pointer transition shadow-sm hover:shadow-md" data-bundle-qty="3">
-      <span class="absolute -top-2.5 right-4 bg-amber-500 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm">
-        🌟 الأكثر طلباً — توفير 35%
+    <label class="bundle-card is-active relative flex items-center justify-between p-3.5 rounded-lg border-2 border-forest bg-surface cursor-pointer transition shadow-sm hover:shadow-md" data-bundle-qty="3">
+      <span class="absolute -top-2.5 inset-inline-end-4 bg-terracotta text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm flex items-center gap-1">
+        <span class="w-3 h-3 inline-flex items-center justify-center">{% render 'icon', name: 'star' %}</span>
+        <span>الأكثر طلباً — توفير 35%</span>
       </span>
       <div class="flex items-center gap-3">
-        <input type="radio" name="bundle_tier_radio" value="3" checked class="w-4 h-4 text-emerald-800 focus:ring-emerald-800">
+        <input type="radio" name="bundle_tier_radio" value="3" checked class="w-4 h-4 text-forest focus:ring-forest">
         <div>
-          <h5 class="text-xs font-bold text-stone-900">المجموعة الثلاثية الملكية (3 حبات)</h5>
-          <p class="text-[11px] text-stone-500">توفير 35% + هدية مجانية + شحن مجاني</p>
+          <h5 class="text-xs font-bold text-dark">المجموعة الثلاثية الملكية (3 حبات)</h5>
+          <p class="text-[11px] text-muted">توفير 35% + هدية مجانية + شحن مجاني</p>
         </div>
       </div>
-      <div class="text-left" dir="ltr">
-        <span class="text-sm font-black text-emerald-900 block">{{ price_3_pack | money_without_currency }} د.م.</span>
-        <span class="text-[11px] text-stone-400 line-through block">{{ base_price | times: 3 | money_without_currency }} د.م.</span>
+      <div class="text-end" dir="ltr">
+        <span class="text-sm font-black text-forest block">{{ price_3_pack | money_without_currency }} د.م.</span>
+        <span class="text-[11px] text-muted line-through block">{{ base_price | times: 3 | money_without_currency }} د.م.</span>
       </div>
     </label>
 
     <!-- Option 2: Duo Pack -->
-    <label class="bundle-card relative flex items-center justify-between p-3.5 rounded-lg border border-stone-300 bg-white cursor-pointer transition hover:border-emerald-700" data-bundle-qty="2">
+    <label class="bundle-card relative flex items-center justify-between p-3.5 rounded-lg border border-subtle-token bg-surface cursor-pointer transition hover:border-forest" data-bundle-qty="2">
       <div class="flex items-center gap-3">
-        <input type="radio" name="bundle_tier_radio" value="2" class="w-4 h-4 text-emerald-800 focus:ring-emerald-800">
+        <input type="radio" name="bundle_tier_radio" value="2" class="w-4 h-4 text-forest focus:ring-forest">
         <div>
-          <h5 class="text-xs font-bold text-stone-900">المجموعة الثنائية (حبتين)</h5>
-          <p class="text-[11px] text-stone-500">توفير 20% + شحن مجاني</p>
+          <h5 class="text-xs font-bold text-dark">المجموعة الثنائية (حبتين)</h5>
+          <p class="text-[11px] text-muted">توفير 20% + شحن مجاني</p>
         </div>
       </div>
-      <div class="text-left" dir="ltr">
-        <span class="text-sm font-bold text-stone-900 block">{{ price_2_pack | money_without_currency }} د.م.</span>
-        <span class="text-[11px] text-stone-400 line-through block">{{ base_price | times: 2 | money_without_currency }} د.م.</span>
+      <div class="text-end" dir="ltr">
+        <span class="text-sm font-bold text-dark block">{{ price_2_pack | money_without_currency }} د.م.</span>
+        <span class="text-[11px] text-muted line-through block">{{ base_price | times: 2 | money_without_currency }} د.م.</span>
       </div>
     </label>
 
     <!-- Option 1: Single Pack -->
-    <label class="bundle-card relative flex items-center justify-between p-3.5 rounded-lg border border-stone-300 bg-white cursor-pointer transition hover:border-emerald-700" data-bundle-qty="1">
+    <label class="bundle-card relative flex items-center justify-between p-3.5 rounded-lg border border-subtle-token bg-surface cursor-pointer transition hover:border-forest" data-bundle-qty="1">
       <div class="flex items-center gap-3">
-        <input type="radio" name="bundle_tier_radio" value="1" class="w-4 h-4 text-emerald-800 focus:ring-emerald-800">
+        <input type="radio" name="bundle_tier_radio" value="1" class="w-4 h-4 text-forest focus:ring-forest">
         <div>
-          <h5 class="text-xs font-bold text-stone-900">عبوة واحدة (حبة واحدة)</h5>
-          <p class="text-[11px] text-stone-500">السعر الأصلي</p>
+          <h5 class="text-xs font-bold text-dark">عبوة واحدة (حبة واحدة)</h5>
+          <p class="text-[11px] text-muted">السعر الأصلي</p>
         </div>
       </div>
-      <div class="text-left" dir="ltr">
-        <span class="text-sm font-bold text-stone-900 block">{{ base_price | money_without_currency }} د.م.</span>
+      <div class="text-end" dir="ltr">
+        <span class="text-sm font-bold text-dark block">{{ base_price | money_without_currency }} د.م.</span>
       </div>
     </label>
   </div>
@@ -73,11 +75,11 @@
     cards.forEach(function(card) {
       card.addEventListener('click', function() {
         cards.forEach(function(c) { 
-          c.classList.remove('is-active', 'border-2', 'border-emerald-800');
-          c.classList.add('border', 'border-stone-300');
+          c.classList.remove('is-active', 'border-2', 'border-forest');
+          c.classList.add('border', 'border-subtle-token');
         });
-        this.classList.add('is-active', 'border-2', 'border-emerald-800');
-        this.classList.remove('border-stone-300');
+        this.classList.add('is-active', 'border-2', 'border-forest');
+        this.classList.remove('border-subtle-token');
         var qty = this.getAttribute('data-bundle-qty');
         var codQty = document.getElementById('CodQuantity');
         if (codQty) codQty.value = qty;

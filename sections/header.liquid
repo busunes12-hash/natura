@@ -1,33 +1,22 @@
 {% comment %}
   Section 2: Sticky Glassmorphism Header
-  — SVG wordmark logo (no emoji)
-  — Desktop nav with hover underline
-  — Mobile hamburger triggering #MobileNavDrawer (defined in mobile-nav-drawer.liquid)
-  — Search, Account, Wishlist, Cart icons (44×44px touch targets)
-  — Scroll-aware class via JS
+  Phase 2 Rebuild:
+  — RTL-correct hamburger placement (inline-end)
+  — Search overlay with keyboard dismiss (Escape)
+  — 44×44px touch targets on all icon buttons
+  — z-index via CSS custom properties
+  — Focus trap ready (managed by DrawerComponent)
+  — Cart badge bump animation on update
 {% endcomment %}
 {{ 'component-header.css' | asset_url | stylesheet_tag }}
 
-<header class="header-wrapper" id="SiteHeader">
+<header class="header-wrapper" id="SiteHeader" role="banner">
   <div class="container header">
 
-    <!-- Mobile Menu Trigger -->
-    <button
-      type="button"
-      class="header__icon-btn lg:hidden"
-      aria-label="افتح القائمة الرئيسية"
-      aria-expanded="false"
-      aria-controls="MobileNavDrawer"
-      onclick="document.querySelector('#MobileNavDrawer')?.open()"
-    >
-      {% render 'icon', name: 'menu' %}
-    </button>
-
-    <!-- Brand Logo -->
+    {%- comment -%} ZONE 1 — Logo (inline-start in RTL = right side) {%- endcomment -%}
     <a href="{{ routes.root_url }}" class="header__logo" aria-label="{{ shop.name }} — الصفحة الرئيسية">
       <div class="header__logo-wrapper">
         <svg viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="header__logo-svg">
-          <!-- Detailed 3-leaf Botanical Emblem -->
           <path d="M60 5 C46 22 48 42 58 54 C60 54 60 54 62 54 C72 42 74 22 60 5 Z" stroke="currentColor" stroke-width="3" fill="none"/>
           <path d="M60 5 L60 54" stroke="currentColor" stroke-width="2"/>
           <path d="M60 20 C54 26 50 32 49 38 M60 28 C66 33 70 38 71 43" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -42,61 +31,59 @@
       </div>
     </a>
 
-    <!-- Desktop Navigation -->
-    <nav class="header__nav hidden lg:flex" aria-label="التنقل الرئيسي">
+    {%- comment -%} ZONE 2 — Desktop Navigation (center) {%- endcomment -%}
+    <nav class="header__nav lg:flex hidden" aria-label="التنقل الرئيسي">
       {%- assign main_menu = linklists[section.settings.menu] -%}
       {%- if main_menu.links.size > 0 -%}
         {%- for link in main_menu.links -%}
-          <a href="{{ link.url }}" class="header__nav-link{% if link.active %} is-active{% endif %}">
+          <a
+            href="{{ link.url }}"
+            class="header__nav-link{% if link.active %} is-active{% endif %}"
+            {% if link.active %}aria-current="page"{% endif %}
+          >
             {{ link.title | escape }}
           </a>
         {%- endfor -%}
       {%- else -%}
-        <a href="{{ routes.root_url }}" class="header__nav-link{% if request.path == '/' %} is-active{% endif %}">الرئيسية</a>
-        <a href="/collections/all" class="header__nav-link{% if request.path contains '/collections' %} is-active{% endif %}">المنتجات</a>
+        <a href="{{ routes.root_url }}" class="header__nav-link{% if request.path == '/' %} is-active{% endif %}"{% if request.path == '/' %} aria-current="page"{% endif %}>الرئيسية</a>
+        <a href="/collections/all" class="header__nav-link{% if request.path contains '/collections' %} is-active{% endif %}"{% if request.path contains '/collections' %} aria-current="page"{% endif %}>المنتجات</a>
+        <a href="/pages/about" class="header__nav-link{% if request.path contains '/about' %} is-active{% endif %}">قصتنا</a>
         <a href="/pages/contact" class="header__nav-link{% if request.path contains '/contact' %} is-active{% endif %}">اتصلي بنا</a>
       {%- endif -%}
     </nav>
 
-    <!-- Header Icon Actions -->
+    {%- comment -%} ZONE 3 — Icon actions + hamburger (inline-end) {%- endcomment -%}
     <div class="header__icons">
 
-      <!-- Search -->
+      {%- comment -%} Search — triggers overlay {%- endcomment -%}
       <button
         type="button"
         class="header__icon-btn"
         aria-label="البحث في المتجر"
+        aria-expanded="false"
+        aria-controls="HeaderSearchOverlay"
         id="SearchToggleBtn"
-        onclick="window.location.href='{{ routes.search_url }}'"
       >
         {% render 'icon', name: 'search' %}
       </button>
 
-      <!-- Account -->
+      {%- comment -%} Account {%- endcomment -%}
       <a
         href="{{ routes.account_url }}"
-        class="header__icon-btn"
+        class="header__icon-btn hidden-md"
         aria-label="{% if customer %}حسابي — {{ customer.first_name }}{% else %}تسجيل الدخول{% endif %}"
       >
         {% render 'icon', name: 'user' %}
       </a>
 
-      <!-- Wishlist -->
-      <button
-        type="button"
-        class="header__icon-btn header__icon-btn--wishlist"
-        aria-label="قائمة الرغبات"
-      >
-        {% render 'icon', name: 'heart' %}
-      </button>
-
-      <!-- Cart -->
+      {%- comment -%} Cart {%- endcomment -%}
       <button
         type="button"
         class="header__icon-btn"
-        aria-label="سلة التسوق — {{ cart.item_count }} منتج"
+        aria-label="سلة التسوق{% if cart.item_count > 0 %} — {{ cart.item_count }} منتج{% endif %}"
         aria-expanded="false"
         aria-controls="CartDrawer"
+        id="CartToggleBtn"
         onclick="document.querySelector('#CartDrawer')?.open()"
       >
         {% render 'icon', name: 'cart' %}
@@ -104,30 +91,134 @@
           class="header__cart-badge{% if cart.item_count == 0 %} hidden{% endif %}"
           data-cart-count
           aria-live="polite"
+          aria-atomic="true"
         >
           {{ cart.item_count }}
         </span>
+      </button>
+
+      {%- comment -%} Mobile Hamburger — inline-end in RTL (visually leftmost) {%- endcomment -%}
+      <button
+        type="button"
+        class="header__icon-btn lg:hidden"
+        aria-label="افتح القائمة الرئيسية"
+        aria-expanded="false"
+        aria-controls="MobileNavDrawer"
+        id="MenuToggleBtn"
+        onclick="document.querySelector('#MobileNavDrawer')?.open()"
+      >
+        {% render 'icon', name: 'menu' %}
       </button>
 
     </div>
   </div>
 </header>
 
+{%- comment -%} Search Overlay — full-width dropdown above header {%- endcomment -%}
+<div
+  id="HeaderSearchOverlay"
+  class="header-search-overlay"
+  role="search"
+  aria-label="البحث في المتجر"
+  aria-hidden="true"
+>
+  <div class="container">
+    <form action="{{ routes.search_url }}" method="get" class="header-search-form" role="search">
+      <input type="hidden" name="type" value="product">
+      <span class="header-search-icon" aria-hidden="true">
+        {% render 'icon', name: 'search' %}
+      </span>
+      <input
+        type="search"
+        name="q"
+        id="HeaderSearchInput"
+        class="header-search-input"
+        placeholder="{{ section.settings.search_placeholder | default: 'ابحثي عن منتج...' }}"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+        aria-label="البحث في المتجر"
+        enterkeyhint="search"
+      >
+    </form>
+    <button
+      type="button"
+      class="header-search-close"
+      aria-label="إغلاق البحث"
+      id="SearchCloseBtn"
+    >
+      {% render 'icon', name: 'close' %}
+    </button>
+  </div>
+</div>
+
 <script>
-  (function() {
-    var header = document.getElementById('SiteHeader');
-    if (!header) return;
-    var threshold = 80;
+(function() {
+  /* ── Scroll-aware header state ── */
+  var header = document.getElementById('SiteHeader');
+  if (header) {
+    var THRESHOLD = 80;
     function onScroll() {
-      if (window.scrollY > threshold) {
-        header.classList.add('is-scrolled');
-      } else {
-        header.classList.remove('is-scrolled');
-      }
+      header.classList.toggle('is-scrolled', window.scrollY > THRESHOLD);
     }
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
-  })();
+  }
+
+  /* ── Search overlay toggle ── */
+  var searchOverlay  = document.getElementById('HeaderSearchOverlay');
+  var searchInput    = document.getElementById('HeaderSearchInput');
+  var searchToggleBtn = document.getElementById('SearchToggleBtn');
+  var searchCloseBtn = document.getElementById('SearchCloseBtn');
+
+  function openSearch() {
+    if (!searchOverlay) return;
+    searchOverlay.classList.add('is-active');
+    searchOverlay.setAttribute('aria-hidden', 'false');
+    searchToggleBtn && searchToggleBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+    // Focus input after animation frame
+    requestAnimationFrame(function() {
+      searchInput && searchInput.focus();
+    });
+  }
+
+  function closeSearch() {
+    if (!searchOverlay) return;
+    searchOverlay.classList.remove('is-active');
+    searchOverlay.setAttribute('aria-hidden', 'true');
+    searchToggleBtn && searchToggleBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    searchToggleBtn && searchToggleBtn.focus();
+  }
+
+  if (searchToggleBtn) {
+    searchToggleBtn.addEventListener('click', function() {
+      var isOpen = searchOverlay && searchOverlay.classList.contains('is-active');
+      isOpen ? closeSearch() : openSearch();
+    });
+  }
+
+  if (searchCloseBtn) {
+    searchCloseBtn.addEventListener('click', closeSearch);
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && searchOverlay && searchOverlay.classList.contains('is-active')) {
+      closeSearch();
+    }
+  });
+
+  /* ── Cart badge bump animation on update ── */
+  window.addEventListener('cart:updated', function() {
+    var badge = document.querySelector('[data-cart-count]');
+    if (badge) {
+      badge.classList.remove('is-bumping');
+      void badge.offsetWidth; /* reflow to restart animation */
+      badge.classList.add('is-bumping');
+    }
+  });
+})();
 </script>
 
 {% schema %}
@@ -137,8 +228,20 @@
     {
       "type": "link_list",
       "id": "menu",
-      "label": "قائمة التنقل",
+      "label": "قائمة التنقل الرئيسية",
       "default": "main-menu"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "نص البحث التعريفي",
+      "default": "ابحثي عن منتج..."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "إظهار أيقونة الحساب",
+      "default": true
     }
   ]
 }

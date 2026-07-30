@@ -1,17 +1,23 @@
 {% comment %}
   10% first-order discount modal popup
+  Phase 7 & 9 Rebuild: SVG icons, z-index token, accessibility, no inline hex
 {% endcomment %}
 <modal-dialog id="NewsletterModal" class="modal-wrapper">
-  <div class="modal-overlay"></div>
-  <div class="modal-content p-8 rounded-lg shadow-lg text-center max-w-md bg-surface" style="background-color: var(--color-bg-surface); max-width: 480px; position: relative;">
-    <button type="button" class="modal-close" data-modal-close aria-label="إغلاق النافذة" style="position: absolute; top: 12px; inset-inline-end: 12px; font-size: 1.5rem;">✕</button>
-    <span class="text-forest mb-2 inline-block">{% render 'icon', name: 'sparkle' %}</span>
+  <div class="modal-overlay" data-modal-close aria-hidden="true"></div>
+  <div class="modal-content p-8 rounded-lg shadow-lg text-center bg-surface border border-subtle-token">
+    <button type="button" class="modal-close" data-modal-close aria-label="إغلاق النافذة">
+      {% render 'icon', name: 'close' %}
+    </button>
+    <span class="text-forest mb-2 inline-block w-8 h-8">{% render 'icon', name: 'sparkle' %}</span>
     <h3 class="type-h2 text-forest mb-2">انضمي إلى عائلة ناتورا واحصلي على خصم 10% فوراً</h3>
-    <p class="text-muted text-sm mb-6">ادخلي بريدكِ الإلكتروني للحصول على رمز الخصم السري ورليل العناية بالبشرة المجاني (PDF) المصمم من طرف خبيرات التجميل.</p>
+    <p class="text-muted text-sm mb-6">ادخلي بريدكِ الإلكتروني للحصول على رمز الخصم السري ودليل العناية بالبشرة المجاني المصمم من طرف خبيرات التجميل.</p>
     {% form 'customer', class: 'flex flex-col gap-3' %}
       <input type="hidden" name="contact[tags]" value="newsletter_popup">
-      <input type="email" name="contact[email]" placeholder="ادخلي بريدكِ الإلكتروني الفاخر..." required class="p-3 border rounded-md font-body text-sm" style="border-color: #DDD;">
-      <button type="submit" class="btn-terracotta">🎁 افتحي الخصم وكتيب العناية المجاني</button>
+      <input type="email" name="contact[email]" placeholder="ادخلي بريدكِ الإلكتروني..." required class="form-input p-3 border border-subtle-token rounded-md font-body text-sm bg-surface">
+      <button type="submit" class="btn-terracotta flex items-center justify-center gap-2">
+        <span class="w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'sparkle' %}</span>
+        <span>افتحي الخصم وكتيب العناية المجاني</span>
+      </button>
     {% endform %}
   </div>
 </modal-dialog>
@@ -21,9 +27,10 @@
     display: none;
     position: fixed;
     inset: 0;
-    z-index: 1000;
+    z-index: var(--z-modal);
     align-items: center;
     justify-content: center;
+    padding: var(--space-4);
   }
   .modal-wrapper.is-active {
     display: flex;
@@ -31,12 +38,32 @@
   .modal-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.6);
+    background: rgba(18, 23, 20, 0.6);
     backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
   .modal-content {
     position: relative;
-    z-index: 1001;
+    z-index: calc(var(--z-modal) + 1);
+    max-width: 480px;
+    width: 100%;
+  }
+  .modal-close {
+    position: absolute;
+    top: var(--space-3);
+    inset-inline-end: var(--space-3);
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-charcoal-dark);
+    background: var(--color-bg-secondary);
+    transition: background-color var(--transition-fast);
+  }
+  .modal-close:hover {
+    background: var(--color-border-subtle);
   }
 </style>
 

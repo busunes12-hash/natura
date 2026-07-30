@@ -1,56 +1,177 @@
 /* ==========================================================================
-   🌿 MATERIA DTC SKINCARE THEME - BASE CSS & GLOBAL DESIGN TOKENS
+   🌿 NATURA DTC SKINCARE THEME - BASE CSS & GLOBAL DESIGN TOKENS
    Target Market: Morocco (Arabic / RTL First / COD)
-   Single Source of Truth: THEME_BLUEPRINT.md
+   Brand Color Canon: #1B3B2B (Deep Moroccan Cedar Green) — PRIMARY
+                      #2D5F3E (Forest Accent/Hover)         — SECONDARY
    ========================================================================== */
 
+/* --------------------------------------------------------------------------
+   1.0 COLOR PALETTE — Single Source of Truth
+   All section/component CSS MUST reference these variables.
+   Never hardcode hex or rgba() without a CSS variable.
+   -------------------------------------------------------------------------- */
 :root {
-  /* 1.1 Color Palette (Restrained Quiet Luxury Moroccan DTC System) */
-  --color-forest: #1B3B2B;         /* Deep Moroccan Cedar Green */
-  --color-forest-deep: #12271C;    /* Rich Obsidian Forest */
-  --color-bg-secondary: #F4F0E8;   /* Warm Sand Dune Alabaster */
-  --color-bg-primary: #FAF8F5;     /* Pure Silk Off-White */
-  --color-bg-surface: #FFFFFF;     /* Crisp White Surface */
-  --color-bg-dark: #121714;        /* Midnight Obsidian */
-  --color-charcoal-dark: #161B18;  /* Deep Charcoal Slate */
-  --color-terracotta: #B86B49;    /* Royal Moroccan Terracotta */
-  --color-terracotta-soft: #FAF4F0;/* Soft Terracotta Silk */
-  --color-text-muted: #525B54;     /* Muted Charcoal (WCAG AA Compliant 4.5:1+) */
-  --color-border-subtle: #E5E0D5;  /* Delicate Stone Border */
-  --color-success: #1E6B3F;        /* Deep Emerald Success */
-  --color-error: #9E2A2B;          /* Luxury Garnet Red */
-  --color-warning: #C57B26;        /* Saharan Ochre */
-  --color-gold: #C5A059;           /* Warm Sahara Gold Foil */
+  /* --- Brand Greens --- */
+  --color-forest:       #1B3B2B; /* PRIMARY — Deep Moroccan Cedar Green */
+  --color-forest-hover: #2D5F3E; /* SECONDARY — Forest Accent / Hover state */
+  --color-forest-deep:  #12271C; /* DEEP — Darkest shade for pressed/active */
 
-  /* Typography Fonts */
-  --font-heading: 'Noto Kufi Arabic', 'Cormorant Garamond', serif;
-  --font-body: 'IBM Plex Sans Arabic', sans-serif;
+  /* --- Backgrounds --- */
+  --color-bg-primary:   #FAF8F5; /* Pure Silk Off-White (page background) */
+  --color-bg-secondary: #F4F0E8; /* Warm Sand Dune Alabaster (cards, inputs) */
+  --color-bg-surface:   #FFFFFF; /* Crisp White Surface (modals, drawers) */
+  --color-bg-dark:      #121714; /* Midnight Obsidian (dark sections) */
+  --color-charcoal-dark:#161B18; /* Deep Charcoal Slate (body text) */
 
-  /* 1.4 Border Radius Token System */
-  --radius-xs: 4px;
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-full: 9999px;
+  /* --- Accent --- */
+  --color-terracotta:      #B86B49; /* Royal Moroccan Terracotta (CTA accent) */
+  --color-terracotta-hover:#A35A39; /* Terracotta hover/pressed */
+  --color-terracotta-soft: #FAF4F0; /* Soft Terracotta Silk (badge bg) */
+  --color-gold:            #C5A059; /* Warm Sahara Gold Foil (stars, accents) */
 
-  /* 1.5 Elevation & Shadow Tokens */
-  --shadow-sm: 0 2px 10px rgba(27, 59, 43, 0.04);
-  --shadow-md: 0 8px 24px rgba(27, 59, 43, 0.08);
-  --shadow-lg: 0 16px 40px rgba(27, 59, 43, 0.12);
-  --shadow-xl: 0 24px 64px rgba(18, 23, 20, 0.20);
+  /* --- Text --- */
+  --color-text-primary: #161B18; /* Same as charcoal-dark — headings */
+  --color-text-muted:   #525B54; /* Muted Charcoal — WCAG AA 4.5:1+ on white */
+  --color-text-inverse: #FFFFFF; /* On dark backgrounds */
 
-  /* 1.6 Transitions & Animation Curves */
-  --transition-base: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  /* --- Borders --- */
+  --color-border-subtle:  #E5E0D5; /* Delicate Stone Border */
+  --color-border-medium:  #CEC8BB; /* Medium border for inputs */
 
-  /* Layout Spacing */
-  --page-width: 1200px;
-  --section-padding-desktop: 4.5rem; /* 72px */
-  --section-padding-mobile: 3rem;    /* 48px */
+  /* --- Semantic --- */
+  --color-success: #1E6B3F; /* Deep Emerald Success */
+  --color-error:   #9E2A2B; /* Luxury Garnet Red */
+  --color-warning: #C57B26; /* Saharan Ochre */
+
+  /* --- Forest RGB for rgba() use --- */
+  --color-forest-rgb: 27, 59, 43;   /* rgba(var(--color-forest-rgb), 0.1) */
+  --color-hover-rgb:  45, 95, 62;   /* rgba(var(--color-hover-rgb), 0.1) */
 }
 
-/* Base Resets */
+/* --------------------------------------------------------------------------
+   1.1 TYPOGRAPHY — Font Families
+   -------------------------------------------------------------------------- */
+:root {
+  --font-heading: 'Noto Kufi Arabic', 'Cormorant Garamond', serif;
+  --font-body:    'IBM Plex Sans Arabic', sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   1.2 SPACING SYSTEM — 8px Grid Token Scale
+   Use these variables everywhere instead of literal rem values.
+   --space-1 = 4px / --space-2 = 8px / --space-4 = 16px / --space-8 = 32px
+   -------------------------------------------------------------------------- */
+:root {
+  --space-0:    0;
+  --space-px:   1px;
+  --space-0-5:  0.125rem;  /*  2px */
+  --space-1:    0.25rem;   /*  4px */
+  --space-1-5:  0.375rem;  /*  6px */
+  --space-2:    0.5rem;    /*  8px */
+  --space-2-5:  0.625rem;  /* 10px */
+  --space-3:    0.75rem;   /* 12px */
+  --space-3-5:  0.875rem;  /* 14px */
+  --space-4:    1rem;      /* 16px */
+  --space-5:    1.25rem;   /* 20px */
+  --space-6:    1.5rem;    /* 24px */
+  --space-7:    1.75rem;   /* 28px */
+  --space-8:    2rem;      /* 32px */
+  --space-9:    2.25rem;   /* 36px */
+  --space-10:   2.5rem;    /* 40px */
+  --space-11:   2.75rem;   /* 44px */
+  --space-12:   3rem;      /* 48px */
+  --space-14:   3.5rem;    /* 56px */
+  --space-16:   4rem;      /* 64px */
+  --space-18:   4.5rem;    /* 72px */
+  --space-20:   5rem;      /* 80px */
+  --space-24:   6rem;      /* 96px */
+  --space-28:   7rem;      /* 112px */
+  --space-32:   8rem;      /* 128px */
+}
+
+/* --------------------------------------------------------------------------
+   1.3 BORDER RADIUS SYSTEM
+   -------------------------------------------------------------------------- */
+:root {
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   14px;
+  --radius-lg:   20px;
+  --radius-xl:   28px;
+  --radius-full: 9999px;
+}
+
+/* --------------------------------------------------------------------------
+   1.4 ELEVATION & SHADOW SYSTEM
+   -------------------------------------------------------------------------- */
+:root {
+  --shadow-xs: 0 1px 4px rgba(var(--color-forest-rgb), 0.06);
+  --shadow-sm: 0 2px 10px rgba(var(--color-forest-rgb), 0.06);
+  --shadow-md: 0 8px 24px rgba(var(--color-forest-rgb), 0.09);
+  --shadow-lg: 0 16px 40px rgba(var(--color-forest-rgb), 0.13);
+  --shadow-xl: 0 24px 64px rgba(18, 23, 20, 0.20);
+}
+
+/* --------------------------------------------------------------------------
+   1.5 TRANSITIONS & ANIMATION CURVES
+   -------------------------------------------------------------------------- */
+:root {
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:    cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --transition-fast:   0.18s var(--ease-in-out);
+  --transition-base:   0.35s var(--ease-out-expo);
+  --transition-smooth: 0.5s  var(--ease-out-expo);
+}
+
+/* --------------------------------------------------------------------------
+   1.6 Z-INDEX SYSTEM — Never use raw numbers outside this table
+   -------------------------------------------------------------------------- */
+:root {
+  --z-below:         -1;
+  --z-base:           0;
+  --z-raised:        10;
+  --z-dropdown:     200;
+  --z-announcement: 300;
+  --z-header:       500;
+  --z-overlay:      600; /* Dark overlay behind drawers/modals */
+  --z-drawer:       700; /* Drawers (cart, mobile nav) */
+  --z-modal:        800; /* Modal dialogs */
+  --z-toast:        900; /* Toast notifications */
+  --z-skip:        9999; /* Skip-to-content link */
+}
+
+/* --------------------------------------------------------------------------
+   1.7 LAYOUT
+   -------------------------------------------------------------------------- */
+:root {
+  --page-width:              1200px;
+  --container-gutter:        1.5rem;  /* 24px desktop */
+  --container-gutter-mobile: 1rem;    /* 16px mobile  */
+  --section-padding:         var(--space-18); /* 72px desktop */
+  --section-padding-mobile:  var(--space-12); /* 48px mobile  */
+
+  /*
+    Breakpoints (for reference — use in @media queries):
+    --bp-xs:  480px
+    --bp-sm:  640px
+    --bp-md:  768px
+    --bp-lg:  1024px
+    --bp-xl:  1280px
+    --bp-2xl: 1440px
+  */
+}
+
+/* ==========================================================================
+   2.0 GLOBAL RESETS
+   ========================================================================== */
+
+/* Force light mode — this is a luxury brand with a crafted light palette */
+:root {
+  color-scheme: light;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -62,33 +183,38 @@ html {
   scroll-behavior: smooth;
   text-rendering: optimizeLegibility;
   -webkit-text-size-adjust: 100%;
+  /* Scroll padding accounts for sticky header (72px) + announcement bar (40px) */
+  scroll-padding-top: 112px;
 }
 
 [id] {
-  scroll-margin-top: 80px;
+  scroll-margin-top: 112px;
 }
 
 body {
   font-family: var(--font-body);
-  font-size: 1.05rem; /* 16.8px */
+  font-size: 1.05rem;
   line-height: 1.65;
   font-weight: 400;
   color: var(--color-charcoal-dark);
   background-color: var(--color-bg-primary);
   direction: rtl;
-  text-align: right;
+  text-align: start;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* 1.2 Typography System — 5-Level Scale */
+/* ==========================================================================
+   2.1 TYPOGRAPHY SCALE — 6-Level Heading System
+   ========================================================================== */
+
 .type-display, .type-h1, h1 {
   font-family: var(--font-heading);
   font-size: clamp(2rem, 4.5vw, 3rem);
   font-weight: 700;
-  line-height: 1.25;
-  color: var(--color-charcoal-dark);
+  line-height: 1.2;
+  color: var(--color-text-primary);
   letter-spacing: -0.015em;
 }
 
@@ -97,7 +223,7 @@ body {
   font-size: clamp(1.5rem, 3.5vw, 2.1rem);
   font-weight: 600;
   line-height: 1.3;
-  color: var(--color-charcoal-dark);
+  color: var(--color-text-primary);
   letter-spacing: -0.01em;
 }
 
@@ -106,7 +232,7 @@ body {
   font-size: clamp(1.15rem, 2.2vw, 1.45rem);
   font-weight: 600;
   line-height: 1.35;
-  color: var(--color-charcoal-dark);
+  color: var(--color-text-primary);
   letter-spacing: 0;
 }
 
@@ -115,7 +241,7 @@ body {
   font-size: 1.1rem;
   font-weight: 600;
   line-height: 1.4;
-  color: var(--color-charcoal-dark);
+  color: var(--color-text-primary);
 }
 
 .type-h5, h5 {
@@ -123,7 +249,7 @@ body {
   font-size: 0.975rem;
   font-weight: 600;
   line-height: 1.45;
-  color: var(--color-charcoal-dark);
+  color: var(--color-text-primary);
 }
 
 .type-h6, h6 {
@@ -133,9 +259,10 @@ body {
   line-height: 1.5;
   color: var(--color-text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
 }
 
+/* Body text */
 .type-body, p {
   font-family: var(--font-body);
   font-size: 1.025rem;
@@ -144,18 +271,17 @@ body {
   color: var(--color-text-muted);
 }
 
-span, a, button, input, select, textarea, label {
-  font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.65;
-  font-weight: 400;
-}
-
+/* NOTE: We do NOT set font-size on span/a/button/input globally.
+   Let each component control its own sizing to avoid specificity fights. */
 a {
   color: inherit;
   text-decoration: none;
   transition: color var(--transition-base);
 }
+
+/* ==========================================================================
+   2.2 MEDIA DEFAULTS
+   ========================================================================== */
 
 img, svg, video {
   max-width: 100%;
@@ -163,15 +289,20 @@ img, svg, video {
   display: block;
 }
 
-/* Smooth Image Loading Fade-in */
+/* Smooth lazy image fade-in */
 img[loading="lazy"] {
   opacity: 0;
   transition: opacity 0.4s ease-in-out;
 }
 
-img[loading="lazy"].is-loaded, img.is-loaded {
+img[loading="lazy"].is-loaded,
+img.is-loaded {
   opacity: 1;
 }
+
+/* ==========================================================================
+   2.3 INTERACTIVE DEFAULTS
+   ========================================================================== */
 
 button {
   cursor: pointer;
@@ -181,36 +312,109 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
-.btn-primary:active, .btn-terracotta:active, .btn-secondary:active {
+/* Active press feedback — applied at element level, not via will-change */
+.btn-primary:active,
+.btn-terracotta:active,
+.btn-secondary:active {
   transform: scale(0.98);
 }
 
-/* Section Divider Utility Rule */
-.section-divider {
-  border-block-end: 1px solid rgba(45, 95, 62, 0.08);
+/* Accessibility focus ring — gold for brand alignment */
+:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: var(--radius-xs);
 }
 
-/* Standardized Section Header Block */
+/* ==========================================================================
+   2.4 LAYOUT
+   ========================================================================== */
+
+.container {
+  max-width: var(--page-width);
+  margin-inline: auto;
+  padding-inline: var(--container-gutter);
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding-inline: var(--container-gutter-mobile);
+  }
+}
+
+/* ==========================================================================
+   2.5 SECTION SYSTEM
+   ========================================================================== */
+
+/* Standardized section vertical spacing */
+.section-padding {
+  padding-block: var(--section-padding);
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding-block: var(--section-padding-mobile);
+  }
+}
+
+/* Section divider rule */
+.section-divider {
+  border-block-end: 1px solid rgba(var(--color-forest-rgb), 0.08);
+}
+
+/* Standardized section header block */
 .section-header {
   text-align: center;
-  margin-block-end: 2.5rem;
+  margin-block-end: var(--space-10);
 }
 
 .section-subtitle {
   font-size: 1.05rem;
   color: var(--color-text-muted);
-  margin-top: 0.5rem;
+  margin-block-start: var(--space-2);
   line-height: 1.75;
   max-width: 640px;
   margin-inline: auto;
 }
 
-/* Smooth Scroll Reveal Micro-Interactions */
+/* ==========================================================================
+   2.6 UTILITY SPACING (8px Grid) — uses --space-* tokens
+   ========================================================================== */
+
+.m-0  { margin: 0 !important; }
+
+/* Block margin utilities (logical — RTL safe) */
+.mb-2  { margin-block-end: var(--space-2)  !important; }
+.mb-3  { margin-block-end: var(--space-3)  !important; }
+.mb-4  { margin-block-end: var(--space-4)  !important; }
+.mb-5  { margin-block-end: var(--space-5)  !important; }
+.mb-6  { margin-block-end: var(--space-6)  !important; }
+.mb-8  { margin-block-end: var(--space-8)  !important; }
+.mb-10 { margin-block-end: var(--space-10) !important; }
+.mb-12 { margin-block-end: var(--space-12) !important; }
+.mb-16 { margin-block-end: var(--space-16) !important; }
+
+/* Block padding utilities */
+.py-4  { padding-block: var(--space-4)  !important; }
+.py-6  { padding-block: var(--space-6)  !important; }
+.py-8  { padding-block: var(--space-8)  !important; }
+.py-12 { padding-block: var(--space-12) !important; }
+.py-16 { padding-block: var(--space-18) !important; }
+
+@media (max-width: 768px) {
+  .py-16 { padding-block: var(--space-12) !important; }
+}
+
+/* ==========================================================================
+   2.7 SCROLL REVEAL MICRO-INTERACTION
+   ========================================================================== */
+
 .reveal-on-scroll {
   opacity: 0;
-  transform: translate3d(0, 20px, 0);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity  0.6s var(--ease-out-expo),
+    transform 0.6s var(--ease-out-expo);
 }
 
 .reveal-on-scroll.is-visible {
@@ -218,71 +422,58 @@ button {
   transform: translate3d(0, 0, 0);
 }
 
-/* Accessibility Focus Ring */
-:focus-visible {
-  outline: 3px solid var(--color-gold);
-  outline-offset: 2px;
+/* Staggered children */
+.reveal-on-scroll [data-stagger="1"] { transition-delay: 0.05s; }
+.reveal-on-scroll [data-stagger="2"] { transition-delay: 0.12s; }
+.reveal-on-scroll [data-stagger="3"] { transition-delay: 0.19s; }
+.reveal-on-scroll [data-stagger="4"] { transition-delay: 0.26s; }
+
+/* ==========================================================================
+   2.8 ACCESSIBILITY
+   ========================================================================== */
+
+/* Skip to content */
+.skip-to-content-link {
+  position: absolute;
+  top: -100px;
+  inset-inline-start: var(--space-4);
+  background: var(--color-forest);
+  color: var(--color-text-inverse);
+  padding: var(--space-3) var(--space-6);
+  z-index: var(--z-skip);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  transition: top 0.2s ease;
 }
 
-/* Badge Alignment Precision */
-.badge-forest, .badge-terracotta {
+.skip-to-content-link:focus {
+  top: var(--space-4);
+}
+
+/* Badge alignment precision */
+.badge-forest,
+.badge-terracotta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
-.badge-forest svg, .badge-terracotta svg {
+.badge-forest svg,
+.badge-terracotta svg {
   display: inline-block;
   vertical-align: middle;
 }
 
-/* Skip to Content */
-.skip-to-content-link {
-  position: absolute;
-  top: -100px;
-  inset-inline-start: 1rem;
-  background: var(--color-forest);
-  color: var(--color-bg-primary);
-  padding: 0.75rem 1.5rem;
-  z-index: 9999;
-  border-radius: var(--radius-sm);
-  transition: top 0.2s ease;
+/* Star color for review contexts */
+.star-gold {
+  color: var(--color-gold);
+  fill: var(--color-gold);
 }
 
-.skip-to-content-link:focus {
-  top: 1rem;
-}
+/* ==========================================================================
+   2.9 REDUCED MOTION
+   ========================================================================== */
 
-/* 1.3 8px Spacing Grid Scale Utilities */
-.m-0 { margin: 0 !important; }
-.mb-2 { margin-block-end: 0.5rem !important; }  /* 8px */
-.mb-4 { margin-block-end: 1rem !important; }    /* 16px */
-.mb-6 { margin-block-end: 1.5rem !important; }  /* 24px */
-.mb-8 { margin-block-end: 2rem !important; }    /* 32px */
-.mb-10 { margin-block-end: 2.5rem !important; } /* 40px */
-.mb-12 { margin-block-end: 3rem !important; }   /* 48px */
-.py-8 { padding-block: 2rem !important; }       /* 32px */
-.py-12 { padding-block: 3rem !important; }      /* 48px */
-.py-16 { padding-block: 4.5rem !important; }    /* 72px */
-
-@media (max-width: 768px) {
-  .py-16 { padding-block: 3rem !important; }    /* 48px on mobile */
-}
-
-/* Container Layout */
-.container {
-  max-width: var(--page-width);
-  margin-inline: auto;
-  padding-inline: 1.5rem;
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding-inline: 1rem;
-  }
-}
-
-/* Reduced Motion Override for Accessibility */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -290,8 +481,10 @@ button {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
   .reveal-on-scroll {
     opacity: 1 !important;
     transform: none !important;
+    transition: none !important;
   }
 }

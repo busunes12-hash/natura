@@ -49,13 +49,14 @@
     height: 20px;
   }
 
+  /* RTL-correct layout: flex row — icon appears at inline-start (right in RTL) */
   .announcement-slide {
     position: absolute;
     inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     font-size: 0.875rem;
     font-weight: 600;
     font-family: var(--font-body);
@@ -64,7 +65,7 @@
     transform: translateY(8px);
     transition: opacity 0.5s ease, transform 0.5s ease;
     pointer-events: none;
-    direction: ltr; /* Align icon on the left side of the message */
+    /* direction: ltr REMOVED — was breaking RTL icon placement */
   }
 
   .announcement-slide.is-active {
@@ -80,10 +81,12 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    /* No transform: scaleX(-1) here — SVG truck/shield icons are directionally neutral */
   }
 
   .announcement-text {
-    direction: rtl; /* Preserve right-to-left alignment for text */
+    /* Inherits direction: rtl from html[dir=rtl] — no override needed */
+    unicode-bidi: isolate;
   }
 
   @media (max-width: 480px) {

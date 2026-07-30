@@ -1,10 +1,11 @@
 {% comment %}
   Section 3.4: AJAX Slide-Out Cart Drawer with CRO Inspection Guarantee & One-Click Upsell Widget
+  Phase 6: Removed emojis, clean SVG icons, tokenized colors, accessible markup
 {% endcomment %}
 {{ 'component-drawer.css' | asset_url | stylesheet_tag }}
 
 <drawer-component id="CartDrawer" class="drawer-component">
-  <div class="drawer-overlay"></div>
+  <div class="drawer-overlay" data-drawer-close aria-hidden="true"></div>
 
   <div class="drawer-content">
     <div class="drawer-header">
@@ -31,9 +32,9 @@
         </span>
       {%- else -%}
         {%- assign needed = free_shipping_threshold | minus: cart_total -%}
-        <span>🚚 باقي لك <strong class="text-terracotta">{{ needed | money_without_currency }} د.م.</strong> فقط للحصول على التوصيل السريع المجاني!</span>
+        <span>توصيل سريع مجاني: باقي لك <strong class="text-terracotta">{{ needed | money_without_currency }} د.م.</strong> فقط!</span>
       {%- endif -%}
-      <div class="progress-track">
+      <div class="progress-track mt-1.5">
         <div class="progress-fill" style="width: {{ progress_percentage }}%;"></div>
       </div>
     </div>
@@ -43,8 +44,8 @@
       {%- if cart.item_count > 0 -%}
         <div class="cart-items-list flex flex-col gap-4">
           {%- for item in cart.items -%}
-            <div class="cart-item flex gap-4 p-3 bg-surface rounded-md border" style="border-color: var(--color-border-subtle);">
-              <div class="cart-item__image w-16 h-16 rounded overflow-hidden flex-shrink-0 bg-cream" style="width: 64px; height: 64px;">
+            <div class="cart-item flex gap-4 p-3 bg-surface rounded-md border border-subtle-token">
+              <div class="cart-item__image w-16 h-16 rounded overflow-hidden flex-shrink-0 bg-cream">
                 {%- if item.image -%}
                   <img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title | escape }}" class="w-full h-full object-cover" width="64" height="64">
                 {%- else -%}
@@ -56,10 +57,10 @@
 
               <div class="cart-item__details flex-grow flex flex-col justify-between">
                 <div class="flex items-start justify-between">
-                  <h4 class="font-bold text-sm leading-tight">{{ item.product.title }}</h4>
+                  <h4 class="font-bold text-sm leading-tight text-dark">{{ item.product.title }}</h4>
                   <button
                     type="button"
-                    class="text-xs text-muted hover:text-terracotta"
+                    class="text-xs text-muted hover:text-terracotta transition"
                     data-cart-remove="{{ item.key }}"
                     aria-label="حذف المنتج من السلة"
                   >
@@ -68,10 +69,10 @@
                 </div>
 
                 <div class="flex items-center justify-between mt-2">
-                  <quantity-input class="quantity-input" style="scale: 0.85; transform-origin: right center;">
-                    <button type="button" name="minus" class="quantity-btn" onclick="CartManager.changeQuantity('{{ item.key }}', {{ item.quantity | minus: 1 }})">-</button>
+                  <quantity-input class="quantity-input">
+                    <button type="button" name="minus" class="quantity-btn" aria-label="تقليل الكمية">-</button>
                     <input type="number" value="{{ item.quantity }}" readonly class="quantity-field" aria-label="الكمية">
-                    <button type="button" name="plus" class="quantity-btn" onclick="CartManager.changeQuantity('{{ item.key }}', {{ item.quantity | plus: 1 }})">+</button>
+                    <button type="button" name="plus" class="quantity-btn" aria-label="زيادة الكمية">+</button>
                   </quantity-input>
 
                   <span class="font-bold text-forest text-sm">
@@ -85,12 +86,12 @@
 
         <!-- High-AOV One-Click Complementary Upsell Widget -->
         {%- if cart_total < free_shipping_threshold -%}
-          <div class="upsell-widget p-3 mt-4 rounded-md border bg-cream" style="background-color: var(--color-bg-secondary); border-color: var(--color-border-subtle);">
+          <div class="upsell-widget p-3 mt-4 rounded-md border border-subtle-token bg-cream">
             <div class="flex items-center justify-between gap-2">
               <div class="flex items-center gap-2">
                 <span class="w-5 h-5 text-forest flex-shrink-0 inline-flex items-center justify-center">{% render 'icon', name: 'sparkle' %}</span>
                 <div>
-                  <h5 class="font-bold text-xs">✨ كمل روتينك: ماء الورد البلدي المقطر (50ml)</h5>
+                  <h5 class="font-bold text-xs text-dark">كملي روتينك: ماء الورد البلدي المقطر (50ml)</h5>
                   <span class="text-xs text-forest font-bold">+49 د.م. فقط (واكسري حد الشحن المجاني فوراً)</span>
                 </div>
               </div>
@@ -98,7 +99,7 @@
                 type="button"
                 class="btn-primary text-xs py-1 px-3 flex items-center gap-1"
                 style="min-height: 36px;"
-                onclick="CartManager.addItem('{{ all_products['rose-water'].selected_or_first_available_variant.id | default: '1' }}', 1, this)"
+                onclick="CartManager.addItem('{{ section.settings.upsell_product.selected_or_first_available_variant.id | default: cart.items.first.variant_id }}', 1, this)"
               >
                 <span>+ إضافة</span>
               </button>
@@ -109,10 +110,11 @@
       {%- else -%}
         <div class="cart-empty flex flex-col items-center justify-center text-center py-12">
           <span class="w-12 h-12 text-forest mb-3 inline-flex items-center justify-center">{% render 'icon', name: 'cart' %}</span>
-          <h4 class="font-bold text-lg mb-2">🌸 سلتكِ تنتظر لمسة جمال!</h4>
+          <h4 class="font-bold text-lg mb-2 text-dark">سلتكِ تنتظر لمسة جمال!</h4>
           <p class="text-xs text-muted mb-6">أضيفي منتجكِ المفضل الآن واحصلي على عينتين مجانيتين مع طلبكِ الأول.</p>
           <a href="/collections/all" class="btn-primary text-sm inline-flex items-center gap-2" data-drawer-close>
-            <span>🌿 تصفحي المنتجات الأكثر مبيعاً</span>
+            <span class="w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'leaf' %}</span>
+            <span>تصفحي المنتجات الأكثر مبيعاً</span>
           </a>
         </div>
       {%- endif -%}
@@ -120,7 +122,7 @@
 
     <!-- Drawer Footer -->
     <div class="drawer-footer">
-      <div class="cod-banner p-3 rounded-md bg-cream text-center text-xs font-bold text-forest mb-2 flex items-center justify-center gap-1.5" style="background-color: var(--color-bg-secondary);">
+      <div class="cod-banner p-3 rounded-md bg-cream text-center text-xs font-bold text-forest mb-2 flex items-center justify-center gap-1.5">
         <span class="w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'truck' %}</span>
         <span>معاينة الشحنة مجانية عند باب منزلكِ قبل دفع سنتيم واحد للموزع</span>
       </div>
@@ -130,7 +132,7 @@
         <span>ضمان إشراقة 30 يوماً — استرجاع كامل المبلغ بدون مخاطرة</span>
       </div>
 
-      <div class="subtotal-row flex items-center justify-between mb-4 font-bold text-lg">
+      <div class="subtotal-row flex items-center justify-between mb-4 font-bold text-lg text-dark">
         <span>المجموع الفرعي:</span>
         <span class="text-forest">{{ cart.total_price | money_without_currency }} د.م.</span>
       </div>
@@ -140,10 +142,10 @@
           type="submit"
           name="checkout"
           class="btn-terracotta w-full text-center text-base py-4 flex items-center justify-center gap-2"
-          {% if cart.item_count == 0 %}disabled style="opacity: 0.5; cursor: not-allowed;"{% endif %}
+          {% if cart.item_count == 0 %}disabled{% endif %}
         >
           <span class="w-5 h-5 inline-flex items-center justify-center">{% render 'icon', name: 'lock' %}</span>
-          <span>🔒 تأكيد الطلب وحجز الشحنة — الدفع نقداً عند الاستلام</span>
+          <span>تأكيد الطلب وحجز الشحنة — الدفع نقداً عند الاستلام</span>
         </button>
       </form>
     </div>

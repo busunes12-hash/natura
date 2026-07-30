@@ -1,26 +1,45 @@
 /* ==========================================================================
-   🌿 MATERIA DTC SKINCARE THEME - RTL ENFORCER LAYER
-   Single Source of Truth: Section 10 of THEME_BLUEPRINT.md
+   🌿 NATURA DTC SKINCARE THEME - RTL ENFORCER LAYER
+   This file is loaded last after base.css and utilities.css.
+   It enforces RTL layout direction and logical property overrides
+   that must take precedence over all other rules.
    ========================================================================== */
 
+/* --- Base direction lock --- */
+html,
+body {
+  direction: rtl !important;
+  text-align: start; /* logical — resolves to 'right' in RTL context */
+}
+
+/* --- ARIA/dir attribute enforcement --- */
 [dir="rtl"] {
   direction: rtl;
-  text-align: right;
+  text-align: start;
 }
 
-/* Prevent third-party apps or inline styles from forcing LTR */
-html, body {
-  direction: rtl !important;
-  text-align: right;
+/* --- Arabic text containers: ensure bidirectional isolation --- */
+[lang="ar"],
+.text-arabic,
+.type-h1,
+.type-h2,
+.type-h3,
+h1, h2, h3, h4, h5, h6, p {
+  unicode-bidi: isolate;
 }
 
-/* Ensure drawers slide from the correct inline start/end side */
+/* --- Prevent third-party apps injecting LTR overrides --- */
+[dir="ltr"] {
+  /* Allow deliberate LTR contexts (e.g., code, phone numbers, Latin URLs) */
+}
+
+/* --- Drawers: always open from inline-end (right in RTL = visually left) --- */
 .drawer-content {
   inset-inline-start: auto;
   inset-inline-end: 0;
 }
 
-/* Mirror directional icons in RTL mode */
+/* --- Directional icons: mirror arrow/chevron icons in RTL --- */
 [dir="rtl"] .rtl-flip,
 [dir="rtl"] .icon-arrow-next,
 [dir="rtl"] .icon-arrow-prev,
@@ -31,16 +50,18 @@ html, body {
   display: inline-block;
 }
 
-/* CSS Logical Properties Enforcer */
-.spacing-start {
-  margin-inline-start: 1rem;
-}
-.spacing-end {
-  margin-inline-end: 1rem;
-}
-.padding-start {
-  padding-inline-start: 1rem;
-}
-.padding-end {
-  padding-inline-end: 1rem;
+/* --- Logical spacing helpers (for use in inline style overrides) --- */
+.spacing-start  { margin-inline-start: var(--space-4); }
+.spacing-end    { margin-inline-end:   var(--space-4); }
+.padding-start  { padding-inline-start: var(--space-4); }
+.padding-end    { padding-inline-end:   var(--space-4); }
+
+/* --- Number/code contexts that must remain LTR --- */
+.ltr-override,
+[dir="rtl"] .phone-number,
+[dir="rtl"] .tracking-number,
+[dir="rtl"] .price-value {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-block;
 }

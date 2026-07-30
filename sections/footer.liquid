@@ -14,19 +14,14 @@
       <!-- Column 1: Brand Info -->
       <div class="footer-col footer-col--brand">
         <a href="{{ routes.root_url }}" class="footer-logo" aria-label="{{ shop.name }}">
-          <div class="header__logo-wrapper" style="transform: scale(0.85); --color-forest: #4ADE80;">
-            <svg viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="header__logo-svg" style="color: #4ADE80;">
-              <path d="M60 5 C46 22 48 42 58 54 C60 54 60 54 62 54 C72 42 74 22 60 5 Z" stroke="#4ADE80" stroke-width="3" fill="none"/>
-              <path d="M60 5 L60 54" stroke="#4ADE80" stroke-width="2"/>
-              <path d="M60 20 C54 26 50 32 49 38 M60 28 C66 33 70 38 71 43" stroke="#4ADE80" stroke-width="2" stroke-linecap="round"/>
-              <path d="M57 52 C38 48 20 38 15 22 C28 18 45 28 54 44 Z" stroke="#4ADE80" stroke-width="3" fill="none"/>
-              <path d="M15 22 C32 30 46 40 57 52" stroke="#4ADE80" stroke-width="2"/>
-              <path d="M25 25 C30 32 37 36 43 40" stroke="#4ADE80" stroke-width="2" stroke-linecap="round"/>
-              <path d="M63 52 C82 48 100 38 105 22 C92 18 75 28 66 44 Z" stroke="#4ADE80" stroke-width="3" fill="none"/>
-              <path d="M105 22 C88 30 74 40 63 52" stroke="#4ADE80" stroke-width="2"/>
-              <path d="M95 25 C90 32 37 36 77 40" stroke="#4ADE80" stroke-width="2" stroke-linecap="round"/>
+          <div class="footer-logo__emblem">
+            <svg viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:28px;height:18px;">
+              <path d="M60 5 C46 22 48 42 58 54 C60 54 60 54 62 54 C72 42 74 22 60 5 Z" stroke="currentColor" stroke-width="3" fill="none"/>
+              <path d="M60 5 L60 54" stroke="currentColor" stroke-width="2"/>
+              <path d="M57 52 C38 48 20 38 15 22 C28 18 45 28 54 44 Z" stroke="currentColor" stroke-width="3" fill="none"/>
+              <path d="M63 52 C82 48 100 38 105 22 C92 18 75 28 66 44 Z" stroke="currentColor" stroke-width="3" fill="none"/>
             </svg>
-            <span class="header__logo-text" style="color: #FFFFFF;">{{ shop.name | default: 'NATURA' }}</span>
+            <span class="footer-logo__name">{{ shop.name | default: 'NATURA' }}</span>
           </div>
         </a>
         <p class="footer-brand-desc">
@@ -102,48 +97,60 @@
 
 <style>
   .footer-section {
-    padding-block: 4rem 2rem;
+    padding-block: var(--space-16) var(--space-8);
   }
 
   .footer-grid {
     display: grid;
     grid-template-columns: 1.8fr 0.9fr 1.1fr 1.4fr;
-    gap: 3rem;
+    gap: var(--space-12);
     align-items: start;
-    padding-bottom: 3rem;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    margin-bottom: 2rem;
+    padding-block-end: var(--space-12);
+    border-block-end: 1px solid rgba(255, 255, 255, 0.06);
+    margin-block-end: var(--space-8);
   }
 
+  /* Footer logo — inherits color from parent link */
   .footer-logo {
     display: inline-flex;
-    align-items: center;
-    gap: 0.625rem;
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: #fff;
     text-decoration: none;
-    margin-bottom: 1rem;
+    margin-block-end: var(--space-4);
+  }
+
+  .footer-logo__emblem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: #6EE7A0; /* Soft green on dark — accessible contrast on #121714 */
+  }
+
+  .footer-logo__name {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    line-height: 1;
   }
 
   .footer-brand-desc {
     font-size: 0.9rem;
     line-height: 1.75;
     color: #AAAAAA;
-    max-width: 320px;
-    margin-bottom: 1.5rem;
+    max-width: 300px;
+    margin-block-end: var(--space-6);
     font-family: var(--font-body);
   }
 
   .footer-col__heading {
     font-family: var(--font-heading);
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     font-weight: 700;
-    color: #EEEEEE;
-    letter-spacing: 0.05em;
+    color: #DDDDDD;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
-    margin-bottom: 1.25rem;
+    margin-block-end: var(--space-5);
   }
 
   .footer-links {
@@ -152,38 +159,41 @@
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: var(--space-3);
   }
 
   .footer-links a {
-    color: #AAAAAA;
+    color: #999999;
     font-size: 0.9rem;
     font-family: var(--font-body);
     text-decoration: none;
-    transition: color var(--transition-base);
-    display: inline-block;
+    transition: color var(--transition-base), padding-inline-start var(--transition-base);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1-5);
   }
 
   .footer-links a:hover {
     color: #FFFFFF;
+    padding-inline-start: var(--space-1-5);
   }
 
   .footer-cod-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-md);
-    padding: 1.25rem;
-    margin-bottom: 1rem;
+    padding: var(--space-5);
+    margin-block-end: var(--space-4);
   }
 
   .footer-cod-card__header {
     display: flex;
     align-items: center;
-    gap: 0.625rem;
+    gap: var(--space-2-5);
     font-weight: 700;
-    color: #E2A652;
+    color: var(--color-gold);
     font-size: 0.95rem;
-    margin-bottom: 0.75rem;
+    margin-block-end: var(--space-3);
     font-family: var(--font-body);
   }
 
@@ -198,17 +208,17 @@
 
   .footer-cod-card__desc {
     font-size: 0.85rem;
-    line-height: 1.6;
-    color: #AAAAAA;
+    line-height: 1.65;
+    color: #999999;
     font-family: var(--font-body);
   }
 
   .footer-shipping-tag {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     font-size: 0.825rem;
-    color: #777777;
+    color: #666666;
     font-family: var(--font-body);
   }
 
@@ -217,23 +227,23 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: var(--space-4);
   }
 
   .footer-copyright {
     font-size: 0.85rem;
-    color: #666666;
+    color: #555555;
     font-family: var(--font-body);
   }
 
   .footer-legal-links {
     display: flex;
-    gap: 1.5rem;
+    gap: var(--space-6);
   }
 
   .footer-legal-links a {
     font-size: 0.85rem;
-    color: #666666;
+    color: #555555;
     text-decoration: none;
     font-family: var(--font-body);
     transition: color var(--transition-base);
@@ -244,14 +254,14 @@
   @media (max-width: 1024px) {
     .footer-grid {
       grid-template-columns: 1fr 1fr;
-      gap: 2rem;
+      gap: var(--space-8);
     }
   }
 
   @media (max-width: 640px) {
     .footer-grid {
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: var(--space-8);
     }
     .footer-sub {
       flex-direction: column;

@@ -1,10 +1,7 @@
 {% comment %}
   Reusable product card component
+  Phase 3: COD badge using CSS token, wishlist accessible, schema microdata
   Usage: {% render 'product-card', product: product %}
-  — Real review data (no hardcoded fake ratings)
-  — Percentage discount badge
-  — Wishlist button
-  — Gold stars
 {% endcomment %}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 
@@ -16,13 +13,18 @@
 
 <div class="product-card" itemscope itemtype="https://schema.org/Product">
   <meta itemprop="name" content="{{ product.title | escape }}">
-  <meta itemprop="image" content="{{ product.featured_media | image_url: width: 800 }}">
+  {%- if product.featured_media -%}
+    <meta itemprop="image" content="{{ product.featured_media | image_url: width: 800 }}">
+  {%- endif -%}
   <div itemprop="offers" itemscope itemtype="https://schema.org/AggregateOffer" class="hidden">
     <meta itemprop="priceCurrency" content="MAD">
     <meta itemprop="lowPrice" content="{{ product.price_min | divided_by: 100.0 }}">
     <meta itemprop="highPrice" content="{{ product.price_max | divided_by: 100.0 }}">
     <meta itemprop="offerCount" content="{{ product.variants.size }}">
+    <meta itemprop="availability" content="{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}">
   </div>
+
+  {%- comment -%} ── Image Zone ── {%- endcomment -%}
   <div class="product-card__image-wrapper">
 
     {%- if product.featured_media -%}
@@ -39,74 +41,74 @@
         loading="lazy"
         width="600"
         height="600"
+        itemprop="image"
       >
       {%- if product.media[1] -%}
         <img
           src="{{ product.media[1] | image_url: width: 600, format: 'webp' }}"
-          alt="{{ product.media[1].alt | default: product.title | escape }}"
+          alt="{{ product.media[1].alt | default: product.title | escape }} — زاوية ثانية"
           class="product-card__image product-card__image--secondary"
           loading="lazy"
           width="600"
           height="600"
+          aria-hidden="true"
         >
       {%- endif -%}
     {%- else -%}
-      <img
-        src="{{ 'vitamin-c-serum.jpg' | asset_url }}"
-        alt="{{ product.title | default: shop.name | escape }}"
-        class="product-card__image product-card__image--primary"
-        loading="lazy"
-        width="600"
-        height="600"
-      >
-    {%- endif -%}
-
-    <!-- Discount badge (percentage) -->
-    {%- if has_discount -%}
-      <div class="product-card__discount" aria-label="خصم {{ savings_pct }}%">
-        خصم {{ savings_pct }}%
+      <div class="product-card__placeholder" aria-hidden="true">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(var(--color-forest-rgb), 0.25)" stroke-width="1.5" aria-hidden="true">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+        </svg>
       </div>
     {%- endif -%}
 
-    <!-- COD Trust Badge -->
-    <div class="product-card__cod-badge" style="position: absolute; bottom: 8px; right: 8px; background: rgba(27, 59, 43, 0.9); color: #fff; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 12px; backdrop-filter: blur(4px);">
-      COD متوفر
-    </div>
+    {%- comment -%} Discount badge {%- endcomment -%}
+    {%- if has_discount -%}
+      <div class="product-card__discount" aria-label="خصم {{ savings_pct }} بالمئة">
+        ‑{{ savings_pct }}%
+      </div>
+    {%- endif -%}
 
-    <!-- Wishlist button -->
+    {%- comment -%} COD badge {%- endcomment -%}
+    <div class="product-card__cod-badge" aria-label="الدفع عند الاستلام متوفر">COD</div>
+
+    {%- comment -%} Wishlist button {%- endcomment -%}
     <button
       type="button"
       class="product-card__wishlist"
       aria-label="أضيفي {{ product.title | escape }} إلى المفضلة"
+      aria-pressed="false"
       data-wishlist-toggle
+      data-product-id="{{ product.id }}"
     >
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
       </svg>
     </button>
-
   </div>
 
+  {%- comment -%} ── Content Zone ── {%- endcomment -%}
   <div class="product-card__content">
     <div>
       <h3 class="product-card__title">
         <a href="{{ product.url }}">{{ product.title }}</a>
       </h3>
 
-      <!-- Reviews — only show if metafield or app provides real data -->
+      {%- comment -%} Stars — only rendered when real review metafield exists {%- endcomment -%}
       {%- if product.metafields.reviews.rating.value != blank -%}
-        <div class="product-card__rating">
-          {%- assign rating_val = product.metafields.reviews.rating.value | round: 1 -%}
-          {%- assign rating_count = product.metafields.reviews.rating_count.value | default: 0 -%}
+        {%- assign rating_val   = product.metafields.reviews.rating.value | round: 1 -%}
+        {%- assign rating_count = product.metafields.reviews.rating_count.value | default: 0 -%}
+        <div class="product-card__rating" aria-label="{{ rating_val }} من 5 نجوم — {{ rating_count }} تقييم" role="img">
           {%- for i in (1..5) -%}
-            <svg width="14" height="14" viewBox="0 0 24 24"
-              fill="{% if i <= rating_val %}#D4AF37{% else %}#E8D5B7{% endif %}"
+            <svg width="13" height="13" viewBox="0 0 24 24"
+              fill="{% if i <= rating_val %}#C5A059{% else %}#E5E0D5{% endif %}"
               aria-hidden="true"
             >
               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
             </svg>
           {%- endfor -%}
-          <span class="text-xs font-bold" style="color: var(--color-text-muted);">{{ rating_val }} ({{ rating_count }})</span>
+          <span class="text-xs text-muted" style="font-weight:600;">{{ rating_val }} <span style="font-weight:400;">({{ rating_count }})</span></span>
         </div>
       {%- endif -%}
 
@@ -118,12 +120,17 @@
       class="btn-primary product-card__quick-add"
       data-quick-add="{{ product.selected_or_first_available_variant.id }}"
       aria-label="إضافة {{ product.title | escape }} للسلة"
+      {% unless product.available %}disabled{% endunless %}
     >
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="flex-shrink:0;">
-        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-      </svg>
-      <span class="btn-text">إضافة للسلة</span>
+      {%- if product.available -%}
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="flex-shrink:0">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <span class="btn-text">إضافة للسلة</span>
+      {%- else -%}
+        <span class="btn-text">نفذت الكمية</span>
+      {%- endif -%}
     </button>
   </div>
 </div>

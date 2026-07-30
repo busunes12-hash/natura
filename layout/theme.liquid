@@ -4,15 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="#2D5F3E">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#1B3B2B">
     <link rel="canonical" href="{{ canonical_url }}">
 
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
     {%- else -%}
-      <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70'%3E%3Cpath d='M60 5 C46 22 48 42 58 54 C60 54 60 54 62 54 C72 42 74 22 60 5 Z' fill='%232D5F3E'/%3E%3Cpath d='M57 52 C38 48 20 38 15 22 C28 18 45 28 54 44 Z' fill='%232D5F3E'/%3E%3Cpath d='M63 52 C82 48 100 38 105 22 C92 18 75 28 66 44 Z' fill='%232D5F3E'/%3E%3C/svg%3E">
+      <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70'%3E%3Cpath d='M60 5 C46 22 48 42 58 54 C60 54 60 54 62 54 C72 42 74 22 60 5 Z' fill='%231B3B2B'/%3E%3Cpath d='M57 52 C38 48 20 38 15 22 C28 18 45 28 54 44 Z' fill='%231B3B2B'/%3E%3Cpath d='M63 52 C82 48 100 38 105 22 C92 18 75 28 66 44 Z' fill='%231B3B2B'/%3E%3C/svg%3E">
     {%- endif -%}
 
+    {%- comment -%} Page title {%- endcomment -%}
     <title>
       {{ page_title }}
       {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
@@ -20,16 +22,64 @@
       {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
+    {%- comment -%} Meta description {%- endcomment -%}
     {%- if page_description -%}
       <meta name="description" content="{{ page_description | escape }}">
     {%- else -%}
       <meta name="description" content="{{ shop.name }} — مستحضرات عناية طبيعية فاخرة مصنوعة في المغرب. زيوت عضوية، سيرومات، وكريمات مختبرة جلدياً. الدفع عند الاستلام في جميع المدن المغربية.">
     {%- endif -%}
 
-    <!-- Google Fonts: Preconnect & Preload Optimization -->
+    {%- comment -%} Open Graph — required for social sharing previews {%- endcomment -%}
+    <meta property="og:site_name" content="{{ shop.name | escape }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:title" content="{{ page_title | escape }}">
+    <meta property="og:type" content="{% if template.name == 'product' %}product{% elsif template.name == 'article' %}article{% else %}website{% endif %}">
+    <meta property="og:locale" content="ar_MA">
+    {%- if page_description -%}
+      <meta property="og:description" content="{{ page_description | escape }}">
+    {%- else -%}
+      <meta property="og:description" content="{{ shop.name }} — مستحضرات عناية طبيعية فاخرة مصنوعة في المغرب.">
+    {%- endif -%}
+    {%- if template.name == 'product' and product.featured_image -%}
+      <meta property="og:image" content="{{ product.featured_image | image_url: width: 1200 }}">
+      <meta property="og:image:width" content="1200">
+      <meta property="og:image:alt" content="{{ product.featured_image.alt | escape }}">
+    {%- elsif template.name == 'article' and article.image -%}
+      <meta property="og:image" content="{{ article.image | image_url: width: 1200 }}">
+    {%- else -%}
+      <meta property="og:image" content="{{ 'luxury-hero-skincare.jpg' | asset_url }}">
+    {%- endif -%}
+
+    {%- comment -%} Twitter Card {%- endcomment -%}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page_title | escape }}">
+    {%- if page_description -%}
+      <meta name="twitter:description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {%- comment -%}
+      IMPORTANT: content_for_header MUST be first before any other tags
+      to allow Shopify apps to inject critical scripts correctly.
+    {%- endcomment -%}
+    {{ content_for_header }}
+
+    {%- comment -%} Google Fonts: Preconnect & async load for performance {%- endcomment -%}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+
+    {%- comment -%}
+      Font preload: Preload the most critical Arabic body font weight to
+      eliminate FOIT (Flash of Invisible Text) for Arabic users.
+    {%- endcomment -%}
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="https://fonts.gstatic.com/s/ibmplexsansarabic/v4/Qw3MZRtWPQCuMN_EUqMawmczQiKjMf9p_gFx.woff2"
+      crossorigin="anonymous"
+    >
+
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@600;700;800&display=swap"
       rel="stylesheet"
@@ -39,19 +89,17 @@
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@600;700;800&display=swap" rel="stylesheet">
     </noscript>
 
-    <!-- LCP Hero Preload (homepage only) -->
+    {%- comment -%} LCP Hero Preload — homepage only for above-fold image {%- endcomment -%}
     {%- if template.name == 'index' -%}
       <link rel="preload" as="image" href="{{ 'luxury-hero-skincare.jpg' | asset_url }}" fetchpriority="high">
     {%- endif -%}
 
-    <!-- Core CSS -->
+    {%- comment -%} Core CSS — order matters: base → utilities → rtl-enforcer {%- endcomment -%}
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'utilities.css' | asset_url | stylesheet_tag }}
     {{ 'rtl-enforcer.css' | asset_url | stylesheet_tag }}
 
-    {{ content_for_header }}
-
-    <!-- JSON-LD Structured Data -->
+    {%- comment -%} JSON-LD Structured Data {%- endcomment -%}
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -60,7 +108,7 @@
       "url": {{ shop.url | json }},
       "logo": {
         "@type": "ImageObject",
-        "url": {{ shop.url | append: '/assets/luxury-hero-skincare.jpg' | json }}
+        "url": {{ shop.url | append: '/assets/natura-logo-primary.png' | json }}
       },
       "contactPoint": {
         "@type": "ContactPoint",
@@ -97,43 +145,43 @@
       window.Shopify.routes = window.Shopify.routes || { root: '{{ routes.root_url }}' };
     </script>
 
-    <!-- JS -->
+    {%- comment -%} Deferred JS — non-blocking {%- endcomment -%}
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'component-cart.js' | asset_url }}" defer="defer"></script>
   </head>
 
   <body class="template-{{ template.name }}">
-    <!-- Accessibility Skip Link -->
+    {%- comment -%} Accessibility: Skip link (Tab to activate) {%- endcomment -%}
     <a class="skip-to-content-link" href="#MainContent">الانتقال إلى المحتوى الرئيسي</a>
 
-    <!-- Master SVG Icon Sprite -->
+    {%- comment -%} Master SVG Icon Sprite — hidden, referenced via <use> {%- endcomment -%}
     {% render 'icons' %}
 
-    <!-- Announcement Bar -->
+    {%- comment -%} Announcement Bar {%- endcomment -%}
     {% section 'announcement-bar' %}
 
-    <!-- Sticky Header -->
+    {%- comment -%} Sticky Header {%- endcomment -%}
     {% section 'header' %}
 
-    <!-- Mobile Nav Drawer -->
+    {%- comment -%} Mobile Nav Drawer {%- endcomment -%}
     {% section 'mobile-nav-drawer' %}
 
-    <!-- Main Content -->
+    {%- comment -%} Main Content {%- endcomment -%}
     <main id="MainContent" class="content-for-layout focus-none" tabindex="-1">
       {{ content_for_layout }}
     </main>
 
-    <!-- Footer -->
+    {%- comment -%} Footer {%- endcomment -%}
     {% section 'footer' %}
 
-    <!-- Cart Drawer -->
+    {%- comment -%} Cart Drawer {%- endcomment -%}
     {% section 'cart-drawer' %}
 
-    <!-- Popups -->
+    {%- comment -%} Popups {%- endcomment -%}
     {% section 'popup-newsletter' %}
     {% section 'popup-cookie-consent' %}
 
-    <!-- WhatsApp Floating Button -->
+    {%- comment -%} WhatsApp Floating Button {%- endcomment -%}
     {% render 'whatsapp-button' %}
   </body>
 </html>

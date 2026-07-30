@@ -1,7 +1,14 @@
 {% comment %}
   Cookie consent bottom banner
+  Phase 7 & 9: Tokenized colors and z-index toast token
 {% endcomment %}
-<div id="CookieConsentBanner" class="cookie-banner fixed bottom-4 inset-inline-start-4 inset-inline-end-4 md:inset-inline-start-auto md:inset-inline-end-4 p-4 rounded-lg shadow-lg border flex items-center justify-between gap-4 max-w-lg" style="border-color: #E8D5B7; background-color: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); z-index: 9999;">
+<div
+  id="CookieConsentBanner"
+  class="cookie-banner fixed bottom-4 inset-inline-start-4 inset-inline-end-4 md:inset-inline-start-auto md:inset-inline-end-4 p-4 rounded-lg shadow-lg border border-subtle-token flex items-center justify-between gap-4 max-w-lg bg-surface"
+  style="z-index: var(--z-toast);"
+  role="region"
+  aria-label="إشعار الخصوصية والمطابقة"
+>
   <p class="text-xs text-muted leading-relaxed">
     نحن نستخدم ملفات تعريف الارتباط (الكوكيز) لتحسين تجربة تسوقكِ وتخصيص العروض.
   </p>

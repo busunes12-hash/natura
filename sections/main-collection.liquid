@@ -1,11 +1,12 @@
 {% comment %}
   Section 3.2: Collection Page Section
+  Phase 5: Responsive grid, design tokens, clear empty states
 {% endcomment %}
 <section class="main-collection-section py-8" style="background-color: var(--color-bg-primary);">
   <div class="container">
     {% render 'breadcrumb' %}
 
-    <div class="collection-header flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
+    <div class="collection-header flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
       <div>
         <h1 class="type-h1">{{ collection.title | default: "جميع المنتجات الطبيعية" }}</h1>
         {%- if collection.description != blank -%}
@@ -24,8 +25,8 @@
         {%- endif -%}
 
         <div class="sort-wrapper flex items-center gap-2">
-          <label class="text-sm font-bold whitespace-nowrap">الترتيب حسب:</label>
-          <select class="form-select text-sm py-2" style="width: auto;" onchange="location.href = this.value">
+          <label class="text-sm font-bold whitespace-nowrap" for="SortBy">الترتيب حسب:</label>
+          <select id="SortBy" class="form-select text-sm py-2 px-3 rounded-lg border border-subtle-token bg-surface" style="width: auto;" onchange="location.href = this.value">
             <option value="?sort_by=manual" {% if collection.sort_by == 'manual' %}selected{% endif %}>المميز</option>
             <option value="?sort_by=best-selling" {% if collection.sort_by == 'best-selling' %}selected{% endif %}>الأكثر مبيعاً</option>
             <option value="?sort_by=price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>السعر: من الأقل للأعلى</option>
@@ -43,7 +44,7 @@
           {%- endfor -%}
         </div>
       {%- else -%}
-        <div class="collection-empty text-center py-16 bg-surface rounded-lg border p-8 my-8" style="border-color: var(--color-border-subtle); border-radius: var(--radius-lg);">
+        <div class="collection-empty text-center py-16 bg-surface rounded-lg border border-subtle-token p-8 my-8">
           <span class="w-12 h-12 text-forest mb-4 inline-flex items-center justify-center">{% render 'icon', name: 'leaf' %}</span>
           <h3 class="type-h2 mb-2" style="font-size: 1.5rem;">لا توجد منتجات مطابقة حالياً</h3>
           <p class="text-muted text-sm mb-6">جرب تغيير خيارات التصفية أو تصفح باقي تشكيلاتنا الطبيعية.</p>
@@ -62,7 +63,7 @@
   .products-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    gap: var(--space-6);
   }
   @media (max-width: 1024px) {
     .products-grid {
@@ -72,7 +73,7 @@
   @media (max-width: 640px) {
     .products-grid {
       grid-template-columns: repeat(2, 1fr) !important;
-      gap: 0.75rem;
+      gap: var(--space-3);
     }
   }
 </style>

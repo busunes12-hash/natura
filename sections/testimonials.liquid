@@ -96,14 +96,15 @@
             <div><p class="testimonial-author__name">سناء البقالي</p><p class="text-xs text-muted">طنجة — التشكيلة العائلية</p></div>
           </div>
         </div>
+        <div class="testimonial-card">
           <div class="testimonial-stars">
-            {%- for i in (1..5) -%}<svg width="16" height="16" viewBox="0 0 24 24" fill="#D4AF37" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>{%- endfor -%}
+            {%- for i in (1..5) -%}<svg width="16" height="16" viewBox="0 0 24 24" fill="#C5A059" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>{%- endfor -%}
             <span class="verified-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.74z"/><polyline points="9 12 11 14 15 10"/></svg>شراء موثق</span>
           </div>
           <blockquote class="testimonial-text">"في البداية كنت متخوفة من الشراء عبر الإنترنت، لكن إمكانية فتح الشحنة ومعاينتها قبل دفع المبلغ للموزع أعطتني ثقة مطلقة. الجودة تفوق الماركات العالمية الفرنسية بكثير."</blockquote>
           <div class="testimonial-author">
             <div class="testimonial-avatar" style="background-color: var(--color-bg-secondary); color: var(--color-forest);">م</div>
-            <div><p class="testimonial-author__name">مريم بناني (42 سنة)</p><p class="text-xs text-muted">مراكش — كريم التين الشوكي</p></div>
+            <div><p class="testimonial-author__name">مريم بناني</p><p class="text-xs text-muted">مراكش — كريم التين الشوكي</p></div>
           </div>
         </div>
       {%- endfor -%}
@@ -140,18 +141,18 @@
   .verified-badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--color-forest);
-    background-color: rgba(45,95,62,0.08);
-    padding: 0.2rem 0.6rem;
+    background-color: rgba(var(--color-forest-rgb), 0.08);
+    padding: var(--space-1) var(--space-2-5);
     border-radius: var(--radius-full);
-    margin-inline-start: 0.5rem;
+    margin-inline-start: var(--space-2);
   }
   .testimonial-text {
     font-size: 0.95rem;
-    line-height: 1.7;
+    line-height: 1.75;
     color: var(--color-charcoal-dark);
     font-style: italic;
     flex: 1;
@@ -159,9 +160,9 @@
   .testimonial-author {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    border-top: 1px solid var(--color-border-subtle);
-    padding-top: 1rem;
+    gap: var(--space-3);
+    border-block-start: 1px solid var(--color-border-subtle);
+    padding-block-start: var(--space-4);
   }
   .testimonial-avatar {
     width: 44px;

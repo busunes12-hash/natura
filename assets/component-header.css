@@ -1,24 +1,42 @@
 /* ==========================================================================
-   🌿 MATERIA DTC SKINCARE THEME - STICKY GLASSMORPHISM HEADER
-   Single Source of Truth: Section 2 of THEME_BLUEPRINT.md
+   🌿 NATURA DTC SKINCARE THEME - STICKY GLASSMORPHISM HEADER
+   Phase 2: Full header rebuild — RTL, logical properties, z-index tokens
+   ========================================================================== */
+
+/* ==========================================================================
+   WRAPPER — Sticky glassmorphism
    ========================================================================== */
 
 .header-wrapper {
   position: sticky;
   top: 0;
-  z-index: 500;
+  z-index: var(--z-header);
   width: 100%;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(45, 95, 62, 0.1);
-  transition: all var(--transition-base);
+  background: rgba(250, 248, 245, 0.92); /* --color-bg-primary at 92% */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-block-end: 1px solid rgba(var(--color-forest-rgb), 0.08);
+  transition:
+    background-color var(--transition-base),
+    box-shadow var(--transition-base);
 }
+
+.header-wrapper.is-scrolled {
+  background: rgba(250, 248, 245, 0.98);
+  box-shadow: 0 2px 24px rgba(var(--color-forest-rgb), 0.10);
+}
+
+/* ==========================================================================
+   INNER LAYOUT — 3-zone flex: [hamburger] [logo] [nav + icons]
+   RTL: hamburger at inline-end, logo at inline-start
+   ========================================================================== */
 
 .header {
   height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--space-4);
 }
 
 @media (max-width: 768px) {
@@ -27,102 +45,15 @@
   }
 }
 
-.header__logo {
-  font-family: var(--font-heading);
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--color-forest);
-  letter-spacing: -0.5px;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+/* ==========================================================================
+   LOGO
+   ========================================================================== */
 
-.header__nav {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-
-.header__nav-link {
-  font-family: var(--font-body);
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--color-charcoal-dark);
-  position: relative;
-  padding-block: 0.5rem;
-}
-
-.header__nav-link:hover,
-.header__nav-link.is-active {
-  color: var(--color-forest-deep);
-}
-
-.header__nav-link::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  inset-inline-start: 0;
-  width: 0;
-  height: 2px;
-  background-color: var(--color-forest);
-  transition: width var(--transition-base);
-}
-
-.header__nav-link:hover::after {
-  width: 100%;
-}
-
-.header__icons {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-/* 44x44px circular touch targets with 22x22px SVG icons */
-.header__icon-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-forest);
-  background-color: transparent;
-  transition: background-color var(--transition-base);
-  position: relative;
-}
-
-.header__icon-btn:hover {
-  background-color: var(--color-bg-secondary);
-}
-
-.header__cart-badge {
-  position: absolute;
-  top: 6px;
-  inset-inline-end: 6px;
-  background-color: var(--color-terracotta);
-  color: var(--color-bg-surface);
-  font-size: 0.75rem;
-  font-weight: 700;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Scroll-aware header state */
-.header-wrapper.is-scrolled {
-  box-shadow: 0 2px 24px rgba(45, 95, 62, 0.12);
-  background: rgba(255, 255, 255, 0.98);
-}
-
-/* Logo refinement — 3-leaf botanical vertical stack */
 .header__logo {
   text-decoration: none;
   display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .header__logo-wrapper {
@@ -150,17 +81,240 @@
   text-transform: uppercase;
 }
 
-/* Wishlist icon */
-.header__icon-btn--wishlist {
-  position: relative;
+/* ==========================================================================
+   DESKTOP NAV
+   ========================================================================== */
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
 }
 
-/* Mobile nav overlay */
+.header__nav-link {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-charcoal-dark);
+  position: relative;
+  padding-block: var(--space-2);
+  white-space: nowrap;
+  transition: color var(--transition-fast);
+}
+
+.header__nav-link:hover,
+.header__nav-link.is-active {
+  color: var(--color-forest);
+}
+
+/* Underline slide-in from inline-start */
+.header__nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  inset-inline-start: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-forest);
+  border-radius: var(--radius-full);
+  transition: width var(--transition-base);
+}
+
+.header__nav-link:hover::after,
+.header__nav-link.is-active::after {
+  width: 100%;
+}
+
+/* ==========================================================================
+   ICON ACTIONS GROUP — right side (inline-start in RTL)
+   ========================================================================== */
+
+.header__icons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* ==========================================================================
+   ICON BUTTON — 44×44px touch targets (WCAG 2.5.5)
+   ========================================================================== */
+
+.header__icon-btn {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-forest);
+  background-color: transparent;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.header__icon-btn svg {
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+}
+
+.header__icon-btn:hover {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-forest-deep);
+}
+
+.header__icon-btn:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   CART BADGE
+   ========================================================================== */
+
+.header__cart-badge {
+  position: absolute;
+  top: 6px;
+  inset-inline-end: 4px;
+  background-color: var(--color-terracotta);
+  color: #FFFFFF;
+  font-size: 0.7rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  padding-inline: 3px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border: 2px solid var(--color-bg-primary);
+  transition: transform 0.2s var(--ease-spring);
+}
+
+/* Bounce animation when cart count changes */
+.header__cart-badge.is-bumping {
+  animation: badge-bump 0.3s var(--ease-spring);
+}
+
+@keyframes badge-bump {
+  0%  { transform: scale(1); }
+  50% { transform: scale(1.35); }
+  100%{ transform: scale(1); }
+}
+
+/* ==========================================================================
+   SEARCH OVERLAY — Full-width dropdown (desktop)
+   ========================================================================== */
+
+.header-search-overlay {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: calc(var(--z-header) + 10);
+  background: rgba(250, 248, 245, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-block-end: 1px solid var(--color-border-subtle);
+  padding-block: var(--space-5);
+  transform: translateY(-100%);
+  opacity: 0;
+  transition:
+    transform 0.35s var(--ease-out-expo),
+    opacity 0.25s ease;
+  pointer-events: none;
+  box-shadow: var(--shadow-lg);
+}
+
+.header-search-overlay.is-active {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.header-search-overlay .container {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.header-search-form {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.header-search-input {
+  width: 100%;
+  background: var(--color-bg-secondary);
+  border: 1.5px solid var(--color-border-subtle);
+  border-radius: var(--radius-full);
+  padding-block: var(--space-3);
+  padding-inline-start: var(--space-12);
+  padding-inline-end: var(--space-5);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: var(--color-charcoal-dark);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  direction: rtl;
+}
+
+.header-search-input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.7;
+}
+
+.header-search-input:focus {
+  outline: none;
+  border-color: var(--color-forest);
+  box-shadow: 0 0 0 3px rgba(var(--color-forest-rgb), 0.12);
+}
+
+.header-search-icon {
+  position: absolute;
+  inset-inline-start: var(--space-4);
+  color: var(--color-text-muted);
+  pointer-events: none;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-search-close {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-charcoal-dark);
+  transition: background-color var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.header-search-close:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+/* ==========================================================================
+   MOBILE NAV OVERLAY (backdrop)
+   ========================================================================== */
+
 .mobile-nav-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 490;
+  background: rgba(18, 23, 20, 0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: var(--z-overlay);
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--transition-base);

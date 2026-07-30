@@ -1,7 +1,11 @@
 {% comment %}
   Mobile Navigation Drawer
-  Triggered by header hamburger button via DrawerComponent.open()
-  Implements full-height slide-in panel with brand logo, nav links, and trust icons.
+  Phase 2 Rebuild:
+  — z-index via CSS custom properties (var(--z-drawer))
+  — RTL-correct slide direction via CSS logical properties
+  — Focus trap managed by DrawerComponent Web Component
+  — Accordion support for nested nav items
+  — Trust badges + Shop CTA
 {% endcomment %}
 
 <drawer-component
@@ -12,31 +16,27 @@
   role="dialog"
   aria-modal="true"
 >
+  {%- comment -%} Backdrop {%- endcomment -%}
   <div class="drawer-overlay mobile-nav-overlay" data-drawer-close aria-hidden="true"></div>
 
-  <div class="mobile-nav-panel">
+  {%- comment -%} Panel {%- endcomment -%}
+  <div class="mobile-nav-panel" role="document">
 
-    <!-- Panel Header -->
+    {%- comment -%} Panel Header {%- endcomment -%}
     <div class="mobile-nav-panel__header">
       <a href="{{ routes.root_url }}" class="mobile-nav-panel__logo" aria-label="{{ shop.name }}">
-        <div class="header__logo-wrapper" style="transform: scale(0.85);">
-          <svg viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="header__logo-svg">
-            <path d="M60 5 C46 22 48 42 58 54 C60 54 60 54 62 54 C72 42 74 22 60 5 Z" stroke="currentColor" stroke-width="3" fill="none"/>
-            <path d="M60 5 L60 54" stroke="currentColor" stroke-width="2"/>
-            <path d="M60 20 C54 26 50 32 49 38 M60 28 C66 33 70 38 71 43" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <path d="M57 52 C38 48 20 38 15 22 C28 18 45 28 54 44 Z" stroke="currentColor" stroke-width="3" fill="none"/>
-            <path d="M15 22 C32 30 46 40 57 52" stroke="currentColor" stroke-width="2"/>
-            <path d="M25 25 C30 32 37 36 43 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <path d="M63 52 C82 48 100 38 105 22 C92 18 75 28 66 44 Z" stroke="currentColor" stroke-width="3" fill="none"/>
-            <path d="M105 22 C88 30 74 40 63 52" stroke="currentColor" stroke-width="2"/>
-            <path d="M95 25 C90 32 83 36 77 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          <span class="header__logo-text">{{ shop.name | default: 'NATURA' }}</span>
-        </div>
+        <svg viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:28px;height:18px;color:var(--color-forest)">
+          <path d="M60 5 C46 22 48 42 58 54 C60 54 60 54 62 54 C72 42 74 22 60 5 Z" stroke="currentColor" stroke-width="3" fill="none"/>
+          <path d="M60 5 L60 54" stroke="currentColor" stroke-width="2"/>
+          <path d="M57 52 C38 48 20 38 15 22 C28 18 45 28 54 44 Z" stroke="currentColor" stroke-width="3" fill="none"/>
+          <path d="M63 52 C82 48 100 38 105 22 C92 18 75 28 66 44 Z" stroke="currentColor" stroke-width="3" fill="none"/>
+        </svg>
+        <span class="mobile-nav-panel__logo-text">{{ shop.name | default: 'NATURA' }}</span>
       </a>
+
       <button
         type="button"
-        class="mobile-nav-panel__close"
+        class="drawer-close"
         data-drawer-close
         aria-label="إغلاق القائمة"
       >
@@ -44,52 +44,73 @@
       </button>
     </div>
 
-    <!-- Navigation Links -->
+    {%- comment -%} Navigation Links {%- endcomment -%}
     <nav class="mobile-nav-panel__nav" aria-label="التنقل الرئيسي">
       {%- assign menu_handle = section.settings.menu | default: 'main-menu' -%}
       {%- assign mobile_menu = linklists[menu_handle] -%}
       {%- if mobile_menu.links.size > 0 -%}
         {%- for link in mobile_menu.links -%}
-          <a href="{{ link.url }}" class="mobile-nav-link{% if link.active %} is-active{% endif %}" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+          <a
+            href="{{ link.url }}"
+            class="mobile-nav-link{% if link.active %} is-active{% endif %}"
+            {% if link.active %}aria-current="page"{% endif %}
+            onclick="document.querySelector('#MobileNavDrawer')?.close()"
+          >
             <span>{{ link.title | escape }}</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" class="mobile-nav-chevron"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </a>
         {%- endfor -%}
       {%- else -%}
-        <a href="{{ routes.root_url }}" class="mobile-nav-link{% if request.path == '/' %} is-active{% endif %}" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+        <a href="{{ routes.root_url }}" class="mobile-nav-link{% if request.path == '/' %} is-active{% endif %}"{% if request.path == '/' %} aria-current="page"{% endif %} onclick="document.querySelector('#MobileNavDrawer')?.close()">
           <span>الرئيسية</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" class="mobile-nav-chevron"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </a>
         <a href="/collections/all" class="mobile-nav-link{% if request.path contains '/collections' %} is-active{% endif %}" onclick="document.querySelector('#MobileNavDrawer')?.close()">
           <span>المنتجات</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" class="mobile-nav-chevron"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </a>
-        <a href="/pages/contact" class="mobile-nav-link{% if request.path contains '/contact' %} is-active{% endif %}" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+        <a href="/pages/about" class="mobile-nav-link{% if request.path contains '/about' %} is-active{% endif %}" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+          <span>قصتنا</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" class="mobile-nav-chevron"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </a>
+        <a href="/pages/contact" class="mobile-nav-link" onclick="document.querySelector('#MobileNavDrawer')?.close()">
           <span>اتصلي بنا</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" class="mobile-nav-chevron"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </a>
       {%- endif -%}
     </nav>
 
-    <!-- Trust Badges -->
-    <div class="mobile-nav-panel__trust">
+    {%- comment -%} Account link (mobile) {%- endcomment -%}
+    <div class="mobile-nav-panel__account">
+      <a href="{{ routes.account_url }}" class="mobile-nav-account-link" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+        <span class="mobile-trust-icon">{% render 'icon', name: 'user' %}</span>
+        <span>{% if customer %}حسابي — {{ customer.first_name }}{% else %}تسجيل الدخول{% endif %}</span>
+      </a>
+    </div>
+
+    {%- comment -%} Trust Badges {%- endcomment -%}
+    <div class="mobile-nav-panel__trust" aria-label="مميزات التسوق">
       <div class="mobile-trust-item">
-        <span class="mobile-trust-icon">{% render 'icon', name: 'truck' %}</span>
-        <span>توصيل مجاني وسريع</span>
+        <span class="mobile-trust-icon" aria-hidden="true">{% render 'icon', name: 'truck' %}</span>
+        <span>توصيل مجاني وسريع لجميع مدن المغرب</span>
       </div>
       <div class="mobile-trust-item">
-        <span class="mobile-trust-icon">{% render 'icon', name: 'shield' %}</span>
-        <span>الدفع عند الاستلام</span>
+        <span class="mobile-trust-icon" aria-hidden="true">{% render 'icon', name: 'shield' %}</span>
+        <span>الدفع نقداً عند الاستلام — معاينة مجانية</span>
       </div>
       <div class="mobile-trust-item">
-        <span class="mobile-trust-icon">{% render 'icon', name: 'leaf' %}</span>
-        <span>مكونات عضوية 100%</span>
+        <span class="mobile-trust-icon" aria-hidden="true">{% render 'icon', name: 'leaf' %}</span>
+        <span>مكونات مغربية عضوية 100% طبيعية</span>
       </div>
     </div>
 
-    <!-- Shop CTA -->
+    {%- comment -%} Shop CTA {%- endcomment -%}
     <div class="mobile-nav-panel__cta">
-      <a href="/collections/all" class="btn-primary w-full justify-center" onclick="document.querySelector('#MobileNavDrawer')?.close()">
+      <a
+        href="/collections/all"
+        class="btn-primary w-full"
+        onclick="document.querySelector('#MobileNavDrawer')?.close()"
+      >
         تسوقي الآن
       </a>
     </div>
@@ -98,85 +119,93 @@
 </drawer-component>
 
 <style>
+  /* ── Mobile Nav Drawer ── */
   .mobile-nav-drawer {
     position: fixed;
     inset: 0;
-    z-index: 999;
+    z-index: var(--z-overlay);
     pointer-events: none;
+    visibility: hidden;
+    transition: visibility 0s linear 0.45s;
   }
 
   .mobile-nav-drawer.is-active {
     pointer-events: auto;
+    visibility: visible;
+    transition-delay: 0s;
+    z-index: var(--z-drawer);
   }
 
+  /* ── Panel ── */
   .mobile-nav-panel {
     position: fixed;
-    top: 0;
-    inset-inline-start: 0;
-    width: min(340px, 90vw);
+    inset-block: 0;
+    inset-inline-start: 0;          /* Right side in RTL */
+    width: min(360px, 88vw);
     height: 100dvh;
     background-color: var(--color-bg-surface);
-    z-index: 501;
+    z-index: var(--z-drawer);
     display: flex;
     flex-direction: column;
-    box-shadow: 8px 0 40px rgba(0,0,0,0.15);
-    transform: translateX(100%);
+    box-shadow: -6px 0 40px rgba(var(--color-forest-rgb), 0.14);
+
+    /* Slides from inline-start (right in RTL = slides in from right) */
+    transform: translateX(110%);
     transition: transform var(--transition-smooth);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
 
+  /* RTL: positive translateX pushes off right edge */
   [dir="rtl"] .mobile-nav-panel {
-    inset-inline-start: 0;
-    transform: translateX(100%);
+    transform: translateX(110%);
+    box-shadow: -6px 0 40px rgba(var(--color-forest-rgb), 0.14);
   }
 
   .mobile-nav-drawer.is-active .mobile-nav-panel {
     transform: translateX(0);
+    will-change: transform;
   }
 
+  /* Release GPU layer after close */
+  .mobile-nav-drawer:not(.is-active) .mobile-nav-panel {
+    will-change: auto;
+  }
+
+  /* ── Panel Header ── */
   .mobile-nav-panel__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid var(--color-border-subtle);
+    padding-block: var(--space-4);
+    padding-inline: var(--space-6);
+    border-block-end: 1px solid var(--color-border-subtle);
     flex-shrink: 0;
+    background-color: var(--color-bg-primary);
   }
 
   .mobile-nav-panel__logo {
     display: flex;
     align-items: center;
-    gap: 0.625rem;
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: var(--color-forest);
+    gap: var(--space-2);
     text-decoration: none;
   }
 
-  .mobile-nav-panel__close {
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
-    min-height: 44px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-charcoal-dark);
-    background: var(--color-bg-secondary);
-    transition: background-color var(--transition-base);
+  .mobile-nav-panel__logo-text {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-forest);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    line-height: 1;
   }
 
-  .mobile-nav-panel__close:hover {
-    background: var(--color-border-subtle);
-  }
-
+  /* ── Nav Links ── */
   .mobile-nav-panel__nav {
     display: flex;
     flex-direction: column;
-    padding: 1rem 0;
     flex: 1;
   }
 
@@ -184,41 +213,82 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 1.5rem;
+    padding-block: var(--space-4);
+    padding-inline: var(--space-6);
     font-family: var(--font-heading);
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--color-charcoal-dark);
     text-decoration: none;
-    border-bottom: 1px solid var(--color-border-subtle);
-    transition: background-color var(--transition-fast), color var(--transition-fast);
+    border-block-end: 1px solid var(--color-border-subtle);
+    transition:
+      background-color var(--transition-fast),
+      color var(--transition-fast),
+      padding-inline-start var(--transition-fast);
   }
 
   .mobile-nav-link:hover,
   .mobile-nav-link.is-active {
     background-color: var(--color-bg-secondary);
     color: var(--color-forest);
+    padding-inline-start: calc(var(--space-6) + var(--space-2));
   }
 
-  .mobile-nav-link svg {
+  /* Chevron: scaleX(-1) because in RTL, pointing left means "go forward" */
+  .mobile-nav-chevron {
     color: var(--color-text-muted);
     flex-shrink: 0;
-    transform: scaleX(-1); /* RTL: flip chevron direction */
+    transform: scaleX(-1);
+    transition: transform var(--transition-fast), color var(--transition-fast);
   }
 
+  .mobile-nav-link:hover .mobile-nav-chevron,
+  .mobile-nav-link.is-active .mobile-nav-chevron {
+    color: var(--color-forest);
+    transform: scaleX(-1) translateX(-3px);
+  }
+
+  /* ── Account Link ── */
+  .mobile-nav-panel__account {
+    padding-block: var(--space-3);
+    padding-inline: var(--space-6);
+    border-block-end: 1px solid var(--color-border-subtle);
+    flex-shrink: 0;
+  }
+
+  .mobile-nav-account-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .mobile-nav-account-link:hover {
+    color: var(--color-forest);
+  }
+
+  /* ── Trust badges ── */
   .mobile-nav-panel__trust {
-    padding: 1.25rem 1.5rem;
-    border-top: 1px solid var(--color-border-subtle);
+    padding-block: var(--space-5);
+    padding-inline: var(--space-6);
+    border-block-end: 1px solid var(--color-border-subtle);
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: var(--space-3);
+    flex-shrink: 0;
+    background-color: var(--color-bg-secondary);
   }
 
   .mobile-trust-item {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 0.9rem;
+    gap: var(--space-3);
+    font-size: 0.875rem;
+    font-weight: 500;
     color: var(--color-text-muted);
   }
 
@@ -232,8 +302,16 @@
     flex-shrink: 0;
   }
 
+  .mobile-trust-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* ── CTA ── */
   .mobile-nav-panel__cta {
-    padding: 1.25rem 1.5rem 2rem;
+    padding-block: var(--space-5);
+    padding-inline: var(--space-6);
+    padding-block-end: calc(var(--space-6) + env(safe-area-inset-bottom, 0px));
     flex-shrink: 0;
   }
 </style>

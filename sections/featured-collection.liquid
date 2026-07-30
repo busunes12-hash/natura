@@ -1,31 +1,30 @@
 {% comment %}
   Section 5: Best Sellers / Featured Collection
-  — Schema-controlled collection + product count + heading
-  — "View All" CTA below grid
-  — No emojis in fallback state
-  — Proper placeholder with SVG icon
+  Phase 3: Inline styles removed, logical properties, token-based spacing
 {% endcomment %}
 
-<section class="featured-collection py-16 reveal-on-scroll" style="background-color: var(--color-bg-secondary);">
+<section class="featured-collection section-padding reveal-on-scroll" style="background-color: var(--color-bg-secondary);">
   <div class="container">
-    <div class="section-header">
-      <span class="badge-forest mb-4" style="display: inline-flex;">{{ section.settings.badge | default: 'الأكثر مبيعاً' }}</span>
-      <h2 class="type-h2">{{ section.settings.title | default: 'منتجاتنا الأكثر طلباً' }}</h2>
-      <p class="section-subtitle">{{ section.settings.subtitle | default: 'مستحضرات حازت على ثقة أكثر من 10,000 سيدة في المغرب' }}</p>
+    <div class="section-header reveal-on-scroll">
+      <span class="badge-forest mb-4">{{ section.settings.badge | default: 'الأكثر مبيعاً' }}</span>
+      <h2 class="type-h2 mb-3">{{ section.settings.title | default: 'منتجاتنا الأكثر طلباً' }}</h2>
+      <p class="section-subtitle">{{ section.settings.subtitle | default: 'مستحضرات حازت على ثقة أكثر من 15,000 سيدة في المغرب' }}</p>
     </div>
 
     <div class="products-grid">
-      {%- assign featured_collection = section.settings.collection -%}
+      {%- assign featured_collection = collections[section.settings.collection] -%}
       {%- if featured_collection != blank and featured_collection.products.size > 0 -%}
         {%- for product in featured_collection.products limit: section.settings.products_to_show -%}
-          {% render 'product-card', product: product %}
+          <div class="reveal-on-scroll" data-stagger="{{ forloop.index | modulo: 4 | plus: 1 }}">
+            {% render 'product-card', product: product %}
+          </div>
         {%- endfor -%}
       {%- else -%}
         {%- for i in (1..4) -%}
           <div class="product-card product-card--placeholder">
             <div class="product-card__image-wrapper">
               <div class="product-card__placeholder">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(45,95,62,0.3)" stroke-width="1.5" aria-hidden="true">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(var(--color-forest-rgb), 0.25)" stroke-width="1.5" aria-hidden="true">
                   <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
                   <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
                 </svg>
@@ -33,10 +32,10 @@
             </div>
             <div class="product-card__content">
               <div>
-                <div class="product-card__placeholder-title" style="height:1rem;background:var(--color-border-subtle);border-radius:4px;margin-bottom:0.5rem;"></div>
-                <div class="product-card__placeholder-title" style="height:1rem;background:var(--color-border-subtle);border-radius:4px;width:60%;"></div>
+                <div class="skeleton" style="height:1rem; margin-block-end:var(--space-2);"></div>
+                <div class="skeleton" style="height:1rem; width:60%;"></div>
               </div>
-              <div class="product-card__placeholder-title" style="height:2.75rem;background:var(--color-border-subtle);border-radius:var(--radius-full);margin-top:1rem;"></div>
+              <div class="skeleton" style="height:46px; border-radius:var(--radius-full);"></div>
             </div>
           </div>
         {%- endfor -%}
@@ -48,10 +47,9 @@
         <a
           href="{{ featured_collection.url | default: '/collections/all' }}"
           class="btn-secondary"
-          style="display: inline-flex;"
         >
           {{ section.settings.view_all_text | default: 'عرض جميع المنتجات' }}
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" style="margin-inline-start:0.5rem;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </a>
       </div>
     {%- endif -%}
@@ -62,20 +60,16 @@
   .products-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    gap: var(--space-6);
   }
   @media (max-width: 1024px) {
     .products-grid { grid-template-columns: repeat(3, 1fr); }
   }
   @media (max-width: 768px) {
-    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
   }
   @media (max-width: 400px) {
-    .products-grid { gap: 0.75rem; }
-  }
-  .products-view-all {
-    text-align: center;
-    margin-top: 2.5rem;
+    .products-grid { gap: var(--space-3); }
   }
 </style>
 
@@ -85,7 +79,7 @@
   "settings": [
     { "type": "text", "id": "badge", "label": "نص البادج", "default": "الأكثر مبيعاً" },
     { "type": "text", "id": "title", "label": "العنوان", "default": "منتجاتنا الأكثر طلباً" },
-    { "type": "textarea", "id": "subtitle", "label": "الوصف", "default": "مستحضرات حازت على ثقة أكثر من 10,000 سيدة في المغرب" },
+    { "type": "textarea", "id": "subtitle", "label": "الوصف", "default": "مستحضرات حازت على ثقة أكثر من 15,000 سيدة في المغرب" },
     { "type": "collection", "id": "collection", "label": "المجموعة المعروضة" },
     {
       "type": "range",
@@ -93,11 +87,11 @@
       "min": 4,
       "max": 12,
       "step": 4,
-      "default": 4,
+      "default": 8,
       "label": "عدد المنتجات"
     },
-    { "type": "checkbox", "id": "show_view_all", "label": "عرض زر 'عرض الكل'", "default": true },
-    { "type": "text", "id": "view_all_text", "label": "نص زر 'عرض الكل'", "default": "عرض جميع المنتجات" }
+    { "type": "checkbox", "id": "show_view_all", "label": "عرض زر عرض الكل", "default": true },
+    { "type": "text", "id": "view_all_text", "label": "نص زر عرض الكل", "default": "عرض جميع المنتجات" }
   ],
   "presets": [{ "name": "الأكثر مبيعاً" }]
 }

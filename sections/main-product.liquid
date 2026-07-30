@@ -1,5 +1,6 @@
 {% comment %}
   Section 3.3 & 11: Main Product Detail Page with JSON-LD Structured Data Schema & Sticky Mobile COD Bar
+  Phase 4 Rebuild: Tokenized styling, clean accordions, optimized CRO hierarchy
 {% endcomment %}
 {{ 'component-forms.css' | asset_url | stylesheet_tag }}
 
@@ -28,11 +29,11 @@
         </div>
 
         {%- if product.media.size > 1 -%}
-          <div class="product-thumbnails">
+          <div class="product-thumbnails flex gap-3 overflow-x-auto pb-2">
             {%- for media in product.media -%}
               <button
                 type="button"
-                class="thumbnail-btn {% if forloop.first %}is-active{% endif %}"
+                class="thumbnail-btn rounded-md overflow-hidden border border-subtle-token {% if forloop.first %}is-active{% endif %}"
                 data-image-src="{{ media | image_url: width: 800 }}"
                 aria-label="عرض الصورة {{ forloop.index }}"
               >
@@ -167,12 +168,12 @@
     aspect-ratio: 1 / 1;
     border-radius: var(--radius-lg);
     border: 1px solid var(--color-border-subtle);
-    box-shadow: 0 16px 40px rgba(31, 36, 30, 0.05);
+    box-shadow: var(--shadow-sm);
     background-color: var(--color-bg-surface);
   }
 
   .main-product-img {
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform var(--transition-smooth);
   }
 
   .main-image-wrapper:hover .main-product-img {
@@ -186,9 +187,9 @@
     color: var(--color-charcoal-dark);
   }
 
-  .pdp-cta-btn {
-    min-height: 54px;
-    border-radius: var(--radius-full);
+  .thumbnail-btn.is-active {
+    border-color: var(--color-forest);
+    box-shadow: 0 0 0 2px var(--color-forest);
   }
 
   /* Accordion Quiet Luxury Styling */
@@ -202,7 +203,7 @@
   }
 
   .pdp-accordion-item[open] {
-    border-color: rgba(45, 95, 62, 0.3);
+    border-color: rgba(var(--color-forest-rgb), 0.3);
     box-shadow: var(--shadow-md);
   }
 
@@ -236,7 +237,7 @@
   .pdp-accordion-content {
     padding-top: 0.85rem;
     margin-top: 0.65rem;
-    border-top: 1px dashed rgba(229, 224, 213, 0.7);
+    border-top: 1px dashed var(--color-border-subtle);
   }
 
   /* Mobile Sticky COD Bar */
@@ -254,13 +255,13 @@
       bottom: 0;
       inset-inline-start: 0;
       inset-inline-end: 0;
-      z-index: 400;
+      z-index: var(--z-header);
       padding: 0.75rem 1rem;
       background-color: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-top: 1px solid var(--color-border-subtle);
-      box-shadow: 0 -8px 24px rgba(31, 36, 30, 0.08);
+      box-shadow: 0 -8px 24px rgba(var(--color-forest-rgb), 0.08);
     }
 
     .sticky-bar-info {
