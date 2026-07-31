@@ -11,33 +11,54 @@
     <div class="product-main-grid grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14 mt-6">
       <!-- Column 1: Product Gallery -->
       <div class="product-gallery flex flex-col gap-6">
-        <div class="main-image-wrapper rounded-lg shadow-md overflow-hidden bg-surface">
+        <div class="main-image-wrapper rounded-lg shadow-md overflow-hidden bg-surface relative group" id="ProductGalleryWrapper">
           {%- if product.featured_media -%}
+            {%- if product.featured_media.media_type == 'video' -%}
+              {{ product.featured_media | video_tag: autoplay: true, loop: true, muted: true, controls: false, class: "w-full h-full object-cover main-product-img" }}
+            {%- else -%}
+              <img
+                src="{{ product.featured_media | image_url: width: 800 }}"
+                alt="{{ product.title | escape }}"
+                class="w-full h-full object-cover main-product-img cursor-zoom-in"
+                loading="eager"
+                width="800"
+                height="800"
+                id="MainProductImage"
+              >
+            {%- endif -%}
+          {%- else -%}
             <img
-              src="{{ product.featured_media | image_url: width: 800 }}"
+              src="{{ 'luxury-hero-skincare.jpg' | asset_url }}"
               alt="{{ product.title | escape }}"
               class="w-full h-full object-cover main-product-img"
-              loading="eager"
               width="800"
               height="800"
+              loading="eager"
             >
-          {%- else -%}
-            <div class="flex items-center justify-center h-full bg-cream text-forest text-6xl">
-              {% render 'icon', name: 'leaf' %}
-            </div>
           {%- endif -%}
+
+          <button type="button" class="gallery-zoom-trigger absolute bottom-3 left-3 bg-surface/90 backdrop-blur-md p-2 rounded-full text-forest shadow-md hover:bg-surface transition flex items-center justify-center" id="GalleryZoomBtn" aria-label="تكبير الصورة">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          </button>
         </div>
 
         {%- if product.media.size > 1 -%}
-          <div class="product-thumbnails flex gap-3 overflow-x-auto pb-2">
+          <div class="product-thumbnails flex gap-3 overflow-x-auto pb-2 scroll-smooth" id="ProductThumbnails">
             {%- for media in product.media -%}
               <button
                 type="button"
-                class="thumbnail-btn rounded-md overflow-hidden border border-subtle-token {% if forloop.first %}is-active{% endif %}"
+                class="thumbnail-btn rounded-md overflow-hidden border border-subtle-token flex-shrink-0 transition {% if forloop.first %}is-active{% endif %}"
                 data-image-src="{{ media | image_url: width: 800 }}"
+                data-media-type="{{ media.media_type }}"
                 aria-label="عرض الصورة {{ forloop.index }}"
               >
-                <img src="{{ media | image_url: width: 150 }}" alt="{{ media.alt | default: product.title | escape }}" width="72" height="72" loading="lazy">
+                {%- if media.media_type == 'video' -%}
+                  <div class="relative w-[72px] h-[72px] bg-dark flex items-center justify-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  </div>
+                {%- else -%}
+                  <img src="{{ media | image_url: width: 150 }}" alt="{{ media.alt | default: product.title | escape }}" width="72" height="72" loading="lazy">
+                {%- endif -%}
               </button>
             {%- endfor -%}
           </div>
@@ -103,12 +124,12 @@
             <summary class="pdp-accordion-summary">
               <span class="flex items-center gap-2.5">
                 <span class="w-4 h-4 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'leaf' %}</span>
-                <span>المكونات الطبيعية ومصدرها الأصيل</span>
+                <span>إكسير الطبيعة المغربية: المكونات العضوية 100% ومصدرها الأصيل</span>
               </span>
               <span class="accordion-chevron">↓</span>
             </summary>
             <div class="pdp-accordion-content">
-              <p class="text-sm text-muted leading-relaxed">زيت أرغان مغربي أصلي 100% معصور على البارد من منطقة سوس، خالٍ تماماً من الزيوت الممددة أو العطور الاصطناعية أو المواد الحافظة.</p>
+              <p class="text-sm text-muted leading-relaxed">زيت أرغان مغربي أصلي 100% مستخلص عبر العصر البارد الأول في معاصرنا المعتمدة بمنطقة سوس والجبال. خالٍ تماماً من الزيوت الممددة أو العطور الاصطناعية أو المواد الحافظة.</p>
             </div>
           </details>
 
@@ -116,12 +137,12 @@
             <summary class="pdp-accordion-summary">
               <span class="flex items-center gap-2.5">
                 <span class="w-4 h-4 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'sparkle' %}</span>
-                <span>طريقة الاستخدام العائلية اليومية</span>
+                <span>طقوس العناية اليومية ورغد الاستخدام للبشرة والشعر</span>
               </span>
               <span class="accordion-chevron">↓</span>
             </summary>
             <div class="pdp-accordion-content">
-              <p class="text-sm text-muted leading-relaxed">ضعي قطرات قليلة على البشرة أو الشعر وتدلك بحركات لطيفة. مناسب للاستخدام اليومي الآمن لجميع أفراد الأسرة الكبار والأطفال.</p>
+              <p class="text-sm text-muted leading-relaxed">ضعي من 3 إلى 5 قطرات دافئة بين كفيكِ، وتُدلّك بها البشرة أو نهايات الشعر بحركات دائرية لطيفة. تركيبة نباتية خفيفة وسريعة الامتصاص مناسبة للاستخدام اليومي الآمن لجميع أفراد الأسرة.</p>
             </div>
           </details>
 
@@ -129,12 +150,12 @@
             <summary class="pdp-accordion-summary">
               <span class="flex items-center gap-2.5">
                 <span class="w-4 h-4 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'truck' %}</span>
-                <span>سياسة الشحن والمعاينة عند الاستلام بالمغرب</span>
+                <span>ضمان معاينة الشحنة والتوصيل الفاخر 24-48 ساعة بالمغرب</span>
               </span>
               <span class="accordion-chevron">↓</span>
             </summary>
             <div class="pdp-accordion-content">
-              <p class="text-sm text-muted leading-relaxed">توصيل سريع 24-48 ساعة لجميع مدن المملكة. تتاح لكِ فرصة فتح الشحنة ومعاينة العبوة والتأكد من سلامتها قبل تسليم أي مبلغ نقدي للموزع. الشحن مجاني لجميع الطلبات فوق 200 د.م.</p>
+              <p class="text-sm text-muted leading-relaxed">توصيل آمن وسريع خلال 24 إلى 48 ساعة لجميع مدن المملكة. تتاح لكِ فرصة فتح الشحنة ومعاينة القارورة والتأكد من سلامتها ونقائها قبل تسليم أي مبلغ للموزع. الشحن مجاني لجميع الطلبات فوق 200 د.م.</p>
             </div>
           </details>
         </div>
@@ -151,11 +172,12 @@
   </div>
   <button
     type="button"
-    class="btn-terracotta text-xs sm:text-sm py-2.5 px-4 whitespace-nowrap flex items-center gap-1.5 sticky-btn"
-    data-quick-add="{{ product.selected_or_first_available_variant.id }}"
+    class="btn-primary text-xs sm:text-sm py-2.5 px-4 whitespace-nowrap flex items-center gap-1.5 sticky-btn"
+    id="StickyMobileCodBtn"
+    data-scroll-to-cod="true"
   >
     <span class="w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'truck' %}</span>
-    <span>إضافة إلى السلة — دفع عند الاستلام</span>
+    <span>اطلبي الآن — الدفع عند الاستلام</span>
   </button>
 </div>
 

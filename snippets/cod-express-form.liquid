@@ -11,7 +11,7 @@
       <span>الطلب المباشر السريع (في 30 ثانية)</span>
     </span>
     <h3 class="type-h3 text-xl font-extrabold text-dark leading-tight">
-      أدخلي معلوماتك وسنتصل بكِ لتأكيد الطلب والتوصيل
+      أدخلي تفاصيل الاستلام وسنتواصل معكِ فوراً للتأكيد والتوصيل
     </h3>
     <p class="text-xs text-muted mt-1">
       الدفع نقداً عند الاستلام | معاينة الشحنة قبل التسليم 100%
@@ -81,23 +81,31 @@
 
     <div class="form-group flex flex-col gap-1">
       <label for="CodAddress" class="text-xs font-bold text-dark">
-        العنوان (الحي / الشارع) <span class="text-muted font-normal">(اختياري)</span>
+        العنوان (الحي، الشارع، ورقم الإقامة) <span class="text-terracotta">*</span>
       </label>
       <input 
         type="text" 
         id="CodAddress" 
         name="address" 
-        placeholder="مثال: حي المعاريف، زنقة..." 
+        placeholder="مثال: حي المعاريف، شارع المسيرة الخضراء، إقامة..." 
+        required
         class="form-input w-full px-3.5 py-2.5 rounded-lg border border-subtle-token text-sm focus:outline-none transition"
       >
+      <span class="text-[11px] text-muted">ضروري لضمان وصول الموزع لباب منزلكِ خلال 24 ساعة</span>
     </div>
 
     <button 
       type="submit" 
-      class="btn-primary w-full py-4 px-6 rounded-full font-bold text-white text-base shadow-lg transition flex items-center justify-center gap-2 cursor-pointer mt-2"
+      id="CodSubmitBtn"
+      class="btn-primary w-full py-4 px-6 rounded-full font-bold text-white text-base shadow-lg transition flex items-center justify-between cursor-pointer mt-2"
     >
-      <span class="w-5 h-5 inline-flex items-center justify-center">{% render 'icon', name: 'cart' %}</span>
-      <span>تأكيد الطلب الآن — الدفع بعد المعاينة</span>
+      <div class="flex items-center gap-2">
+        <span class="w-5 h-5 inline-flex items-center justify-center">{% render 'icon', name: 'cart' %}</span>
+        <span>تأكيد الطلب الآن — الدفع بعد المعاينة</span>
+      </div>
+      <span id="CodFormTotalBadge" class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-white/20 text-white whitespace-nowrap">
+        {{ product.price | default: 19900 | money_without_currency }} د.م.
+      </span>
     </button>
 
     <div class="cod-guarantees-grid grid grid-cols-3 gap-2 text-center mt-3 pt-3 border-t border-subtle-token">

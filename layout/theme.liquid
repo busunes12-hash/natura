@@ -89,9 +89,11 @@
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@600;700;800&display=swap" rel="stylesheet">
     </noscript>
 
-    {%- comment -%} LCP Hero Preload — homepage only for above-fold image {%- endcomment -%}
+    {%- comment -%} LCP Hero Preload — homepage & product page above-fold images {%- endcomment -%}
     {%- if template.name == 'index' -%}
       <link rel="preload" as="image" href="{{ 'luxury-hero-skincare.jpg' | asset_url }}" fetchpriority="high">
+    {%- elsif template.name == 'product' and product.featured_media -%}
+      <link rel="preload" as="image" href="{{ product.featured_media | image_url: width: 800 }}" fetchpriority="high">
     {%- endif -%}
 
     {%- comment -%} Core CSS — order matters: base → utilities → rtl-enforcer {%- endcomment -%}

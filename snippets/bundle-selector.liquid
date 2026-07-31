@@ -20,7 +20,14 @@
 
   <div class="bundle-options flex flex-col gap-2.5">
     <!-- Option 3: Royal Bundle (Best Value - Pre-selected) -->
-    <label class="bundle-card is-active relative flex items-center justify-between p-3.5 rounded-lg border-2 border-forest bg-surface cursor-pointer transition shadow-sm hover:shadow-md" data-bundle-qty="3">
+    <label 
+      class="bundle-card is-active relative flex items-center justify-between p-3.5 rounded-lg border-2 border-forest bg-surface cursor-pointer transition shadow-sm hover:shadow-md" 
+      data-bundle-qty="3"
+      data-price-formatted="{{ price_3_pack | money_without_currency }}"
+      data-compare-formatted="{{ base_price | times: 3 | money_without_currency }}"
+      data-savings-amount="{{ base_price | times: 3 | minus: price_3_pack | money_without_currency }}"
+      data-savings-pct="35"
+    >
       <span class="absolute -top-2.5 inset-inline-end-4 bg-terracotta text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm flex items-center gap-1">
         <span class="w-3 h-3 inline-flex items-center justify-center">{% render 'icon', name: 'star' %}</span>
         <span>الأكثر طلباً — توفير 35%</span>
@@ -32,14 +39,21 @@
           <p class="text-[11px] text-muted">توفير 35% + هدية مجانية + شحن مجاني</p>
         </div>
       </div>
-      <div class="text-end" dir="ltr">
+      <div class="text-start flex flex-col items-end">
         <span class="text-sm font-black text-forest block">{{ price_3_pack | money_without_currency }} د.م.</span>
         <span class="text-[11px] text-muted line-through block">{{ base_price | times: 3 | money_without_currency }} د.م.</span>
       </div>
     </label>
 
     <!-- Option 2: Duo Pack -->
-    <label class="bundle-card relative flex items-center justify-between p-3.5 rounded-lg border border-subtle-token bg-surface cursor-pointer transition hover:border-forest" data-bundle-qty="2">
+    <label 
+      class="bundle-card relative flex items-center justify-between p-3.5 rounded-lg border border-subtle-token bg-surface cursor-pointer transition hover:border-forest" 
+      data-bundle-qty="2"
+      data-price-formatted="{{ price_2_pack | money_without_currency }}"
+      data-compare-formatted="{{ base_price | times: 2 | money_without_currency }}"
+      data-savings-amount="{{ base_price | times: 2 | minus: price_2_pack | money_without_currency }}"
+      data-savings-pct="20"
+    >
       <div class="flex items-center gap-3">
         <input type="radio" name="bundle_tier_radio" value="2" class="w-4 h-4 text-forest focus:ring-forest">
         <div>
@@ -47,14 +61,21 @@
           <p class="text-[11px] text-muted">توفير 20% + شحن مجاني</p>
         </div>
       </div>
-      <div class="text-end" dir="ltr">
+      <div class="text-start flex flex-col items-end">
         <span class="text-sm font-bold text-dark block">{{ price_2_pack | money_without_currency }} د.م.</span>
         <span class="text-[11px] text-muted line-through block">{{ base_price | times: 2 | money_without_currency }} د.م.</span>
       </div>
     </label>
 
     <!-- Option 1: Single Pack -->
-    <label class="bundle-card relative flex items-center justify-between p-3.5 rounded-lg border border-subtle-token bg-surface cursor-pointer transition hover:border-forest" data-bundle-qty="1">
+    <label 
+      class="bundle-card relative flex items-center justify-between p-3.5 rounded-lg border border-subtle-token bg-surface cursor-pointer transition hover:border-forest" 
+      data-bundle-qty="1"
+      data-price-formatted="{{ base_price | money_without_currency }}"
+      data-compare-formatted=""
+      data-savings-amount="0"
+      data-savings-pct="0"
+    >
       <div class="flex items-center gap-3">
         <input type="radio" name="bundle_tier_radio" value="1" class="w-4 h-4 text-forest focus:ring-forest">
         <div>
@@ -62,7 +83,7 @@
           <p class="text-[11px] text-muted">السعر الأصلي</p>
         </div>
       </div>
-      <div class="text-end" dir="ltr">
+      <div class="text-start flex flex-col items-end">
         <span class="text-sm font-bold text-dark block">{{ base_price | money_without_currency }} د.م.</span>
       </div>
     </label>
@@ -72,20 +93,81 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var cards = document.querySelectorAll('.bundle-card');
+    
+    function updatePrices(card) {
+      if (!card) return;
+      var qty = card.getAttribute('data-bundle-qty');
+      var priceFormatted = card.getAttribute('data-price-formatted');
+      var compareFormatted = card.getAttribute('data-compare-formatted');
+      var savingsAmount = card.getAttribute('data-savings-amount');
+      var savingsPct = card.getAttribute('data-savings-pct');
+
+      // Update Form hidden fields
+      var codQty = document.getElementById('CodQuantity');
+      if (codQty) codQty.value = qty;
+      var codBundle = document.getElementById('CodBundleTier');
+      if (codBundle) codBundle.value = qty;
+
+      // Update COD form submit button badge
+      var formBadge = document.getElementById('CodFormTotalBadge');
+      if (formBadge && priceFormatted) {
+        formBadge.textContent = priceFormatted + ' د.م.';
+      }
+
+      // Update Hero Price display snippet
+      var salePriceEl = document.querySelector('.price-container .price-item--sale');
+      if (salePriceEl && priceFormatted) {
+        salePriceEl.textContent = priceFormatted + ' د.م.';
+      }
+
+      var regPriceEl = document.querySelector('.price-container .price-item--regular');
+      if (regPriceEl) {
+        if (compareFormatted) {
+          regPriceEl.textContent = compareFormatted + ' د.م.';
+          regPriceEl.style.display = 'inline';
+        } else {
+          regPriceEl.style.display = 'none';
+        }
+      }
+
+      var savingsBadgeEl = document.querySelector('.price-container .badge-terracotta');
+      if (savingsBadgeEl) {
+        if (savingsPct && parseInt(savingsPct, 10) > 0) {
+          savingsBadgeEl.textContent = 'وفري ' + savingsAmount + ' د.م. (' + savingsPct + '%-)';
+          savingsBadgeEl.style.display = 'inline-flex';
+        } else {
+          savingsBadgeEl.style.display = 'none';
+        }
+      }
+
+      // Update Sticky Mobile Bar Price
+      var stickyPriceEl = document.querySelector('.sticky-mobile-buy-bar .sticky-bar-info span');
+      if (stickyPriceEl && priceFormatted) {
+        stickyPriceEl.textContent = priceFormatted + ' د.م.';
+      }
+    }
+
     cards.forEach(function(card) {
       card.addEventListener('click', function() {
         cards.forEach(function(c) { 
           c.classList.remove('is-active', 'border-2', 'border-forest');
           c.classList.add('border', 'border-subtle-token');
+          var radio = c.querySelector('input[type="radio"]');
+          if (radio) radio.checked = false;
         });
         this.classList.add('is-active', 'border-2', 'border-forest');
         this.classList.remove('border-subtle-token');
-        var qty = this.getAttribute('data-bundle-qty');
-        var codQty = document.getElementById('CodQuantity');
-        if (codQty) codQty.value = qty;
-        var codBundle = document.getElementById('CodBundleTier');
-        if (codBundle) codBundle.value = qty;
+        var activeRadio = this.querySelector('input[type="radio"]');
+        if (activeRadio) activeRadio.checked = true;
+
+        updatePrices(this);
       });
     });
+
+    // Initialize with pre-selected bundle card (Option 3)
+    var initialCard = document.querySelector('.bundle-card.is-active');
+    if (initialCard) {
+      updatePrices(initialCard);
+    }
   });
 </script>

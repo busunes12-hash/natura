@@ -283,6 +283,77 @@ class AccordionManager {
 }
 
 /* ==========================================================================
+   10. ScrollToCODManager — Smooth scroll mobile sticky CTA to COD form
+   ========================================================================== */
+class ScrollToCODManager {
+  static init() {
+    document.querySelectorAll('[data-scroll-to-cod]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const codForm = document.getElementById('QuickCODForm') || document.getElementById('DirectCODExpressForm');
+        if (codForm) {
+          const offsetTop = codForm.getBoundingClientRect().top + window.pageYOffset - 80;
+          window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+
+          // Focus first empty required input field
+          setTimeout(() => {
+            const emptyInput = codForm.querySelector('input[required]:placeholder-shown, select[required]:has(option[value=""]:checked)');
+            if (emptyInput) {
+              emptyInput.focus();
+            } else {
+              const nameInput = document.getElementById('CodCustomerName');
+              if (nameInput) nameInput.focus();
+            }
+          }, 450);
+        }
+      });
+    });
+  }
+}
+
+/* ==========================================================================
+   11. LightboxZoomManager — Product image high-res zoom lightbox
+   ========================================================================== */
+class LightboxZoomManager {
+  static init() {
+    const mainImg = document.getElementById('MainProductImage');
+    const zoomBtn = document.getElementById('GalleryZoomBtn');
+
+    const openLightbox = () => {
+      if (!mainImg || !mainImg.src) return;
+      
+      let lightbox = document.getElementById('GalleryLightbox');
+      if (!lightbox) {
+        lightbox = document.createElement('div');
+        lightbox.id = 'GalleryLightbox';
+        lightbox.className = 'fixed inset-0 z-[900] bg-dark/95 backdrop-blur-xl flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300';
+        lightbox.innerHTML = `
+          <button type="button" class="absolute top-4 right-4 text-white text-3xl font-light p-2 focus:outline-none" id="CloseLightboxBtn" aria-label="إغلاق">&times;</button>
+          <img src="" alt="صورة مكبرة" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl transition-transform duration-300" id="LightboxImage">
+        `;
+        document.body.appendChild(lightbox);
+
+        lightbox.querySelector('#CloseLightboxBtn').addEventListener('click', () => {
+          lightbox.classList.add('opacity-0', 'pointer-events-none');
+        });
+        lightbox.addEventListener('click', (e) => {
+          if (e.target === lightbox) {
+            lightbox.classList.add('opacity-0', 'pointer-events-none');
+          }
+        });
+      }
+
+      const lightboxImg = lightbox.querySelector('#LightboxImage');
+      lightboxImg.src = mainImg.src;
+      lightbox.classList.remove('opacity-0', 'pointer-events-none');
+    };
+
+    if (mainImg) mainImg.addEventListener('click', openLightbox);
+    if (zoomBtn) zoomBtn.addEventListener('click', openLightbox);
+  }
+}
+
+/* ==========================================================================
    DOMContentLoaded — Boot sequence
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
@@ -292,6 +363,8 @@ document.addEventListener('DOMContentLoaded', () => {
   ProductGallery.init();
   VariantPillPicker.init();
   AccordionManager.init();
+  ScrollToCODManager.init();
+  LightboxZoomManager.init();
 
   /* Open cart drawer on cart:updated event */
   window.addEventListener('cart:updated', () => {
