@@ -75,13 +75,13 @@ class StorefrontHTMLParser(HTMLParser):
                 self.tag_stack.pop()
 
     def handle_data(self, data):
-        # Ignore script, style, svg
-        if any(t in self.tag_stack for t in ['script', 'style', 'svg']):
+        # Scripts and styles are source code, while SVG text can be visible.
+        if any(t in self.tag_stack for t in ['script', 'style']):
             return
 
         clean = data.replace('__LIQUID_EXPR__', ' ').replace('__LIQUID_TAG__', ' ')
         clean = clean.replace('&nbsp;', ' ').replace('&copy;', ' ').replace('&mdash;', ' ').replace('&ndash;', ' ').replace('&amp;', ' ')
-        clean = clean.strip()
+        clean = re.sub(r'#[0-9A-Fa-f]{3,8}\b', '', clean).strip()
         if not clean:
             return
 
@@ -147,9 +147,51 @@ for root, dirs, files in os.walk('.'):
                 except Exception as e:
                     pass
 
+# 3. Check the standalone brand page and the SVG logos it displays.
+print("\n--- 3. Testing standalone page and displayed SVG logos ---")
+for path in ['index.html', 'assets/natura-logo-primary.svg', 'assets/natura-logo-minimal.svg',
+             'assets/natura-logo-horizontal.svg', 'assets/natura-icon-only.svg']:
+    with open(path, encoding='utf-8') as fp:
+        raw_content = fp.read()
+    clean_content = re.sub(r'<!--.*?-->', '', raw_content, flags=re.DOTALL)
+    parser = StorefrontHTMLParser(path)
+    parser.feed(clean_content)
+
+# 4. Check text supplied by JSON templates and active theme settings.
+print("\n--- 4. Testing configured storefront text ---")
+display_keys = {'badge', 'title', 'subtitle', 'eyebrow', 'headline', 'description',
+                'placeholder', 'text_1', 'text_2', 'text_3', 'view_all_text',
+                'before_label', 'after_label', 'before_sub', 'after_sub',
+                'stat_1_number', 'stat_2_number', 'stat_3_number',
+                'stat_1_label', 'stat_2_label', 'stat_3_label',
+                'btn_primary_text', 'btn_secondary_text', 'btn_text', 'disclaimer',
+                'brand_desc', 'links_heading', 'service_heading', 'cod_text'}
+for root in ['templates', 'config']:
+    for directory, _, files in os.walk(root):
+        for filename in files:
+            if not filename.endswith('.json') or filename == 'settings_schema.json':
+                continue
+            path = os.path.join(directory, filename)
+            with open(path, encoding='utf-8') as fp:
+                data = json.load(fp)
+            def check_display(obj, location=''):
+                if isinstance(obj, dict):
+                    for key, value in obj.items():
+                        child = f'{location}.{key}' if location else key
+                        if key in display_keys and isinstance(value, str) and re.search(r'[A-Za-z]', value):
+                            report(path, child, 'Configured text contains Latin', value)
+                        elif isinstance(value, (dict, list)):
+                            check_display(value, child)
+                elif isinstance(obj, list):
+                    for i, value in enumerate(obj):
+                        check_display(value, f'{location}[{i}]')
+            check_display(data)
+
 print("\n" + "=" * 60)
 if len(violations) == 0:
-    print("✨ SUCCESS! 0 LATIN WORDS FOUND ACROSS THE ENTIRE STOREFRONT! ✨")
+    print("0 Latin words in scanned theme text, configured copy, standalone page, and displayed SVGs.")
+    print("Raster image lettering and Shopify admin content require separate review.")
 else:
     print(f"⚠️ FOUND {len(violations)} LATIN OCCURRENCES TO FIX.")
 print("=" * 60)
+sys.exit(1 if violations else 0)

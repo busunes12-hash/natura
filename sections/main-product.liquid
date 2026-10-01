@@ -28,8 +28,8 @@
             {%- endif -%}
           {%- else -%}
             <img
-              src="{{ 'luxury-hero-skincare.jpg' | asset_url }}"
-              alt="{{ product.title | escape }}"
+              src="{{ 'natura-icon-only.svg' | asset_url }}"
+              alt="رمز ناتورا النباتي"
               class="w-full h-full object-cover main-product-img"
               width="800"
               height="800"
@@ -357,7 +357,7 @@
   "@context": "https://schema.org/",
   "@type": "Product",
   "name": {{ product.title | default: "زيت الأرغان المغربي النقي 100% — معصور على البارد (100 مل)" | json }},
-  "image": [ {{ product.featured_media | image_url: width: 800 | default: "luxury-hero-skincare.jpg" | prepend: 'https:' | json }} ],
+  "image": [ {% if product.featured_media %}{{ product.featured_media | image_url: width: 800 | prepend: 'https:' | json }}{% else %}{{ 'natura-icon-only.svg' | asset_url | json }}{% endif %} ],
   "description": {{ product.description | strip_html | default: "زيت أرغان مغربي أصلي 100% معصور على البارد من منطقة سوس، خالي من المواد الكيميائية والعطور." | json }},
   "brand": { "@type": "Brand", "name": "ناتورا" },
   "offers": {

@@ -14,7 +14,7 @@
   <div class="container header">
 
     {%- comment -%} ZONE 1 — Logo (inline-start in RTL = right side) {%- endcomment -%}
-    <a href="{{ routes.root_url }}" class="header__logo" aria-label="{{ shop.name }} — الصفحة الرئيسية">
+    <a href="{{ routes.root_url }}" class="header__logo" aria-label="ناتورا — الصفحة الرئيسية">
       <div class="header__logo-wrapper">
         <svg viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="header__logo-svg">
           <path d="M60 5 C46 22 48 42 58 54 C60 54 60 54 62 54 C72 42 74 22 60 5 Z" stroke="currentColor" stroke-width="3" fill="none"/>
@@ -27,7 +27,7 @@
           <path d="M105 22 C88 30 74 40 63 52" stroke="currentColor" stroke-width="2"/>
           <path d="M95 25 C90 32 83 36 77 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>
-        <span class="header__logo-text">{{ shop.name | replace: 'NATURA', 'ناتورا' | replace: 'Natura', 'ناتورا' | replace: 'natura', 'ناتورا' | default: 'ناتورا' }}</span>
+        <span class="header__logo-text">ناتورا</span>
       </div>
     </a>
 

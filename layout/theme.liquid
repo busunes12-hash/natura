@@ -19,18 +19,18 @@
       {{ page_title }}
       {%- if current_tags %} &ndash; الوسوم "{{ current_tags | join: ', ' }}"{% endif -%}
       {%- if current_page != 1 %} &ndash; الصفحة {{ current_page }}{% endif -%}
-      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+      {%- unless page_title contains 'ناتورا' %} &ndash; ناتورا{% endunless -%}
     </title>
 
     {%- comment -%} Meta description {%- endcomment -%}
     {%- if page_description -%}
       <meta name="description" content="{{ page_description | escape }}">
     {%- else -%}
-      <meta name="description" content="{{ shop.name }} — مستحضرات عناية طبيعية فاخرة مصنوعة في المغرب. زيوت عضوية، سيرومات، وكريمات مختبرة جلدياً. الدفع عند الاستلام في جميع المدن المغربية.">
+      <meta name="description" content="ناتورا — مستحضرات عناية طبيعية فاخرة مصنوعة في المغرب. زيوت عضوية، سيرومات، وكريمات مختبرة جلدياً. الدفع عند الاستلام في جميع المدن المغربية.">
     {%- endif -%}
 
     {%- comment -%} Open Graph — required for social sharing previews {%- endcomment -%}
-    <meta property="og:site_name" content="{{ shop.name | escape }}">
+    <meta property="og:site_name" content="ناتورا">
     <meta property="og:url" content="{{ canonical_url }}">
     <meta property="og:title" content="{{ page_title | escape }}">
     <meta property="og:type" content="{% if template.name == 'product' %}product{% elsif template.name == 'article' %}article{% else %}website{% endif %}">
@@ -38,7 +38,7 @@
     {%- if page_description -%}
       <meta property="og:description" content="{{ page_description | escape }}">
     {%- else -%}
-      <meta property="og:description" content="{{ shop.name }} — مستحضرات عناية طبيعية فاخرة مصنوعة في المغرب.">
+      <meta property="og:description" content="ناتورا — مستحضرات عناية طبيعية فاخرة مصنوعة في المغرب.">
     {%- endif -%}
     {%- if template.name == 'product' and product.featured_image -%}
       <meta property="og:image" content="{{ product.featured_image | image_url: width: 1200 }}">
@@ -47,7 +47,7 @@
     {%- elsif template.name == 'article' and article.image -%}
       <meta property="og:image" content="{{ article.image | image_url: width: 1200 }}">
     {%- else -%}
-      <meta property="og:image" content="{{ 'luxury-hero-skincare.jpg' | asset_url }}">
+      <meta property="og:image" content="{{ 'skincare-after.jpg' | asset_url }}">
     {%- endif -%}
 
     {%- comment -%} Twitter Card {%- endcomment -%}
@@ -79,7 +79,7 @@
 
     {%- comment -%} LCP Hero Preload — homepage & product page above-fold images {%- endcomment -%}
     {%- if template.name == 'index' -%}
-      <link rel="preload" as="image" href="{{ 'luxury-hero-skincare.jpg' | asset_url }}" fetchpriority="high">
+      <link rel="preload" as="image" href="{{ 'skincare-after.jpg' | asset_url }}" fetchpriority="high">
     {%- elsif template.name == 'product' and product.featured_media -%}
       <link rel="preload" as="image" href="{{ product.featured_media | image_url: width: 800 }}" fetchpriority="high">
     {%- endif -%}
@@ -117,11 +117,11 @@
     {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": {{ shop.name | json }},
+      "name": "ناتورا",
       "url": {{ shop.url | json }},
       "logo": {
         "@type": "ImageObject",
-        "url": {{ 'natura-logo-primary.png' | asset_url | json }}
+        "url": {{ 'natura-icon-only.svg' | asset_url | json }}
       },
       "contactPoint": {
         "@type": "ContactPoint",
@@ -138,7 +138,7 @@
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": {{ shop.name | json }},
+      "name": "ناتورا",
       "url": {{ shop.url | json }},
       "potentialAction": {
         "@type": "SearchAction",

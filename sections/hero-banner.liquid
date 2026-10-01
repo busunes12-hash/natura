@@ -83,7 +83,7 @@
             "
             src="{{ section.settings.image | image_url: width: 800, format: 'webp' }}"
             sizes="(max-width: 768px) 100vw, 50vw"
-            alt="{{ section.settings.image.alt | default: shop.name | escape }}"
+            alt="{{ section.settings.image.alt | default: 'ناتورا — عناية طبيعية بالبشرة' | escape }}"
             class="hero-image__img is-loaded"
             loading="eager"
             fetchpriority="high"
@@ -92,15 +92,15 @@
           >
         {%- else -%}
           <img
-            src="{{ 'luxury-hero-skincare.jpg' | asset_url }}"
-            srcset="{{ 'luxury-hero-skincare.jpg' | asset_url }} 800w"
+            src="{{ 'skincare-after.jpg' | asset_url }}"
+            srcset="{{ 'skincare-after.jpg' | asset_url }} 800w"
             sizes="(max-width: 768px) 100vw, 50vw"
-            alt="{{ shop.name }} — مستحضرات العناية بالبشرة الطبيعية المغربية"
+            alt="ناتورا — مستحضرات العناية بالبشرة الطبيعية المغربية"
             class="hero-image__img is-loaded"
             loading="eager"
             fetchpriority="high"
-            width="800"
-            height="800"
+            width="1368"
+            height="768"
           >
         {%- endif -%}
 
