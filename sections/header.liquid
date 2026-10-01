@@ -32,7 +32,7 @@
     </a>
 
     {%- comment -%} ZONE 2 — Desktop Navigation (center) {%- endcomment -%}
-    <nav class="header__nav lg:flex hidden" aria-label="التنقل الرئيسي">
+    <nav class="header__nav" aria-label="التنقل الرئيسي">
       {%- assign main_menu = linklists[section.settings.menu] -%}
       {%- if main_menu.links.size > 0 -%}
         {%- for link in main_menu.links -%}

@@ -3,7 +3,6 @@
   Phase 3: COD badge using CSS token, wishlist accessible, schema microdata
   Usage: {% render 'product-card', product: product %}
 {% endcomment %}
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
 
 {%- assign has_discount = false -%}
 {%- if product.compare_at_price > product.price -%}
@@ -71,7 +70,7 @@
     {%- endif -%}
 
     {%- comment -%} COD badge {%- endcomment -%}
-    <div class="product-card__cod-badge" aria-label="الدفع عند الاستلام متوفر">COD</div>
+    <div class="product-card__cod-badge" aria-label="الدفع عند الاستلام متوفر">الدفع عند الاستلام</div>
 
     {%- comment -%} Wishlist button {%- endcomment -%}
     <button

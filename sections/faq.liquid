@@ -11,45 +11,59 @@
     </div>
 
     <div class="faq-list flex flex-col gap-4">
-      <details class="faq-item">
-        <summary class="faq-summary">
-          <span>كيف تتم عملية المعاينة والدفع عند الاستلام بالمغرب؟</span>
-          <span class="faq-icon">+</span>
-        </summary>
-        <div class="faq-answer">
-          نحن نوفر خدمة الدفع عند الاستلام (COD) الموثوقة لجميع مدن وقرى المملكة المغربية. عند وصول موزع الشحن لباب منزلك، تتاح لك فرصة فتح الشحنة ومعاينة العبوة والتأكد من سلامتها ومطابقتها قبل تسليم أي مبلغ نقدي للموزع.
-        </div>
-      </details>
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <details class="faq-item" {{ block.shopify_attributes }}>
+            <summary class="faq-summary">
+              <span>{{ block.settings.question }}</span>
+              <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+              {{ block.settings.answer }}
+            </div>
+          </details>
+        {%- endfor -%}
+      {%- else -%}
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>كيف تتم عملية المعاينة والدفع عند الاستلام بالمغرب؟</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-answer">
+            نحن نوفر خدمة الدفع عند الاستلام الموثوقة لجميع مدن وقرى المملكة المغربية. عند وصول موزع الشحن لباب منزلك، تتاح لك فرصة فتح الشحنة ومعاينة العبوة والتأكد من سلامتها ومطابقتها قبل تسليم أي مبلغ نقدي للموزع.
+          </div>
+        </details>
 
-      <details class="faq-item">
-        <summary class="faq-summary">
-          <span>كيف أتأكد من نقاء وأصالة الزيوت والمكونات العضوية؟</span>
-          <span class="faq-icon">+</span>
-        </summary>
-        <div class="faq-answer">
-          تُستخلص جميع زيوتنا (الأرغان والتين الشوكي) عبر العصر البارد الأول في معاصرنا المعتمدة بسوس والأطلس. نضمن لك خلوها تماماً من أي معطرات اصطناعية أو كحول أو زيوت معدنية مخففة، ونرفق معها ضمان الأصالة والنقاء.
-        </div>
-      </details>
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>كيف أتأكد من نقاء وأصالة الزيوت والمكونات العضوية؟</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-answer">
+            تُستخلص جميع زيوتنا (الأرغان والتين الشوكي) عبر العصر البارد الأول في معاصرنا المعتمدة بسوس والأطلس. نضمن لك خلوها تماماً من أي معطرات اصطناعية أو كحول أو زيوت معدنية مخففة، ونرفق معها ضمان الأصالة والنقاء.
+          </div>
+        </details>
 
-      <details class="faq-item">
-        <summary class="faq-summary">
-          <span>كم يستغرق الشحن وما هي تكلفة التوصيل؟</span>
-          <span class="faq-icon">+</span>
-        </summary>
-        <div class="faq-answer">
-          التوصيل مجاني 100% لجميع الطلبات بقيمة 200 د.م. أو أكثر. يستغرق التوصيل من 24 إلى 48 ساعة في المدن الرئيسية (الدار البيضاء، الرباط، مراكش، طنجة، فاس، أكادير)، ومن 48 إلى 72 ساعة لباقي المناطق والقرى.
-        </div>
-      </details>
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>كم يستغرق الشحن وما هي تكلفة التوصيل؟</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-answer">
+            التوصيل مجاني 100% لجميع الطلبات بقيمة 200 د.م. أو أكثر. يستغرق التوصيل من 24 إلى 48 ساعة في المدن الرئيسية (الدار البيضاء، الرباط، مراكش، طنجة، فاس، أكادير)، ومن 48 إلى 72 ساعة لباقي المناطق والقرى.
+          </div>
+        </details>
 
-      <details class="faq-item">
-        <summary class="faq-summary">
-          <span>هل المنتجات آمنة للاستخدام اليومي ولجميع أفراد العائلة؟</span>
-          <span class="faq-icon">+</span>
-        </summary>
-        <div class="faq-answer">
-          نعم، بالتأكيد. تم تطوير جميع مستحضرات ناتورا بمكونات نباتية نقية خالية من البارابين، السلفات، والعطور الاصطناعية. تركيباتنا لطيفة جداً وتناسب جميع أنواع البشرة (بما فيها الحساسة) وهي خيار آمن يومياً للكبار والأطفال.
-        </div>
-      </details>
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>هل المنتجات آمنة للاستخدام اليومي ولجميع أفراد العائلة؟</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-answer">
+            نعم، بالتأكيد. تم تطوير جميع مستحضرات ناتورا بمكونات نباتية نقية خالية من البارابين، السلفات، والعطور الاصطناعية. تركيباتنا لطيفة جداً وتناسب جميع أنواع البشرة (بما فيها الحساسة) وهي خيار آمن يومياً للكبار والأطفال.
+          </div>
+        </details>
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -124,6 +138,16 @@
     { "type": "text", "id": "badge", "label": "نص البادج", "default": "شفافية وثقة" },
     { "type": "text", "id": "title", "label": "العنوان", "default": "الأسئلة الشائعة حول المنتجات والشحن" },
     { "type": "textarea", "id": "subtitle", "label": "الوصف", "default": "كل ما تود معرفته عن نقاء مكوناتنا، سلامة الاستخدام العائلي، وطريقة الشحن والمعاينة" }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "سؤال وجواب",
+      "settings": [
+        { "type": "text", "id": "question", "label": "السؤال", "default": "سؤال حول المنتج أو الشحن" },
+        { "type": "textarea", "id": "answer", "label": "الإجابة", "default": "نص الإجابة المفصلة..." }
+      ]
+    }
   ],
   "presets": [{ "name": "الأسئلة الشائعة" }]
 }

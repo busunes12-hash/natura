@@ -45,7 +45,7 @@
         type="tel" 
         id="CodCustomerPhone" 
         name="phone" 
-        placeholder="06XX XXX XXX" 
+        placeholder="0600 000 000" 
         pattern="^(06|07|05)[0-9]{8}$" 
         required 
         class="form-input w-full px-3.5 py-2.5 rounded-lg border border-subtle-token text-sm focus:outline-none transition"
@@ -65,17 +65,17 @@
         class="form-select w-full px-3.5 py-2.5 rounded-lg border border-subtle-token text-sm bg-surface focus:outline-none transition"
       >
         <option value="">إختاري مدينتكِ</option>
-        <option value="Casablanca">الدار البيضاء (توصيل خلال 24 ساعة - مجاني)</option>
-        <option value="Rabat">الرباط / سلا (توصيل خلال 24 ساعة - مجاني)</option>
-        <option value="Marrakech">مراكش (توصيل خلال 24-48 ساعة)</option>
-        <option value="Tangier">طنجة (توصيل خلال 24-48 ساعة)</option>
-        <option value="Agadir">أكادير (توصيل خلال 48 ساعة)</option>
-        <option value="Fes">فاس (توصيل خلال 48 ساعة)</option>
-        <option value="Meknes">مكناس (توصيل خلال 48 ساعة)</option>
-        <option value="Oujda">وجدة (توصيل خلال 48 ساعة)</option>
-        <option value="Kenitra">القنيطرة (توصيل خلال 24-48 ساعة)</option>
-        <option value="Tetouan">تطوان (توصيل خلال 48 ساعة)</option>
-        <option value="Other">مدينة أخرى بالمملكة (توصيل 48 ساعة)</option>
+        <option value="الدار البيضاء">الدار البيضاء (توصيل خلال 24 ساعة - مجاني)</option>
+        <option value="الرباط">الرباط / سلا (توصيل خلال 24 ساعة - مجاني)</option>
+        <option value="مراكش">مراكش (توصيل خلال 24-48 ساعة)</option>
+        <option value="طنجة">طنجة (توصيل خلال 24-48 ساعة)</option>
+        <option value="أكادير">أكادير (توصيل خلال 48 ساعة)</option>
+        <option value="فاس">فاس (توصيل خلال 48 ساعة)</option>
+        <option value="مكناس">مكناس (توصيل خلال 48 ساعة)</option>
+        <option value="وجدة">وجدة (توصيل خلال 48 ساعة)</option>
+        <option value="القنيطرة">القنيطرة (توصيل خلال 24-48 ساعة)</option>
+        <option value="تطوان">تطوان (توصيل خلال 48 ساعة)</option>
+        <option value="أخرى">مدينة أخرى بالمملكة (توصيل 48 ساعة)</option>
       </select>
     </div>
 
@@ -122,6 +122,11 @@
         <span class="text-[10px] font-bold text-dark">تأكيد واتساب</span>
       </div>
     </div>
+    <div id="CodSuccessBox" class="hidden my-4 p-5 rounded-xl bg-cream border border-forest text-center flex-col items-center gap-2">
+      <span class="w-8 h-8 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'badge-check' %}</span>
+      <h4 class="font-bold text-base text-forest">تم تسجيل طلبكِ بنجاح!</h4>
+      <p class="text-xs text-muted leading-relaxed">شكراً لثقتكِ. سيتصل بكِ فريق خدمة العملاء خلال ساعات لتأكيد العنوان وموعد التوصيل.</p>
+    </div>
   </form>
 </div>
 
@@ -130,6 +135,8 @@
     var form = document.getElementById('DirectCODExpressForm');
     if (!form) return;
     var phoneInput = document.getElementById('CodCustomerPhone');
+    var submitBtn = document.getElementById('CodSubmitBtn');
+    var successBox = document.getElementById('CodSuccessBox');
     
     form.addEventListener('submit', function(e) {
       if (!phoneInput) return;
@@ -141,6 +148,70 @@
         alert('الرجاء إدخال رقم هاتف مغربي صحيح مكون من 10 أرقام ويبدأ بـ 06 أو 07 أو 05 (مثال: 0661123456)');
         phoneInput.focus();
         return false;
+      }
+
+      e.preventDefault();
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.7';
+      }
+
+      var formData = new FormData(form);
+      var name = formData.get('customer_name') || '';
+      var phone = cleanPhone;
+      var city = formData.get('city') || '';
+      var address = formData.get('address') || '';
+      var variantId = formData.get('variant_id');
+      var qty = parseInt(formData.get('quantity') || '1', 10);
+
+      // Attempt endpoint post
+      fetch(form.action, {
+        method: 'POST',
+        body: formData
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error('Proxy not configured');
+        return res.json();
+      })
+      .then(function() {
+        showSuccess();
+      })
+      .catch(function() {
+        // Fallback: save to cart attributes & open WhatsApp confirmation
+        var root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+        var cleanRoot = root.endsWith('/') ? root : root + '/';
+        
+        fetch(cleanRoot + 'cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: variantId,
+            quantity: qty,
+            properties: {
+              'نوع الطلب': 'طلب مباشر بالدفع عند الاستلام',
+              'الاسم الكامل': name,
+              'رقم الهاتف': phone,
+              'المدينة': city,
+              'العنوان': address
+            }
+          })
+        }).finally(function() {
+          showSuccess();
+          var waNumber = '{{ settings.whatsapp_number | default: "212600000000" }}';
+          var prodTitle = '{{ product.title | escape }}';
+          var waMsg = 'مرحباً ناتورا، قمت بطلب ' + prodTitle + ' بالدفع عند الاستلام:\nالاسم: ' + name + '\nالهاتف: ' + phone + '\nالمدينة: ' + city + '\nالعنوان: ' + address;
+          setTimeout(function() {
+            window.open('https://wa.me/' + waNumber + '?text=' + encodeURIComponent(waMsg), '_blank');
+          }, 800);
+        });
+      });
+
+      function showSuccess() {
+        if (submitBtn) submitBtn.style.display = 'none';
+        if (successBox) {
+          successBox.classList.remove('hidden');
+          successBox.style.display = 'flex';
+        }
       }
     });
   })();

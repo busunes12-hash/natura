@@ -231,22 +231,113 @@ class VariantPillPicker {
   static init() {
     document.querySelectorAll('.variant-pill').forEach((pill) => {
       pill.addEventListener('click', () => {
-        const variantId  = pill.getAttribute('data-variant-id');
-        const hiddenInput = document.querySelector('input[name="id"]');
-        const submitBtn  = document.querySelector('.product-form [data-quick-add]');
+        const variantId = pill.getAttribute('data-variant-id');
+        const price = pill.getAttribute('data-variant-price');
+        
+        const hiddenInputs = document.querySelectorAll('input[name="id"], #CodVariantId, #MainProductVariantId');
+        hiddenInputs.forEach(input => { if (input && variantId) input.value = variantId; });
 
-        if (hiddenInput && variantId) hiddenInput.value = variantId;
-        if (submitBtn  && variantId) submitBtn.setAttribute('data-quick-add', variantId);
+        const quickAddBtns = document.querySelectorAll('[data-quick-add]');
+        quickAddBtns.forEach(btn => { if (btn && variantId) btn.setAttribute('data-quick-add', variantId); });
+
+        if (price) {
+          const salePriceEl = document.querySelector('.price-container .price-item--sale');
+          if (salePriceEl) salePriceEl.textContent = price + ' د.م.';
+          const codBadge = document.getElementById('CodFormTotalBadge');
+          if (codBadge) codBadge.textContent = price + ' د.م.';
+          const stickyPrice = document.querySelector('.sticky-mobile-buy-bar .sticky-bar-info span');
+          if (stickyPrice) stickyPrice.textContent = price + ' د.م.';
+        }
 
         const parent = pill.closest('.variant-pills');
         if (parent) {
-          parent.querySelectorAll('.variant-pill').forEach(p => p.classList.remove('is-active'));
-          parent.querySelectorAll('.variant-pill').forEach(p => p.setAttribute('aria-pressed', 'false'));
+          parent.querySelectorAll('.variant-pill').forEach(p => {
+            p.classList.remove('is-active');
+            p.setAttribute('aria-checked', 'false');
+          });
         }
         pill.classList.add('is-active');
-        pill.setAttribute('aria-pressed', 'true');
+        pill.setAttribute('aria-checked', 'true');
       });
     });
+  }
+}
+
+/* ==========================================================================
+   7.5 WishlistManager — LocalStorage-backed wishlist
+   ========================================================================== */
+class WishlistManager {
+  static init() {
+    const getWishlist = () => {
+      try {
+        return JSON.parse(localStorage.getItem('natura_wishlist') || '[]');
+      } catch (e) {
+        return [];
+      }
+    };
+
+    const saveWishlist = (list) => {
+      try {
+        localStorage.setItem('natura_wishlist', JSON.stringify(list));
+      } catch (e) {}
+    };
+
+    const updateButtons = () => {
+      const list = getWishlist();
+      document.querySelectorAll('[data-wishlist-toggle]').forEach(btn => {
+        const id = btn.getAttribute('data-product-id');
+        const isFavorited = list.includes(id);
+        btn.classList.toggle('is-favorited', isFavorited);
+        btn.setAttribute('aria-pressed', String(isFavorited));
+        const svg = btn.querySelector('svg');
+        if (svg) {
+          svg.setAttribute('fill', isFavorited ? 'var(--color-terracotta)' : 'none');
+          svg.setAttribute('stroke', isFavorited ? 'var(--color-terracotta)' : 'currentColor');
+        }
+      });
+    };
+
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-wishlist-toggle]');
+      if (!btn) return;
+      e.preventDefault();
+      const id = btn.getAttribute('data-product-id');
+      if (!id) return;
+
+      let list = getWishlist();
+      if (list.includes(id)) {
+        list = list.filter(item => item !== id);
+      } else {
+        list.push(id);
+      }
+      saveWishlist(list);
+      updateButtons();
+    });
+
+    updateButtons();
+  }
+}
+
+/* ==========================================================================
+   7.6 NewsletterModalManager — Trigger 10% discount popup
+   ========================================================================== */
+class NewsletterModalManager {
+  static init() {
+    try {
+      if (localStorage.getItem('natura_newsletter_seen') === 'true') return;
+    } catch (e) {}
+
+    const modal = document.querySelector('modal-dialog#NewsletterModal');
+    if (!modal) return;
+
+    setTimeout(() => {
+      if (!modal.classList.contains('is-active')) {
+        modal.open();
+        try {
+          localStorage.setItem('natura_newsletter_seen', 'true');
+        } catch (e) {}
+      }
+    }, 7000);
   }
 }
 
@@ -365,6 +456,8 @@ document.addEventListener('DOMContentLoaded', () => {
   AccordionManager.init();
   ScrollToCODManager.init();
   LightboxZoomManager.init();
+  WishlistManager.init();
+  NewsletterModalManager.init();
 
   /* Open cart drawer on cart:updated event */
   window.addEventListener('cart:updated', () => {

@@ -69,9 +69,9 @@
                 </div>
 
                 <div class="flex items-center justify-between mt-2">
-                  <quantity-input class="quantity-input">
+                  <quantity-input class="quantity-input" data-line-key="{{ item.key }}">
                     <button type="button" name="minus" class="quantity-btn" aria-label="تقليل الكمية">-</button>
-                    <input type="number" value="{{ item.quantity }}" readonly class="quantity-field" aria-label="الكمية">
+                    <input type="number" value="{{ item.quantity }}" min="0" max="99" readonly class="quantity-field" aria-label="الكمية" data-line-key="{{ item.key }}">
                     <button type="button" name="plus" class="quantity-btn" aria-label="زيادة الكمية">+</button>
                   </quantity-input>
 

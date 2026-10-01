@@ -91,6 +91,18 @@
   gap: var(--space-8);
 }
 
+@media (max-width: 1023px) {
+  .header__nav {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .header__nav {
+    display: flex !important;
+  }
+}
+
 .header__nav-link {
   font-family: var(--font-body);
   font-size: 1rem;

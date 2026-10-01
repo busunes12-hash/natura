@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+scan_results.txt
+clean_scan_results.txt
+.DS_Store
+Thumbs.db

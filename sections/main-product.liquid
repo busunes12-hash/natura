@@ -97,16 +97,58 @@
         <!-- Stock Scarcity Urgency Badge Snippet -->
         {% render 'scarcity-badge', product: product %}
 
+        <!-- Product Variants Picker (if multiple variants exist) -->
+        {%- unless product.has_only_default_variant -%}
+          <div class="product-variant-picker flex flex-col gap-2 my-2">
+            <span class="text-xs font-bold text-dark">اختاري الحجم / النوع:</span>
+            <div class="variant-pills" role="radiogroup" aria-label="خيارات المنتج">
+              {%- for variant in product.variants -%}
+                <button
+                  type="button"
+                  class="variant-pill {% if forloop.first %}is-active{% endif %}"
+                  data-variant-id="{{ variant.id }}"
+                  data-variant-price="{{ variant.price | money_without_currency }}"
+                  role="radio"
+                  aria-checked="{% if forloop.first %}true{% else %}false{% endif %}"
+                  {% unless variant.available %}disabled{% endunless %}
+                >
+                  <span>{{ variant.title }}</span>
+                  <span class="text-xs text-muted">({{ variant.price | money_without_currency }} د.م.)</span>
+                </button>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endunless -%}
+
+        <!-- Standard E-commerce Product Form & Add to Cart -->
+        {% form 'product', product, class: 'product-form flex flex-col gap-3 my-2', id: 'MainProductForm' %}
+          <input type="hidden" name="id" id="MainProductVariantId" value="{{ product.selected_or_first_available_variant.id }}">
+          
+          <div class="flex items-center gap-3">
+            <quantity-input class="quantity-input flex-shrink-0">
+              <button type="button" name="minus" class="quantity-btn" aria-label="تقليل الكمية">-</button>
+              <input type="number" name="quantity" value="1" min="1" max="99" class="quantity-field" aria-label="الكمية">
+              <button type="button" name="plus" class="quantity-btn" aria-label="زيادة الكمية">+</button>
+            </quantity-input>
+
+            <button
+              type="button"
+              class="btn-secondary flex-grow py-3 px-5 rounded-full font-bold text-sm flex items-center justify-center gap-2 cursor-pointer shadow-sm hover:shadow"
+              data-quick-add="{{ product.selected_or_first_available_variant.id }}"
+              id="AddToCartBtn"
+              {% unless product.available %}disabled{% endunless %}
+            >
+              <span class="w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'cart' %}</span>
+              <span>{% if product.available %}إضافة إلى السلة{% else %}نفدت الكمية{% endif %}</span>
+            </button>
+          </div>
+        {% endform %}
+
         <!-- Tiered Volume Discount Bundle Selector -->
         {% render 'bundle-selector', product: product %}
 
         <!-- Accelerated 1-Click Direct COD Form -->
         {% render 'cod-express-form', product: product %}
-
-        {% form 'product', product, class: 'product-form flex flex-col gap-4 hidden' %}
-          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-          <button type="submit" name="add" class="hidden">إضافة إلى السلة</button>
-        {% endform %}
 
         {% render 'trust-bar' %}
 
@@ -126,7 +168,9 @@
                 <span class="w-4 h-4 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'leaf' %}</span>
                 <span>إكسير الطبيعة المغربية: المكونات العضوية 100% ومصدرها الأصيل</span>
               </span>
-              <span class="accordion-chevron">↓</span>
+              <span class="accordion-chevron">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
             </summary>
             <div class="pdp-accordion-content">
               <p class="text-sm text-muted leading-relaxed">زيت أرغان مغربي أصلي 100% مستخلص عبر العصر البارد الأول في معاصرنا المعتمدة بمنطقة سوس والجبال. خالٍ تماماً من الزيوت الممددة أو العطور الاصطناعية أو المواد الحافظة.</p>
@@ -139,7 +183,9 @@
                 <span class="w-4 h-4 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'sparkle' %}</span>
                 <span>طقوس العناية اليومية ورغد الاستخدام للبشرة والشعر</span>
               </span>
-              <span class="accordion-chevron">↓</span>
+              <span class="accordion-chevron">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
             </summary>
             <div class="pdp-accordion-content">
               <p class="text-sm text-muted leading-relaxed">ضعي من 3 إلى 5 قطرات دافئة بين كفيكِ، وتُدلّك بها البشرة أو نهايات الشعر بحركات دائرية لطيفة. تركيبة نباتية خفيفة وسريعة الامتصاص مناسبة للاستخدام اليومي الآمن لجميع أفراد الأسرة.</p>
@@ -152,7 +198,9 @@
                 <span class="w-4 h-4 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'truck' %}</span>
                 <span>ضمان معاينة الشحنة والتوصيل الفاخر 24-48 ساعة بالمغرب</span>
               </span>
-              <span class="accordion-chevron">↓</span>
+              <span class="accordion-chevron">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
             </summary>
             <div class="pdp-accordion-content">
               <p class="text-sm text-muted leading-relaxed">توصيل آمن وسريع خلال 24 إلى 48 ساعة لجميع مدن المملكة. تتاح لكِ فرصة فتح الشحنة ومعاينة القارورة والتأكد من سلامتها ونقائها قبل تسليم أي مبلغ للموزع. الشحن مجاني لجميع الطلبات فوق 200 د.م.</p>

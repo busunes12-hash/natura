@@ -8,7 +8,7 @@
     <header class="article-header text-center my-8">
       <span class="badge-forest mb-2">مدونة الجمال</span>
       <h1 class="type-h1 mb-4">{{ article.title | default: "أسرار استخدام زيت التين الشوكي المغربي للبشرة" }}</h1>
-      <span class="text-sm text-muted font-medium">{{ article.published_at | date: "%d %B %Y" }} • بقلم فريق ماتيريا</span>
+      <span class="text-sm text-muted font-medium">{{ article.published_at | date: "%d/%m/%Y" }} • بقلم فريق ناتورا</span>
     </header>
 
     {%- if article.image -%}

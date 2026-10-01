@@ -17,8 +17,8 @@
     {%- comment -%} Page title {%- endcomment -%}
     <title>
       {{ page_title }}
-      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- if current_tags %} &ndash; الوسوم "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; الصفحة {{ current_page }}{% endif -%}
       {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
@@ -68,18 +68,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 
-    {%- comment -%}
-      Font preload: Preload the most critical Arabic body font weight to
-      eliminate FOIT (Flash of Invisible Text) for Arabic users.
-    {%- endcomment -%}
-    <link
-      rel="preload"
-      as="font"
-      type="font/woff2"
-      href="https://fonts.gstatic.com/s/ibmplexsansarabic/v4/Qw3MZRtWPQCuMN_EUqMawmczQiKjMf9p_gFx.woff2"
-      crossorigin="anonymous"
-    >
-
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@600;700;800&display=swap"
       rel="stylesheet"
@@ -96,10 +84,33 @@
       <link rel="preload" as="image" href="{{ product.featured_media | image_url: width: 800 }}" fetchpriority="high">
     {%- endif -%}
 
-    {%- comment -%} Core CSS — order matters: base → utilities → rtl-enforcer {%- endcomment -%}
+    {%- comment -%} Core CSS — order matters: base → utilities → components → rtl-enforcer {%- endcomment -%}
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'utilities.css' | asset_url | stylesheet_tag }}
+    {{ 'component-card.css' | asset_url | stylesheet_tag }}
+    {{ 'component-forms.css' | asset_url | stylesheet_tag }}
     {{ 'rtl-enforcer.css' | asset_url | stylesheet_tag }}
+
+    {%- comment -%} Dynamic Theme Editor Customizer Tokens {%- endcomment -%}
+    <style>
+      :root {
+        {% if settings.color_primary != blank %}
+          --color-forest: {{ settings.color_primary }};
+        {% endif %}
+        {% if settings.color_bg != blank %}
+          --color-bg-primary: {{ settings.color_bg }};
+        {% endif %}
+        {% if settings.color_terracotta != blank %}
+          --color-terracotta: {{ settings.color_terracotta }};
+        {% endif %}
+        {% if settings.heading_font != blank %}
+          --font-heading: '{{ settings.heading_font }}', 'Cormorant Garamond', serif;
+        {% endif %}
+        {% if settings.body_font != blank %}
+          --font-body: '{{ settings.body_font }}', sans-serif;
+        {% endif %}
+      }
+    </style>
 
     {%- comment -%} JSON-LD Structured Data {%- endcomment -%}
     <script type="application/ld+json">
@@ -110,7 +121,7 @@
       "url": {{ shop.url | json }},
       "logo": {
         "@type": "ImageObject",
-        "url": {{ shop.url | append: '/assets/natura-logo-primary.png' | json }}
+        "url": {{ 'natura-logo-primary.png' | asset_url | json }}
       },
       "contactPoint": {
         "@type": "ContactPoint",

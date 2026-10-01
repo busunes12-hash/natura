@@ -1,0 +1,87 @@
+{% comment %}
+  Section: Customer Login & Password Recovery
+{% endcomment %}
+<section class="customer-login-section py-16" style="background-color: var(--color-bg-primary); min-height: 70vh;">
+  <div class="container max-w-md mx-auto">
+    <div class="login-box p-8 rounded-2xl bg-surface border border-subtle-token shadow-sm">
+      <div class="text-center mb-6">
+        <span class="w-12 h-12 text-forest mb-2 inline-flex items-center justify-center">{% render 'icon', name: 'user' %}</span>
+        <h1 class="type-h1 text-2xl font-bold text-dark">تسجيل الدخول</h1>
+        <p class="text-xs text-muted mt-1">مرحباً بعودتكِ إلى مجتمع ناتورا للعناية الطبيعية</p>
+      </div>
+
+      {% form 'customer_login', class: 'flex flex-col gap-4' %}
+        {{ form.errors | default_errors }}
+
+        <div class="form-group flex flex-col gap-1">
+          <label for="CustomerEmail" class="text-xs font-bold text-dark">البريد الإلكتروني</label>
+          <input
+            type="email"
+            name="customer[email]"
+            id="CustomerEmail"
+            autocomplete="email"
+            autocorrect="off"
+            autocapitalize="off"
+            required
+            class="form-input text-sm p-3 rounded-lg border border-subtle-token"
+            placeholder="name@example.com"
+          >
+        </div>
+
+        <div class="form-group flex flex-col gap-1">
+          <div class="flex items-center justify-between">
+            <label for="CustomerPassword" class="text-xs font-bold text-dark">كلمة المرور</label>
+            <a href="#recover" onclick="document.getElementById('RecoverPasswordForm').classList.toggle('hidden');" class="text-xs text-forest hover:underline">
+              نسيتِ كلمة المرور؟
+            </a>
+          </div>
+          <input
+            type="password"
+            name="customer[password]"
+            id="CustomerPassword"
+            autocomplete="current-password"
+            required
+            class="form-input text-sm p-3 rounded-lg border border-subtle-token"
+          >
+        </div>
+
+        <button type="submit" class="btn-primary w-full py-3.5 rounded-full font-bold text-sm shadow-md mt-2">
+          تسجيل الدخول
+        </button>
+
+        <div class="text-center text-xs text-muted mt-4 border-t border-subtle-token pt-4">
+          ليس لديكِ حساب بعد؟
+          <a href="{{ routes.account_register_url }}" class="text-forest font-bold hover:underline">إنشاء حساب جديد</a>
+        </div>
+      {% endform %}
+
+      <div id="RecoverPasswordForm" class="hidden mt-8 pt-6 border-t border-subtle-token">
+        <h2 class="text-base font-bold text-dark mb-2 text-center">استعادة كلمة المرور</h2>
+        <p class="text-xs text-muted text-center mb-4">أدخلي بريدكِ الإلكتروني وسنرسل لكِ رابطاً لإعادة تعيين كلمة المرور.</p>
+        {% form 'recover_customer_password', class: 'flex flex-col gap-3' %}
+          {{ form.errors | default_errors }}
+          <input
+            type="email"
+            name="email"
+            id="RecoverEmail"
+            autocorrect="off"
+            autocapitalize="off"
+            required
+            class="form-input text-sm p-3 rounded-lg border border-subtle-token"
+            placeholder="name@example.com"
+          >
+          <button type="submit" class="btn-secondary w-full py-3 rounded-full font-bold text-sm">
+            إرسال رابط الاستعادة
+          </button>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "صفحة تسجيل الدخول",
+  "settings": []
+}
+{% endschema %}

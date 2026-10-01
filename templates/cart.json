@@ -1,11 +1,11 @@
 {
   "sections": {
-    "cart_drawer": {
-      "type": "cart-drawer",
+    "main": {
+      "type": "main-cart",
       "settings": {}
     }
   },
   "order": [
-    "cart_drawer"
+    "main"
   ]
 }

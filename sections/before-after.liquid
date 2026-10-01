@@ -145,29 +145,32 @@
     function setPosition(pct) {
       pct = Math.max(0, Math.min(100, pct));
       position = pct;
-      afterPanel.style.clipPath = 'polygon(' + pct + '% 0, 100% 0, 100% 100%, ' + pct + '% 100%)';
-      divider.style.right = pct + '%';
+      afterPanel.style.clipPath = 'inset(0 0 0 ' + pct + '%)';
+      divider.style.left = pct + '%';
+      divider.style.right = 'auto';
     }
 
     function getPercent(clientX) {
       var rect = slider.getBoundingClientRect();
       var x = clientX - rect.left;
-      var pct = (1 - (x / rect.width)) * 100;
-      return pct;
+      var pct = (x / rect.width) * 100;
+      return Math.max(0, Math.min(100, pct));
     }
 
     // Initial
     setPosition(50);
 
     // Mouse events
-    dragTarget.addEventListener('mousedown', function(e) {
+    function onPointerDown(e) {
       isDragging = true;
       e.preventDefault();
-    });
-    divider.addEventListener('mousedown', function(e) {
-      isDragging = true;
-      e.preventDefault();
-    });
+      setPosition(getPercent(e.clientX || (e.touches && e.touches[0] && e.touches[0].clientX)));
+    }
+
+    if (dragTarget) dragTarget.addEventListener('mousedown', onPointerDown);
+    if (divider) divider.addEventListener('mousedown', onPointerDown);
+    slider.addEventListener('mousedown', onPointerDown);
+
     document.addEventListener('mousemove', function(e) {
       if (!isDragging) return;
       setPosition(getPercent(e.clientX));
@@ -175,14 +178,12 @@
     document.addEventListener('mouseup', function() { isDragging = false; });
 
     // Touch events
-    dragTarget.addEventListener('touchstart', function(e) {
-      isDragging = true;
-    }, { passive: true });
-    divider.addEventListener('touchstart', function(e) {
-      isDragging = true;
-    }, { passive: true });
+    if (dragTarget) dragTarget.addEventListener('touchstart', onPointerDown, { passive: true });
+    if (divider) divider.addEventListener('touchstart', onPointerDown, { passive: true });
+    slider.addEventListener('touchstart', onPointerDown, { passive: true });
+
     document.addEventListener('touchmove', function(e) {
-      if (!isDragging) return;
+      if (!isDragging || !e.touches || !e.touches[0]) return;
       setPosition(getPercent(e.touches[0].clientX));
     }, { passive: true });
     document.addEventListener('touchend', function() { isDragging = false; });
@@ -195,8 +196,8 @@
     divider.setAttribute('aria-valuemax', '100');
     divider.setAttribute('aria-valuenow', '50');
     divider.addEventListener('keydown', function(e) {
-      if (e.key === 'ArrowLeft') { setPosition(position + 5); divider.setAttribute('aria-valuenow', position); }
-      if (e.key === 'ArrowRight') { setPosition(position - 5); divider.setAttribute('aria-valuenow', position); }
+      if (e.key === 'ArrowLeft') { setPosition(position - 5); divider.setAttribute('aria-valuenow', position); }
+      if (e.key === 'ArrowRight') { setPosition(position + 5); divider.setAttribute('aria-valuenow', position); }
     });
   })();
 </script>

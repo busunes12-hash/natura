@@ -4,8 +4,8 @@
 {% endcomment %}
 <div
   id="CookieConsentBanner"
-  class="cookie-banner fixed bottom-4 inset-inline-start-4 inset-inline-end-4 md:inset-inline-start-auto md:inset-inline-end-4 p-4 rounded-lg shadow-lg border border-subtle-token flex items-center justify-between gap-4 max-w-lg bg-surface"
-  style="z-index: var(--z-toast);"
+  class="cookie-banner fixed bottom-4 inset-inline-start-4 inset-inline-end-4 p-4 rounded-lg shadow-lg border border-subtle-token flex items-center justify-between gap-4 max-w-lg bg-surface"
+  style="z-index: var(--z-toast); display: none;"
   role="region"
   aria-label="إشعار الخصوصية والمطابقة"
 >
@@ -15,11 +15,33 @@
   <button
     type="button"
     class="btn-primary text-xs py-2 px-4 whitespace-nowrap"
-    onclick="document.getElementById('CookieConsentBanner').style.display = 'none'"
+    id="AcceptCookieBtn"
   >
     موافق
   </button>
 </div>
+
+<script>
+  (function() {
+    var banner = document.getElementById('CookieConsentBanner');
+    var btn = document.getElementById('AcceptCookieBtn');
+    if (!banner) return;
+    try {
+      if (localStorage.getItem('natura_cookie_consent') === 'true') {
+        return;
+      }
+    } catch(e) {}
+    banner.style.display = 'flex';
+    if (btn) {
+      btn.addEventListener('click', function() {
+        banner.style.display = 'none';
+        try {
+          localStorage.setItem('natura_cookie_consent', 'true');
+        } catch(e) {}
+      });
+    }
+  })();
+</script>
 
 {% schema %}
 {

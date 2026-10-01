@@ -4,6 +4,13 @@
    Dynamic Cart Drawer update + Free Shipping threshold calculation
    ========================================================================== */
 
+function getShopifyRoute(endpoint) {
+  const root = window.Shopify?.routes?.root || '/';
+  const cleanRoot = root.endsWith('/') ? root : root + '/';
+  const cleanEndpoint = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
+  return cleanRoot + cleanEndpoint;
+}
+
 class CartManager {
   static async addItem(variantId, quantity = 1, buttonElement = null) {
     if (buttonElement) {
@@ -12,7 +19,7 @@ class CartManager {
     }
 
     try {
-      const response = await fetch(`${window.Shopify.routes.root}cart/add.js`, {
+      const response = await fetch(getShopifyRoute('cart/add.js'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,7 +50,7 @@ class CartManager {
 
   static async changeQuantity(lineKey, quantity) {
     try {
-      const response = await fetch(`${window.Shopify.routes.root}cart/change.js`, {
+      const response = await fetch(getShopifyRoute('cart/change.js'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +73,7 @@ class CartManager {
 
   static async refreshCartDrawer() {
     try {
-      const response = await fetch(`${window.Shopify.routes.root}?section_id=cart-drawer`);
+      const response = await fetch(getShopifyRoute('?section_id=cart-drawer'));
       const text = await response.text();
       const parser = new DOMParser();
       const htmlDoc = parser.parseFromString(text, 'text/html');
@@ -79,7 +86,7 @@ class CartManager {
       }
 
       // Update cart count pills in header
-      const cartResponse = await fetch(`${window.Shopify.routes.root}cart.js`);
+      const cartResponse = await fetch(getShopifyRoute('cart.js'));
       const cartData = await cartResponse.json();
 
       document.querySelectorAll('[data-cart-count]').forEach((badge) => {
@@ -108,5 +115,21 @@ document.addEventListener('click', (event) => {
     event.preventDefault();
     const key = removeBtn.dataset.cartRemove;
     if (key) CartManager.changeQuantity(key, 0);
+  }
+});
+
+// Quantity Input Live Sync
+let quantityDebounceTimer;
+document.addEventListener('change', (event) => {
+  const input = event.target;
+  if (input && input.classList.contains('quantity-field')) {
+    const key = input.getAttribute('data-line-key') || input.closest('quantity-input')?.getAttribute('data-line-key');
+    const newQty = parseInt(input.value, 10);
+    if (key && !isNaN(newQty) && newQty >= 0) {
+      clearTimeout(quantityDebounceTimer);
+      quantityDebounceTimer = setTimeout(() => {
+        CartManager.changeQuantity(key, newQty);
+      }, 300);
+    }
   }
 });

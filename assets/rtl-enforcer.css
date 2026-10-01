@@ -44,8 +44,7 @@ h1, h2, h3, h4, h5, h6, p {
 [dir="rtl"] .icon-arrow-next,
 [dir="rtl"] .icon-arrow-prev,
 [dir="rtl"] .slider-next,
-[dir="rtl"] .slider-prev,
-[dir="rtl"] .accordion-chevron {
+[dir="rtl"] .slider-prev {
   transform: scaleX(-1);
   display: inline-block;
 }

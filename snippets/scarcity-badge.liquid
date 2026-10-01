@@ -1,8 +1,12 @@
 {% comment %}
   Dynamic stock scarcity badge snippet — Quiet Luxury Refinement
-{% endcomment %}
 {%- assign current_variant = product.selected_or_first_available_variant -%}
-{%- if current_variant.inventory_management != blank and current_variant.inventory_quantity > 0 and current_variant.inventory_quantity <= 10 -%}
+{%- if current_variant.available == false -%}
+  <div class="stock-scarcity-badge stock-scarcity-badge--soldout" style="background-color: var(--color-bg-secondary); color: var(--color-text-muted); border-color: var(--color-border-subtle);">
+    <span class="scarcity-icon">{% render 'icon', name: 'sparkle' %}</span>
+    <span>نفد المخزون حالياً — جاري عصر وتحضير دفعة طازجة جديدة</span>
+  </div>
+{%- elsif current_variant.inventory_management != blank and current_variant.inventory_quantity > 0 and current_variant.inventory_quantity <= 10 -%}
   <div class="stock-scarcity-badge">
     <span class="scarcity-icon">{% render 'icon', name: 'sparkle' %}</span>
     <span>وجبة إنتاج طازجة محدودة: باقي {{ current_variant.inventory_quantity }} قوارير فقط من دفعة هذا الأسبوع المعصورة على البارد</span>

@@ -1,0 +1,84 @@
+{% comment %}
+  Section: Customer Registration
+{% endcomment %}
+<section class="customer-register-section py-16" style="background-color: var(--color-bg-primary); min-height: 70vh;">
+  <div class="container max-w-md mx-auto">
+    <div class="register-box p-8 rounded-2xl bg-surface border border-subtle-token shadow-sm">
+      <div class="text-center mb-6">
+        <span class="w-12 h-12 text-forest mb-2 inline-flex items-center justify-center">{% render 'icon', name: 'sparkle' %}</span>
+        <h1 class="type-h1 text-2xl font-bold text-dark">إنشاء حساب جديد</h1>
+        <p class="text-xs text-muted mt-1">انضمي إلينا واستمتعي بعروض حصرية وتتبع أسهل لطلباتكِ</p>
+      </div>
+
+      {% form 'create_customer', class: 'flex flex-col gap-4' %}
+        {{ form.errors | default_errors }}
+
+        <div class="form-group flex flex-col gap-1">
+          <label for="RegisterFirstName" class="text-xs font-bold text-dark">الاسم الأول</label>
+          <input
+            type="text"
+            name="customer[first_name]"
+            id="RegisterFirstName"
+            autocomplete="given-name"
+            required
+            class="form-input text-sm p-3 rounded-lg border border-subtle-token"
+          >
+        </div>
+
+        <div class="form-group flex flex-col gap-1">
+          <label for="RegisterLastName" class="text-xs font-bold text-dark">النسب / اللقب</label>
+          <input
+            type="text"
+            name="customer[last_name]"
+            id="RegisterLastName"
+            autocomplete="family-name"
+            required
+            class="form-input text-sm p-3 rounded-lg border border-subtle-token"
+          >
+        </div>
+
+        <div class="form-group flex flex-col gap-1">
+          <label for="RegisterEmail" class="text-xs font-bold text-dark">البريد الإلكتروني</label>
+          <input
+            type="email"
+            name="customer[email]"
+            id="RegisterEmail"
+            autocomplete="email"
+            autocorrect="off"
+            autocapitalize="off"
+            required
+            class="form-input text-sm p-3 rounded-lg border border-subtle-token"
+          >
+        </div>
+
+        <div class="form-group flex flex-col gap-1">
+          <label for="RegisterPassword" class="text-xs font-bold text-dark">كلمة المرور</label>
+          <input
+            type="password"
+            name="customer[password]"
+            id="RegisterPassword"
+            autocomplete="new-password"
+            required
+            class="form-input text-sm p-3 rounded-lg border border-subtle-token"
+          >
+        </div>
+
+        <button type="submit" class="btn-primary w-full py-3.5 rounded-full font-bold text-sm shadow-md mt-2">
+          تأكيد التسجيل والانضمام
+        </button>
+
+        <div class="text-center text-xs text-muted mt-4 border-t border-subtle-token pt-4">
+          لديكِ حساب بالفعل؟
+          <a href="{{ routes.account_login_url }}" class="text-forest font-bold hover:underline">تسجيل الدخول هنا</a>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "صفحة إنشاء حساب",
+  "settings": []
+}
+{% endschema %}

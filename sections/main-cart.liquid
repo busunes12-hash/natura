@@ -1,0 +1,138 @@
+{% comment %}
+  Section: Standalone Cart Page (main-cart.liquid)
+  Target Market: Morocco (Arabic / RTL First / COD)
+{% endcomment %}
+
+<section class="main-cart-section py-12" style="background-color: var(--color-bg-primary); min-height: 70vh;">
+  <div class="container max-w-4xl">
+    <div class="cart-header text-center mb-8">
+      <h1 class="type-h1 mb-2">سلة التسوق</h1>
+      <p class="text-sm text-muted">راجعي منتجاتكِ المختارة قبل تأكيد الشحن والتوصيل لباب منزلكِ</p>
+    </div>
+
+    {%- if cart.item_count > 0 -%}
+      <!-- Free Shipping Threshold Banner -->
+      {%- assign free_shipping_threshold = settings.free_shipping_threshold | default: 200 | times: 100 -%}
+      {%- assign cart_total = cart.total_price -%}
+      {%- assign progress_percentage = cart_total | times: 100 | divided_by: free_shipping_threshold -%}
+      {%- if progress_percentage > 100 -%}{%- assign progress_percentage = 100 -%}{%- endif -%}
+
+      <div class="free-shipping-card p-4 rounded-xl bg-surface border border-subtle-token mb-6 text-center shadow-xs">
+        {%- if cart_total >= free_shipping_threshold -%}
+          <span class="text-forest font-bold text-sm flex items-center justify-center gap-1.5">
+            <span class="w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'sparkle' %}</span>
+            <span>مبروك! لقد حصلتِ على توصيل مجاني وسريع لجميع مدن المغرب!</span>
+          </span>
+        {%- else -%}
+          {%- assign needed = free_shipping_threshold | minus: cart_total -%}
+          <span class="text-sm font-medium">توصيل مجاني: أضيفي <strong class="text-terracotta font-bold">{{ needed | money_without_currency }} د.م.</strong> فقط للاستفادة من الشحن المجاني!</span>
+        {%- endif -%}
+        <div class="progress-track mt-2 w-full bg-cream rounded-full h-2 overflow-hidden">
+          <div class="progress-fill bg-forest h-full rounded-full transition-all duration-300" style="width: {{ progress_percentage }}%;"></div>
+        </div>
+      </div>
+
+      <div class="cart-grid grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Cart Items List (2 cols) -->
+        <div class="cart-items-wrapper md:col-span-2 flex flex-col gap-4">
+          {%- for item in cart.items -%}
+            <div class="cart-page-item p-4 rounded-xl bg-surface border border-subtle-token flex gap-4 items-center justify-between shadow-xs">
+              <div class="flex items-center gap-4 flex-grow">
+                <div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-cream">
+                  {%- if item.image -%}
+                    <img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" class="w-full h-full object-cover" width="80" height="80">
+                  {%- else -%}
+                    <div class="flex items-center justify-center h-full text-forest">
+                      {% render 'icon', name: 'leaf' %}
+                    </div>
+                  {%- endif -%}
+                </div>
+
+                <div class="flex flex-col gap-1">
+                  <h3 class="font-bold text-sm text-dark">{{ item.product.title }}</h3>
+                  {%- unless item.product.has_only_default_variant -%}
+                    <span class="text-xs text-muted">{{ item.variant.title }}</span>
+                  {%- endunless -%}
+                  <span class="font-bold text-forest text-sm">{{ item.final_price | money_without_currency }} د.م.</span>
+                </div>
+              </div>
+
+              <div class="flex flex-col items-end justify-between gap-3 flex-shrink-0">
+                <quantity-input class="quantity-input" data-line-key="{{ item.key }}">
+                  <button type="button" name="minus" class="quantity-btn" aria-label="تقليل الكمية">-</button>
+                  <input type="number" value="{{ item.quantity }}" min="0" max="99" readonly class="quantity-field" aria-label="الكمية" data-line-key="{{ item.key }}">
+                  <button type="button" name="plus" class="quantity-btn" aria-label="زيادة الكمية">+</button>
+                </quantity-input>
+
+                <button
+                  type="button"
+                  class="text-xs text-muted hover:text-terracotta transition cursor-pointer"
+                  data-cart-remove="{{ item.key }}"
+                >
+                  حذف من السلة
+                </button>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <!-- Cart Summary (1 col) -->
+        <div class="cart-summary-wrapper md:col-span-1">
+          <div class="cart-summary-box p-6 rounded-xl bg-surface border border-subtle-token shadow-sm flex flex-col gap-4">
+            <h3 class="font-bold text-base text-dark border-b border-subtle-token pb-3">ملخص الطلب</h3>
+
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-muted">المجموع الفرعي:</span>
+              <span class="font-bold text-forest text-base">{{ cart.total_price | money_without_currency }} د.م.</span>
+            </div>
+
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-muted">الشحن والتوصيل:</span>
+              <span class="font-bold text-forest">
+                {% if cart_total >= free_shipping_threshold %}مجاني{% else %}حسب المدينة{% endif %}
+              </span>
+            </div>
+
+            <div class="cod-pill p-3 rounded-lg bg-cream text-xs text-forest font-bold flex items-center gap-2">
+              <span class="w-4 h-4 inline-flex items-center justify-center flex-shrink-0">{% render 'icon', name: 'truck' %}</span>
+              <span>الدفع نقداً عند الاستلام | معاينة الشحنة قبل الدفع</span>
+            </div>
+
+            <form action="{{ routes.cart_url }}" method="post">
+              <button
+                type="submit"
+                name="checkout"
+                class="btn-terracotta w-full py-4 text-center rounded-full font-bold text-base flex items-center justify-center gap-2 cursor-pointer shadow-md"
+              >
+                <span class="w-5 h-5 inline-flex items-center justify-center">{% render 'icon', name: 'lock' %}</span>
+                <span>تأكيد الطلب وحجز الشحنة</span>
+              </button>
+            </form>
+
+            <a href="/collections/all" class="text-xs text-center text-muted hover:text-forest transition">
+              ← مواصلة التسوق وتصفح المنتجات
+            </a>
+          </div>
+        </div>
+      </div>
+
+    {%- else -%}
+      <div class="cart-empty-state text-center py-16 bg-surface rounded-2xl border border-subtle-token p-8 max-w-lg mx-auto shadow-xs">
+        <span class="w-16 h-16 text-forest mb-4 inline-flex items-center justify-center">{% render 'icon', name: 'cart' %}</span>
+        <h2 class="type-h2 text-xl mb-2">سلتكِ فارغة حالياً</h2>
+        <p class="text-sm text-muted mb-6">اكتشفي تشكيلتنا الفاخرة من زيوت الأرغان والتين الشوكي المعصورة على البارد.</p>
+        <a href="/collections/all" class="btn-primary inline-flex items-center gap-2">
+          <span class="w-4 h-4 inline-flex items-center justify-center">{% render 'icon', name: 'leaf' %}</span>
+          <span>تصفحي المنتجات الأكثر طلباً</span>
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "صفحة السلة الرئيسية",
+  "settings": []
+}
+{% endschema %}

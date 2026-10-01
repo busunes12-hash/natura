@@ -1,0 +1,82 @@
+{% comment %}
+  Section: Customer Account Overview & Order History
+{% endcomment %}
+<section class="customer-account-section py-16" style="background-color: var(--color-bg-primary); min-height: 70vh;">
+  <div class="container max-w-4xl mx-auto">
+    <div class="flex items-center justify-between border-b border-subtle-token pb-4 mb-8">
+      <div>
+        <h1 class="type-h1 text-2xl font-bold text-dark">حسابي — مرحباً {{ customer.first_name }}</h1>
+        <p class="text-xs text-muted mt-1">{{ customer.email }}</p>
+      </div>
+      <a href="{{ routes.account_logout_url }}" class="text-xs font-bold text-terracotta hover:underline">
+        تسجيل الخروج
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Orders List (2 cols) -->
+      <div class="md:col-span-2">
+        <h2 class="text-lg font-bold text-dark mb-4">سجل الطلبات</h2>
+        {%- paginate customer.orders by 10 -%}
+          {%- if customer.orders.size > 0 -%}
+            <div class="orders-list flex flex-col gap-3">
+              {%- for order in customer.orders -%}
+                <div class="p-4 rounded-xl bg-surface border border-subtle-token flex items-center justify-between shadow-xs">
+                  <div>
+                    <span class="font-bold text-sm text-forest block">الطلب {{ order.name }}</span>
+                    <span class="text-xs text-muted">{{ order.created_at | date: "%d/%m/%Y" }}</span>
+                  </div>
+                  <div>
+                    <span class="text-xs px-2.5 py-1 rounded-full bg-cream text-dark font-semibold">
+                      {{ order.financial_status_label }}
+                    </span>
+                  </div>
+                  <div class="text-end">
+                    <span class="font-bold text-sm text-dark block">{{ order.total_price | money_without_currency }} د.م.</span>
+                    <a href="{{ order.customer_url }}" class="text-xs text-forest hover:underline">تفاصيل الطلب</a>
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+            {% render 'pagination', paginate: paginate %}
+          {%- else -%}
+            <div class="p-8 rounded-xl bg-surface border border-subtle-token text-center">
+              <span class="w-12 h-12 text-forest mb-2 inline-flex items-center justify-center">{% render 'icon', name: 'truck' %}</span>
+              <p class="text-sm font-bold text-dark">لم تقومي بإجراء أي طلبات حتى الآن.</p>
+              <a href="/collections/all" class="btn-primary inline-flex items-center gap-1.5 text-xs py-2.5 px-5 rounded-full mt-4">
+                تصفحي منتجاتنا الطبيعية
+              </a>
+            </div>
+          {%- endif -%}
+        {%- endpaginate -%}
+      </div>
+
+      <!-- Account Info / Default Address (1 col) -->
+      <div class="md:col-span-1">
+        <div class="p-6 rounded-xl bg-surface border border-subtle-token shadow-xs flex flex-col gap-3">
+          <h2 class="text-base font-bold text-dark border-b border-subtle-token pb-2">عنوان التوصيل الافتراضي</h2>
+          {%- if customer.default_address -%}
+            <p class="text-xs text-muted leading-relaxed">
+              {{ customer.default_address.name }}<br>
+              {{ customer.default_address.address1 }}<br>
+              {{ customer.default_address.city }}<br>
+              {{ customer.default_address.phone }}
+            </p>
+          {%- else -%}
+            <p class="text-xs text-muted">لم يتم حفظ عنوان توصيل افتراضي بعد.</p>
+          {%- endif -%}
+          <a href="{{ routes.account_addresses_url }}" class="text-xs font-bold text-forest hover:underline mt-2">
+            إدارة العناوين ({{ customer.addresses_count }})
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "صفحة الحساب الشخصي",
+  "settings": []
+}
+{% endschema %}
