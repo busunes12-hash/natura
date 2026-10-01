@@ -1,0 +1,12 @@
+{%- liquid
+  assign label = link.title | strip
+  assign normalized_label = label | downcase
+  if link.url == routes.root_url or link.url == '/' or normalized_label == 'home'
+    assign label = 'الرئيسية'
+  elsif link.url contains '/collections/all' or normalized_label == 'catalog'
+    assign label = 'المنتجات'
+  elsif link.url contains '/pages/contact' or normalized_label == 'contact'
+    assign label = 'اتصلي بنا'
+  endif
+-%}
+{{- label | escape -}}

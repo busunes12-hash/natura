@@ -41,7 +41,7 @@
             class="header__nav-link{% if link.active %} is-active{% endif %}"
             {% if link.active %}aria-current="page"{% endif %}
           >
-            {{ link.title | escape }}
+            {% render 'navigation-label', link: link %}
           </a>
         {%- endfor -%}
       {%- else -%}
