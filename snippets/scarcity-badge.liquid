@@ -1,5 +1,6 @@
 {% comment %}
-  Dynamic stock scarcity badge snippet — Quiet Luxury Refinement
+  Dynamic stock scarcity badge snippet
+{% endcomment %}
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 {%- if current_variant.available == false -%}
   <div class="stock-scarcity-badge stock-scarcity-badge--soldout" style="background-color: var(--color-bg-secondary); color: var(--color-text-muted); border-color: var(--color-border-subtle);">

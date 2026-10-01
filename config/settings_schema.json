@@ -13,7 +13,7 @@
       {
         "type": "image_picker",
         "id": "favicon",
-        "label": "أيقونة المتجر (Favicon)"
+        "label": "أيقونة المتجر المفضلة"
       },
       {
         "type": "color",
@@ -70,7 +70,7 @@
     ]
   },
   {
-    "name": "الخطوط وتنسيق RTL",
+    "name": "الخطوط وتنسيق المتجر العربي",
     "settings": [
       {
         "type": "text",
