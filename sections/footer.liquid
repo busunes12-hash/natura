@@ -21,7 +21,7 @@
               <path d="M57 52 C38 48 20 38 15 22 C28 18 45 28 54 44 Z" stroke="currentColor" stroke-width="3" fill="none"/>
               <path d="M63 52 C82 48 100 38 105 22 C92 18 75 28 66 44 Z" stroke="currentColor" stroke-width="3" fill="none"/>
             </svg>
-            <span class="footer-logo__name">{{ shop.name | default: 'NATURA' }}</span>
+            <span class="footer-logo__name">{{ shop.name | replace: 'NATURA', 'ناتورا' | replace: 'Natura', 'ناتورا' | replace: 'natura', 'ناتورا' | default: 'ناتورا' }}</span>
           </div>
         </a>
         <p class="footer-brand-desc">
@@ -85,7 +85,7 @@
     <!-- Sub-footer -->
     <div class="footer-sub">
       <p class="footer-copyright">
-        &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. جميع الحقوق محفوظة.
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name | replace: 'NATURA', 'ناتورا' | replace: 'Natura', 'ناتورا' | replace: 'natura', 'ناتورا' | default: 'ناتورا' }}. جميع الحقوق محفوظة.
       </p>
       <div class="footer-legal-links">
         <a href="/pages/privacy">سياسة الخصوصية</a>

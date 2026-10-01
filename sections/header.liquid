@@ -27,7 +27,7 @@
           <path d="M105 22 C88 30 74 40 63 52" stroke="currentColor" stroke-width="2"/>
           <path d="M95 25 C90 32 83 36 77 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>
-        <span class="header__logo-text">{{ shop.name | default: 'NATURA' }}</span>
+        <span class="header__logo-text">{{ shop.name | replace: 'NATURA', 'ناتورا' | replace: 'Natura', 'ناتورا' | replace: 'natura', 'ناتورا' | default: 'ناتورا' }}</span>
       </div>
     </a>
 
