@@ -11,9 +11,15 @@
 class QuantityInput extends HTMLElement {
   constructor() {
     super();
-    this.input = this.querySelector('input');
     this.changeEvent = new Event('change', { bubbles: true });
+  }
+
+  connectedCallback() {
+    this.input = this.querySelector('input');
+    if (!this.input) return;
     this.querySelectorAll('button').forEach((button) => {
+      if (button.dataset.quantityBound) return;
+      button.dataset.quantityBound = 'true';
       button.addEventListener('click', this.onButtonClick.bind(this));
     });
   }
@@ -234,10 +240,10 @@ class VariantPillPicker {
         const variantId = pill.getAttribute('data-variant-id');
         const price = pill.getAttribute('data-variant-price');
         
-        const hiddenInputs = document.querySelectorAll('input[name="id"], #CodVariantId, #MainProductVariantId');
+        const hiddenInputs = document.querySelectorAll('#MainProductVariantId, #CodVariantId');
         hiddenInputs.forEach(input => { if (input && variantId) input.value = variantId; });
 
-        const quickAddBtns = document.querySelectorAll('[data-quick-add]');
+        const quickAddBtns = document.querySelectorAll('#AddToCartBtn');
         quickAddBtns.forEach(btn => { if (btn && variantId) btn.setAttribute('data-quick-add', variantId); });
 
         if (price) {
@@ -460,7 +466,8 @@ document.addEventListener('DOMContentLoaded', () => {
   NewsletterModalManager.init();
 
   /* Open cart drawer on cart:updated event */
-  window.addEventListener('cart:updated', () => {
+  window.addEventListener('cart:updated', (event) => {
+    if (!event.detail?.openDrawer) return;
     const cartDrawer = document.querySelector('drawer-component#CartDrawer');
     if (cartDrawer && !cartDrawer.classList.contains('is-active')) {
       cartDrawer.open();

@@ -85,21 +85,21 @@
         </div>
 
         <!-- High-AOV One-Click Complementary Upsell Widget -->
-        {%- if cart_total < free_shipping_threshold -%}
+        {%- if cart_total < free_shipping_threshold and section.settings.upsell_product != blank and section.settings.upsell_product.available -%}
           <div class="upsell-widget p-3 mt-4 rounded-md border border-subtle-token bg-cream">
             <div class="flex items-center justify-between gap-2">
               <div class="flex items-center gap-2">
                 <span class="w-5 h-5 text-forest flex-shrink-0 inline-flex items-center justify-center">{% render 'icon', name: 'sparkle' %}</span>
                 <div>
-                  <h5 class="font-bold text-xs text-dark">كملي روتينك: ماء الورد البلدي المقطر (50 مل)</h5>
-                  <span class="text-xs text-forest font-bold">+49 د.م. فقط (واكسري حد الشحن المجاني فوراً)</span>
+                  <h5 class="font-bold text-xs text-dark">{{ section.settings.upsell_product.title }}</h5>
+                  <span class="text-xs text-forest font-bold">{{ section.settings.upsell_product.price | money_without_currency }} د.م.</span>
                 </div>
               </div>
               <button
                 type="button"
                 class="btn-primary text-xs py-1 px-3 flex items-center gap-1"
                 style="min-height: 36px;"
-                onclick="CartManager.addItem('{{ section.settings.upsell_product.selected_or_first_available_variant.id | default: cart.items.first.variant_id }}', 1, this)"
+                data-quick-add="{{ section.settings.upsell_product.selected_or_first_available_variant.id }}"
               >
                 <span>+ إضافة</span>
               </button>

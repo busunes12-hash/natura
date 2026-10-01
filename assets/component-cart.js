@@ -33,10 +33,10 @@ class CartManager {
 
       if (!response.ok) throw new Error('فشل في إضافة المنتج إلى السلة');
 
-      const item = await response.json();
+      await response.json();
       await CartManager.refreshCartDrawer();
 
-      window.dispatchEvent(new CustomEvent('cart:updated'));
+      window.dispatchEvent(new CustomEvent('cart:updated', { detail: { openDrawer: true } }));
     } catch (error) {
       console.error('Cart Error:', error);
       window.dispatchEvent(new CustomEvent('theme:error', { detail: { message: 'تعذر إضافة المنتج. يرجى المحاولة مرة أخرى.' } }));
@@ -65,6 +65,10 @@ class CartManager {
       if (!response.ok) throw new Error('فشل تحديث الكمية');
 
       await CartManager.refreshCartDrawer();
+      if (document.body.classList.contains('template-cart')) {
+        window.location.reload();
+        return;
+      }
       window.dispatchEvent(new CustomEvent('cart:updated'));
     } catch (error) {
       console.error('Cart Quantity Error:', error);
@@ -74,16 +78,16 @@ class CartManager {
   static async refreshCartDrawer() {
     try {
       const response = await fetch(getShopifyRoute('?section_id=cart-drawer'));
+      if (!response.ok) throw new Error('Failed to load cart section');
       const text = await response.text();
       const parser = new DOMParser();
       const htmlDoc = parser.parseFromString(text, 'text/html');
 
-      const newContent = htmlDoc.querySelector('#CartDrawerContent');
-      const currentContent = document.querySelector('#CartDrawerContent');
-
-      if (newContent && currentContent) {
-        currentContent.innerHTML = newContent.innerHTML;
-      }
+      ['.free-shipping-bar', '#CartDrawerContent', '.drawer-footer'].forEach((selector) => {
+        const updated = htmlDoc.querySelector(`#CartDrawer ${selector}`);
+        const current = document.querySelector(`#CartDrawer ${selector}`);
+        if (updated && current) current.innerHTML = updated.innerHTML;
+      });
 
       // Update cart count pills in header
       const cartResponse = await fetch(getShopifyRoute('cart.js'));
@@ -106,7 +110,8 @@ document.addEventListener('click', (event) => {
     event.preventDefault();
     const variantId = quickAddBtn.dataset.quickAdd;
     if (variantId) {
-      CartManager.addItem(variantId, 1, quickAddBtn);
+      const quantity = parseInt(quickAddBtn.closest('.product-form')?.querySelector('input[name="quantity"]')?.value || '1', 10);
+      CartManager.addItem(variantId, Number.isInteger(quantity) && quantity > 0 ? quantity : 1, quickAddBtn);
     }
   }
 

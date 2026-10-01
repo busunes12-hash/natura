@@ -64,8 +64,6 @@
           </div>
         {%- endif -%}
 
-        <!-- Clinical Study Results Box -->
-        {% render 'clinical-results' %}
       </div>
 
       <!-- Column 2: Product Info & COD Order Form -->
@@ -83,14 +81,16 @@
 
         <h1 class="type-h1 product-title">{{ product.title | default: "زيت الأرغان المغربي النقي 100% — معصور على البارد (100 مل)" }}</h1>
 
+        {%- if product.metafields.reviews.rating.value != blank -%}
         <div class="rating-row flex items-center gap-2.5 text-sm">
           <div class="stars flex gap-1">
             {%- for i in (1..5) -%}
               <span class="star-gold inline-flex items-center justify-center w-4 h-4">{% render 'icon', name: 'star' %}</span>
             {%- endfor -%}
           </div>
-          <span class="font-semibold text-forest">4.9/5 (1,540 تقييم عملاء موثق)</span>
+          <span class="font-semibold text-forest">{{ product.metafields.reviews.rating.value | round: 1 }}/5 ({{ product.metafields.reviews.rating_count.value | default: 0 }} تقييم)</span>
         </div>
+        {%- endif -%}
 
         {% render 'price', product: product %}
 
@@ -105,11 +105,11 @@
               {%- for variant in product.variants -%}
                 <button
                   type="button"
-                  class="variant-pill {% if forloop.first %}is-active{% endif %}"
+                  class="variant-pill {% if variant.id == product.selected_or_first_available_variant.id %}is-active{% endif %}"
                   data-variant-id="{{ variant.id }}"
                   data-variant-price="{{ variant.price | money_without_currency }}"
                   role="radio"
-                  aria-checked="{% if forloop.first %}true{% else %}false{% endif %}"
+                  aria-checked="{% if variant.id == product.selected_or_first_available_variant.id %}true{% else %}false{% endif %}"
                   {% unless variant.available %}disabled{% endunless %}
                 >
                   <span>{{ variant.title }}</span>

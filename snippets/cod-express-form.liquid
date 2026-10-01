@@ -11,15 +11,15 @@
       <span>الطلب المباشر السريع (في 30 ثانية)</span>
     </span>
     <h3 class="type-h3 text-xl font-extrabold text-dark leading-tight">
-      أدخلي تفاصيل الاستلام وسنتواصل معكِ فوراً للتأكيد والتوصيل
+      أدخلي تفاصيل الاستلام ثم أكملي الطلب في صفحة الدفع
     </h3>
     <p class="text-xs text-muted mt-1">
       الدفع نقداً عند الاستلام | معاينة الشحنة قبل التسليم 100%
     </p>
   </div>
 
-  <form action="/apps/cod-order-create" method="POST" id="DirectCODExpressForm" class="flex flex-col gap-3.5">
-    <input type="hidden" name="variant_id" id="CodVariantId" value="{{ product.selected_or_first_available_variant.id }}">
+  <form action="{{ routes.cart_add_url }}" method="POST" id="DirectCODExpressForm" class="flex flex-col gap-3.5">
+    <input type="hidden" name="id" id="CodVariantId" value="{{ product.selected_or_first_available_variant.id }}">
     <input type="hidden" name="quantity" id="CodQuantity" value="1">
     <input type="hidden" name="bundle_tier" id="CodBundleTier" value="1">
 
@@ -30,7 +30,7 @@
       <input 
         type="text" 
         id="CodCustomerName" 
-        name="customer_name" 
+        name="properties[الاسم الكامل]"
         placeholder="مثال: ليلى التازي" 
         required 
         class="form-input w-full px-3.5 py-2.5 rounded-lg border border-subtle-token text-sm focus:outline-none transition"
@@ -44,14 +44,14 @@
       <input 
         type="tel" 
         id="CodCustomerPhone" 
-        name="phone" 
+        name="properties[رقم الهاتف]"
         placeholder="0600 000 000" 
         pattern="^(06|07|05)[0-9]{8}$" 
         required 
         class="form-input w-full px-3.5 py-2.5 rounded-lg border border-subtle-token text-sm focus:outline-none transition"
         dir="ltr"
       >
-      <span class="text-[11px] text-muted">سنرسل لكِ تفاصيل التتبع فور إرسال الطلب عبر الواتساب</span>
+      <span class="text-[11px] text-muted">يُستخدم رقم الهاتف للتواصل بشأن طلبكِ.</span>
     </div>
 
     <div class="form-group flex flex-col gap-1">
@@ -60,7 +60,7 @@
       </label>
       <select 
         id="CodCustomerCity" 
-        name="city" 
+        name="properties[المدينة]"
         required 
         class="form-select w-full px-3.5 py-2.5 rounded-lg border border-subtle-token text-sm bg-surface focus:outline-none transition"
       >
@@ -86,7 +86,7 @@
       <input 
         type="text" 
         id="CodAddress" 
-        name="address" 
+        name="properties[العنوان]"
         placeholder="مثال: حي المعاريف، شارع المسيرة الخضراء، إقامة..." 
         required
         class="form-input w-full px-3.5 py-2.5 rounded-lg border border-subtle-token text-sm focus:outline-none transition"
@@ -101,7 +101,7 @@
     >
       <div class="flex items-center gap-2">
         <span class="w-5 h-5 inline-flex items-center justify-center">{% render 'icon', name: 'cart' %}</span>
-        <span>تأكيد الطلب الآن — الدفع بعد المعاينة</span>
+        <span>المتابعة إلى الدفع</span>
       </div>
       <span id="CodFormTotalBadge" class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-white/20 text-white whitespace-nowrap">
         {{ product.price | default: 19900 | money_without_currency }} د.م.
@@ -122,11 +122,7 @@
         <span class="text-[10px] font-bold text-dark">تأكيد واتساب</span>
       </div>
     </div>
-    <div id="CodSuccessBox" class="hidden my-4 p-5 rounded-xl bg-cream border border-forest text-center flex-col items-center gap-2">
-      <span class="w-8 h-8 text-forest inline-flex items-center justify-center">{% render 'icon', name: 'badge-check' %}</span>
-      <h4 class="font-bold text-base text-forest">تم تسجيل طلبكِ بنجاح!</h4>
-      <p class="text-xs text-muted leading-relaxed">شكراً لثقتكِ. سيتصل بكِ فريق خدمة العملاء خلال ساعات لتأكيد العنوان وموعد التوصيل.</p>
-    </div>
+    <p id="CodFormError" class="hidden text-sm text-terracotta" role="alert"></p>
   </form>
 </div>
 
@@ -136,7 +132,7 @@
     if (!form) return;
     var phoneInput = document.getElementById('CodCustomerPhone');
     var submitBtn = document.getElementById('CodSubmitBtn');
-    var successBox = document.getElementById('CodSuccessBox');
+    var errorBox = document.getElementById('CodFormError');
     
     form.addEventListener('submit', function(e) {
       if (!phoneInput) return;
@@ -156,61 +152,43 @@
         submitBtn.style.opacity = '0.7';
       }
 
+      if (errorBox) errorBox.classList.add('hidden');
       var formData = new FormData(form);
-      var name = formData.get('customer_name') || '';
-      var phone = cleanPhone;
-      var city = formData.get('city') || '';
-      var address = formData.get('address') || '';
-      var variantId = formData.get('variant_id');
-      var qty = parseInt(formData.get('quantity') || '1', 10);
+      var qty = parseInt(formData.get('quantity'), 10);
+      var variantId = formData.get('id');
+      if (!variantId || !Number.isInteger(qty) || qty < 1) {
+        showError();
+        return;
+      }
 
-      // Attempt endpoint post
-      fetch(form.action, {
+      var root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+      var cleanRoot = root.endsWith('/') ? root : root + '/';
+      fetch(cleanRoot + 'cart/add.js', {
         method: 'POST',
-        body: formData
-      })
-      .then(function(res) {
-        if (!res.ok) throw new Error('Proxy not configured');
-        return res.json();
-      })
-      .then(function() {
-        showSuccess();
-      })
-      .catch(function() {
-        // Fallback: save to cart attributes & open WhatsApp confirmation
-        var root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
-        var cleanRoot = root.endsWith('/') ? root : root + '/';
-        
-        fetch(cleanRoot + 'cart/add.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            id: variantId,
-            quantity: qty,
-            properties: {
-              'نوع الطلب': 'طلب مباشر بالدفع عند الاستلام',
-              'الاسم الكامل': name,
-              'رقم الهاتف': phone,
-              'المدينة': city,
-              'العنوان': address
-            }
-          })
-        }).finally(function() {
-          showSuccess();
-          var waNumber = '{{ settings.whatsapp_number | default: "212600000000" }}';
-          var prodTitle = '{{ product.title | escape }}';
-          var waMsg = 'مرحباً ناتورا، قمت بطلب ' + prodTitle + ' بالدفع عند الاستلام:\nالاسم: ' + name + '\nالهاتف: ' + phone + '\nالمدينة: ' + city + '\nالعنوان: ' + address;
-          setTimeout(function() {
-            window.open('https://wa.me/' + waNumber + '?text=' + encodeURIComponent(waMsg), '_blank');
-          }, 800);
-        });
-      });
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          id: variantId,
+          quantity: qty,
+          properties: {
+            'الاسم الكامل': formData.get('properties[الاسم الكامل]'),
+            'رقم الهاتف': cleanPhone,
+            'المدينة': formData.get('properties[المدينة]'),
+            'العنوان': formData.get('properties[العنوان]')
+          }
+        })
+      }).then(function(res) {
+        if (!res.ok) throw new Error('Cart add failed');
+        window.location.assign(cleanRoot + 'checkout');
+      }).catch(showError);
 
-      function showSuccess() {
-        if (submitBtn) submitBtn.style.display = 'none';
-        if (successBox) {
-          successBox.classList.remove('hidden');
-          successBox.style.display = 'flex';
+      function showError() {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = '';
+        }
+        if (errorBox) {
+          errorBox.textContent = 'تعذر إضافة المنتج. يرجى المحاولة مرة أخرى.';
+          errorBox.classList.remove('hidden');
         }
       }
     });
